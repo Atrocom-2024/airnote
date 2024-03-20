@@ -1,7 +1,10 @@
 import Layout from "./_components/layouts/Layout";
+import HomeMapSection from "./_components/HomeMapSection";
 
 export default function Home() {
   return (
-    <Layout>안녕하세요</Layout>
+    <Layout>
+      <HomeMapSection />
+    </Layout>
   );
 }
