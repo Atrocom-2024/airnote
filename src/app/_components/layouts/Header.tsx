@@ -1,10 +1,16 @@
 import Link from "next/link";
+import { getServerSession } from "next-auth";
 
+import { authOptions } from "@/pages/api/[...nextauth]";
 import { IoSearch } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
 import NavigationBar from "../NavigationBar";
+import LoginBtn from "../LoginBtn";
 
-export default function Header() {
+export default async function Header() {
+  const session = await getServerSession(authOptions);
+  console.log(session);
+
   return (
     <header className="w-[100vw] h-[8vh] justify-between flex items-center border-b-[1.5px] border-purple px-5 sm:px-10">
       <section className="flex items-center">
@@ -26,9 +32,13 @@ export default function Header() {
           <Link href="">고객지원</Link>
         </article>
         <article className="flex items-center">
-          <Link href="/my">
-            <CgProfile size="40" color="#756AB6" />
-          </Link>
+          {session ? (
+            <Link href="/my">
+              <CgProfile size="40" color="#756AB6" />
+            </Link>
+          ) : (
+            <LoginBtn />
+          )}
           <NavigationBar />
         </article>
       </section>
