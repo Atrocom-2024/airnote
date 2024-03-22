@@ -9,7 +9,7 @@ export default function LoginModal({ closeModalHandler, loginHandler }: PropsTyp
       <article className="absolute w-[100vw] h-[100vh] z-40" onClick={closeModalHandler}></article>
       <article className="w-[300px] h-[250px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-md shadow-2xl p-5 z-50 md:w-[500px] md:h-[400px]">
         <section className="flex justify-between items-center">
-          <div className="text-xl text-purple font-bold md:text-3xl">로그인 | 회원가입</div>
+          <div className="text-xl text-purple font-bold md:text-3xl">로그인ㅣ회원가입</div>
           <div className="cursor-pointer" onClick={closeModalHandler}>
             <IoClose size="40" color="#756AB6" />
           </div>
