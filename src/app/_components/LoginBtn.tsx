@@ -13,7 +13,6 @@ export default function LoginBtn() {
     setIsLoginModal(true);
   }
   
-
   const closeModalHandler = () => {
     setIsLoginModal(false);
   }
