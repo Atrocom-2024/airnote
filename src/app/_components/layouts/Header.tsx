@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 
-import { authOptions } from "@/pages/api/[...nextauth]";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { IoSearch } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
 import NavigationBar from "../NavigationBar";
