@@ -10,9 +10,6 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "KIMMULJU",
   description: "Welcome to KIMMULJU",
-  icons: {
-    icon: '/favicon.ico'
-  }
 };
 
 export const viewport: Viewport = {
