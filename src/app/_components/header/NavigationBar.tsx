@@ -1,9 +1,11 @@
 'use client'
 
 import Link from "next/link";
+import { signOut, useSession } from "next-auth/react";
 import { useState } from "react";
 
 export default function NavigationBar() {
+  const { data: session } = useSession();
   const [isNavigationBar, setIsNavigationBar] = useState(false);
 
   const NavigationBarHandler = () => {
@@ -12,6 +14,10 @@ export default function NavigationBar() {
 
   const linkClickHandler = () => {
     setIsNavigationBar(false);
+  }
+
+  const logoutHandler = () => {
+    signOut();
   }
 
   return (
@@ -53,6 +59,7 @@ export default function NavigationBar() {
             href="https://open.kakao.com/o/srTkVkcg"
             onClick={linkClickHandler}
           >고객지원</Link>
+          {session && <button type="button" onClick={logoutHandler}>로그아웃</button>}
         </div>
       </div>
     </section>

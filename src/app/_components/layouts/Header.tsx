@@ -4,12 +4,12 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { IoSearch } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
-import NavigationBar from "../NavigationBar";
-import LoginBtn from "../LoginBtn";
+import NavigationBar from "../header/NavigationBar";
+import LoginBtn from "../header/LoginBtn";
+import LogoutBtn from "../header/LogoutBtn";
 
 export default async function Header() {
   const session = await getServerSession(authOptions);
-  console.log(session);
 
   return (
     <header className="w-[100vw] h-[8vh] justify-between flex items-center border-b-[1.5px] border-purple px-5 sm:px-10">
@@ -22,7 +22,7 @@ export default async function Header() {
           <IoSearch className="absolute top-1/2 right-3 -translate-y-1/2" size="30" color="#756AB6" />
         </article>
       </section>
-      <section className="flex">
+      <section className="flex text-sm">
         <article className="hidden space-x-10 items-center mr-10 lg:flex">
           <Link
             className="bg-purple text-white px-5 py-2 rounded-md"
@@ -30,6 +30,7 @@ export default async function Header() {
           >후기등록</Link>
           <Link href="/howuse">이용방법</Link>
           <Link href="">고객지원</Link>
+          {session && <LogoutBtn />}
         </article>
         <article className="flex items-center">
           {session ? (
