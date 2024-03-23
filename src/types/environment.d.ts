@@ -5,5 +5,6 @@ namespace NodeJS {
     KAKAO_CLIENT_SECRET: string;
     NEXT_AUTH_SECRET: string;
     NEXTAUTH_URL: string;
+    MONGODB_URI: string;
   }
 }
