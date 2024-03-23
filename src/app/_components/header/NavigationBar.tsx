@@ -20,6 +20,10 @@ export default function NavigationBar() {
     signOut();
   }
 
+  const reviewsBtnHandler = () => {
+    return alert('로그인 후 이용하실 수 있습니다.');
+  }
+
   return (
     <section className="lg:hidden">
       <div
@@ -44,11 +48,15 @@ export default function NavigationBar() {
             href="/home"
             onClick={linkClickHandler}
           >홈</Link>
-          <Link
-            className="mb-5"
-            href="/reviews/add"
-            onClick={linkClickHandler}
-          >후기등록</Link>
+          {session ? (
+            <Link
+              className="mb-5"
+              href="/reviews/add"
+              onClick={linkClickHandler}
+            >후기등록</Link>
+          ) : (
+            <button className="mb-5" type="button" onClick={reviewsBtnHandler}>후기등록</button>
+          )}
           <Link
             className="mb-5"
             href="/howuse"
