@@ -14,6 +14,7 @@ export default function ReviewForm() {
       address: "",
       address_detail: "",
       content: "",
+      auth_file: null
     }
   });
 
