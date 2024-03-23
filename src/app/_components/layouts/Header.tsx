@@ -7,6 +7,7 @@ import { CgProfile } from "react-icons/cg";
 import NavigationBar from "../header/NavigationBar";
 import LoginBtn from "../header/LoginBtn";
 import LogoutBtn from "../header/LogoutBtn";
+import ReviewAddBtn from "../header/ReviewAddBtn";
 
 export default async function Header() {
   const session = await getServerSession(authOptions);
@@ -24,10 +25,14 @@ export default async function Header() {
       </section>
       <section className="flex text-sm text-purple">
         <article className="hidden space-x-10 items-center mr-10 lg:flex">
-          <Link
-            className="bg-purple text-white px-5 py-2 rounded-md"
-            href="/reviews/add"
-          >후기등록</Link>
+          {session ? (
+            <Link
+              className="bg-purple text-white px-5 py-2 rounded-md"
+              href="/reviews/add"
+            >후기등록</Link>
+          ) : (
+            <ReviewAddBtn />
+          )}
           <Link href="/howuse">이용방법</Link>
           <Link href="">고객지원</Link>
           {session && <LogoutBtn />}
