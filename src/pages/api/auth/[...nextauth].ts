@@ -3,7 +3,7 @@ import NextAuth from "next-auth/next";
 import Kakao from "next-auth/providers/kakao";
 import { Db } from "mongodb";
 
-import { connectDB } from "@/pages/_utills/database";
+import { connectDB } from "@/pages/api/_utills/database";
 
 export const authOptions: NextAuthOptions = {
   providers: [
