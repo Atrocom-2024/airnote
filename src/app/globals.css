@@ -53,3 +53,8 @@ table {
 * {
     font-family: 'Noto Sans KR', sans-serif;
 }
+
+/* 기타 옵션 */
+html, body {
+    overflow-x: hidden;
+}

@@ -7,7 +7,7 @@ export default function Layout({ children, className }: PropsType) {
       {/*  */}
       <Header />
       {/*  */}
-      <section className="w-[100vw] h-[84vh]">{ children }</section>
+      <section className={`w-[100vw] h-[84vh] ${className}`}>{ children }</section>
       {/*  */}
       <Footer />
       {/*  */}
