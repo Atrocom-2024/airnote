@@ -34,7 +34,7 @@ export default async function Header() {
             <ReviewAddBtn />
           )}
           <Link href="/howuse">이용방법</Link>
-          <Link href="">고객지원</Link>
+          <Link href="https://open.kakao.com/o/sAgQYPhg">고객지원</Link>
           {session && <LogoutBtn />}
         </article>
         <article className="flex items-center">
