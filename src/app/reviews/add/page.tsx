@@ -5,16 +5,16 @@ import ReviewFormInput from "./_components/ReviewFormInput";
 
 export default function ReviewAdd() {
   return (
-    <Layout className="my-10">
-      <main className="w-[600px] mx-auto">
+    <Layout className="h-auto px-5 my-10 md:px-0">
+      <main className="w-full mx-auto md:w-[600px]">
         <Title>건물주 후기 작성</Title>
-        <form className="mt-10 px-16 grid grid-cols-1 text-sm">
+        <form className="mt-10 px-5 grid grid-cols-1 text-sm md:px-16">
           <article className="mb-8">
             <SubTitle>주소</SubTitle>
             <section className="mt-5">
-              <div className="grid grid-cols-5 gap-2 mb-3">
+              <div className="grid grid-cols-4 gap-2 mb-3 md:grid-cols-5">
                 <ReviewFormInput
-                  className="col-span-4"
+                  className="col-span-3 md:col-span-4"
                   placeholder="주소를 입력해주세요."
                   disabled={true}
                 />
@@ -51,6 +51,7 @@ export default function ReviewAdd() {
               </div>
             </section>
           </article>
+          <button className="bg-purple text-white rounded-md py-3 mt-5">후기등록</button>
         </form>
       </main>
     </Layout>
