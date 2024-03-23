@@ -45,7 +45,7 @@ export default function NavigationBar() {
         <div className="px-20 py-24 flex flex-col items-center text-white sm:text-xl">
           <Link
             className="mb-5"
-            href="/home"
+            href="/"
             onClick={linkClickHandler}
           >홈</Link>
           {session ? (
@@ -64,7 +64,7 @@ export default function NavigationBar() {
           >이용방법</Link>
           <Link
             className="mb-5"
-            href="https://open.kakao.com/o/srTkVkcg"
+            href="https://open.kakao.com/o/sAgQYPhg"
             onClick={linkClickHandler}
           >고객지원</Link>
           {session && <button type="button" onClick={logoutHandler}>로그아웃</button>}
