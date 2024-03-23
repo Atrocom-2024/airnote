@@ -1,6 +1,9 @@
 import { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
 import Kakao from "next-auth/providers/kakao";
+import { Db } from "mongodb";
+
+import { connectDB } from "@/pages/_utills/database";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -19,6 +22,17 @@ export const authOptions: NextAuthOptions = {
       } 
       return token;
     },
+    async signIn({ user }) {
+      const db: Db = await connectDB();
+      const userInfo = await db.collection('user_data').findOne({ email: user.email });
+      if (!userInfo) {
+        const insertUser = await db.collection('user_data').insertOne({
+          email: user.email,
+          name: user.name
+        });
+      }
+      return true;
+    }
   },
 };
 

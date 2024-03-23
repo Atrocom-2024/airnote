@@ -2,7 +2,7 @@ import Header from "./Header";
 
 export default function Layout({ children, className }: PropsType) {
   return (
-    <main>
+    <main className="bg-white">
       {/*  */}
       <Header />
       {/*  */}

@@ -22,7 +22,7 @@ export default async function Header() {
           <IoSearch className="absolute top-1/2 right-3 -translate-y-1/2" size="30" color="#756AB6" />
         </article>
       </section>
-      <section className="flex text-sm">
+      <section className="flex text-sm text-purple">
         <article className="hidden space-x-10 items-center mr-10 lg:flex">
           <Link
             className="bg-purple text-white px-5 py-2 rounded-md"
