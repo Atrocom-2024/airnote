@@ -2,19 +2,26 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import DaumPostcodeEmbed from "react-daum-postcode"
 
+import LoadingUI from "@/app/_components/LoadingUI";
 import SubTitle from "@/app/_components/SubTitle";
 import ReviewFormInput from "./ReviewFormInput";
-import DaumPostcodeEmbed from "react-daum-postcode";
 
 export default function ReviewForm() {
   const [openPostcode, setOpenPostcode] = useState<boolean>(false);
-  const { register, handleSubmit, watch, setValue, formState: { isSubmitting, errors } } = useForm<FormInputs>({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { isSubmitting }
+  } = useForm<FormInputs>({
     defaultValues: {
       address: "",
       address_detail: "",
       content: "",
-      auth_file: null
+      auth_file: null,
+      encoded_auth_file: ''
     }
   });
 
@@ -31,17 +38,62 @@ export default function ReviewForm() {
 
   const fileVerifyHandler = register('auth_file', {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-      const fileType = e.target.files ? e.target.files[0].type.split('/')[1] : '';
-      if (fileType !== 'png' && fileType !== 'jpg' && fileType !== 'jpeg') {
-        setValue('auth_file', null);
-        return alert('파일은 .png 또는 .jpg 형식의 파일만 지원합니다.');
+      if (e.target.files) {
+        const fileType = e.target.files[0].type.split('/')[1];
+        if (fileType !== 'png' && fileType !== 'jpg' && fileType !== 'jpeg') {
+          setValue('auth_file', null);
+          return alert('파일은 .png 또는 .jpg 형식의 파일만 지원합니다.');
+        } else {
+          // 인증서류 이미지 인코딩
+          const reader = new FileReader();
+          reader.readAsDataURL(e.target.files[0]);
+          reader.onloadend = () => {
+            typeof(reader.result) === 'string' && setValue('encoded_auth_file', reader.result);
+          }
+        }
       }
     }
   });
   
   const formSubmitHandler = async (data: FormInputs) => {
-    console.log(data);
+    // 폼 작성요소 검사
+    if (!data.address) {
+      return alert('후기를 작성할 주소를 입력해주세요.');
+    } else if (!data.address_detail) {
+      return alert('후기를 작성할 상세주소를 입력해주세요.');
+    } else if (!data.content) {
+      return alert('후기 내용을 입력해주세요.');
+    } else if (!data.auth_file) {
+      return alert('인증서류를 첨부해주세요.');
+    }
+
+    // 인증서류 이미지 인코딩
+    const reader = new FileReader();
+    reader.readAsDataURL(data.auth_file[0]);
+    reader.onloadend = () => {
+      typeof(reader.result) === 'string' && setValue('encoded_auth_file', reader.result);
+    }
+    
+    try {
+      const res = await fetch('/api/reviews/add', {
+        method: 'POST',
+        headers: { 'Content-type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      if (res.ok) {
+        return alert('후기 등록을 완료했습니다.');
+      } else {
+        return alert('후기 등록에 실패했습니다.');
+      }
+    } catch (err) {
+      console.error(err);
+      return alert('후기 등록에 실패했습니다.');
+    }
   };
+
+  if (isSubmitting) {
+    return <LoadingUI />;
+  }
 
   return (
     <form className="mt-10 px-5 grid grid-cols-1 text-sm md:px-16" onSubmit={handleSubmit(formSubmitHandler)}>
@@ -116,7 +168,8 @@ interface FormInputs {
   address: string;
   address_detail: string;
   content: string;
-  auth_file: File | null;
+  auth_file: FileList | null;
+  encoded_auth_file: string;
 }
 
 interface AddressParam {
