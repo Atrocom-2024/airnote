@@ -1,3 +1,5 @@
+'ues client'
+
 import { UseFormRegisterReturn } from "react-hook-form";
 
 export default function ReviewFormInput({ className, type, placeholder, disabled, register, accept, onChange }: InputProps) {
