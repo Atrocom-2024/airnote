@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import DaumPostcodeEmbed from "react-daum-postcode"
@@ -9,6 +10,7 @@ import SubTitle from "@/app/_components/SubTitle";
 import ReviewFormInput from "./ReviewFormInput";
 
 export default function ReviewForm() {
+  const router = useRouter();
   const [openPostcode, setOpenPostcode] = useState<boolean>(false);
   const {
     register,
@@ -81,7 +83,7 @@ export default function ReviewForm() {
         body: JSON.stringify(data)
       });
       if (res.ok) {
-        return alert('후기 등록을 완료했습니다.');
+        return router.push('/my');
       } else {
         return alert('후기 등록에 실패했습니다.');
       }
