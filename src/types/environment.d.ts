@@ -6,5 +6,7 @@ namespace NodeJS {
     NEXT_AUTH_SECRET: string;
     NEXTAUTH_URL: string;
     MONGODB_URI: string;
+    NEXT_PUBLIC_DOMAIN: string;
+    NEXT_PUBLIC_AES_EMAIL_SECRET_KEY: string;
   }
 }
