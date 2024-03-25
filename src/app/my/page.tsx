@@ -5,9 +5,8 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import Layout from "../_components/layouts/Layout";
 import Title from "../_components/Title";
 import { encrypt } from "@/utills/modules";
-import { ObjectId } from "mongodb";
 import MyReviewCard from "./_components/MyReviewCard";
-import NameInput from "./_components/NameInput";
+import NameContainer from "./_components/NameContainer";
 
 export default async function My() {
   const session = await getServerSession(authOptions);
@@ -24,7 +23,7 @@ export default async function My() {
             </section>
             <section className="ml-5 text-dark-gray">
               <div className="mb-3">{session?.user.email}</div>
-              <NameInput name={session?.user.name} />
+              <NameContainer name={session?.user.name} />
             </section>
           </article>
         </section>

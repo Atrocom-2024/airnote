@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-export default function NameInput({ name }: { name: string; }) {
+export default function NameContainer({ name }: { name: string; }) {
   const [changeName, setChangeName] = useState(name);
   const [isInputChange, setIsInputChange] = useState(true);
 
