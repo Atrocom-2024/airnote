@@ -1,8 +1,9 @@
 'use client'
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export default function NameContainer({ name }: { name: string; }) {
+  const inputRef = useRef<HTMLInputElement>(null);
   const [changeName, setChangeName] = useState(name);
   const [isInputChange, setIsInputChange] = useState(true);
 
@@ -12,19 +13,31 @@ export default function NameContainer({ name }: { name: string; }) {
   
   const onInputHandler = () => {
     setIsInputChange(false);
+    if (inputRef.current) {
+      inputRef.current.disabled = false;
+      inputRef.current.focus();
+    }
   }
   
   const offInputHandler = () => {
     setIsInputChange(true);
+    if (inputRef.current) {
+      inputRef.current.disabled = true;
+    }
+  }
+
+  const nameUpdateHandler = async () => {
+
   }
 
   return (
     <div>
       <input
-        className="w-[120px] px-2 py-1 block rounded-md mb-2 bg-dark-white disabled:bg-white disabled:p-0"
+        className="w-[120px] px-2 py-1 block rounded-md mb-2 bg-dark-white outline-gray disabled:bg-white disabled:p-0"
         value={changeName}
-        disabled={isInputChange}
+        disabled={true}
         onChange={nameInputChangeHandler}
+        ref={inputRef}
       />
       {isInputChange ? (
         <button
@@ -35,7 +48,7 @@ export default function NameContainer({ name }: { name: string; }) {
         <>
           <button
             className="border-[1.5px] border-purple rounded-md px-3 py-1 mr-1"
-            onClick={onInputHandler}
+            onClick={nameUpdateHandler}
           >확인</button>
           <button
             className="border-[1.5px] border-purple rounded-md px-3 py-1"
