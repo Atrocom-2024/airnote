@@ -5,15 +5,15 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import Layout from "../_components/layouts/Layout";
 import Title from "../_components/Title";
 import { encrypt } from "@/utills/modules";
-import { ObjectId } from "mongodb";
 import MyReviewCard from "./_components/MyReviewCard";
+import NameContainer from "./_components/NameContainer";
 
 export default async function My() {
   const session = await getServerSession(authOptions);
   const myReviews: MyReviewTypes[] = await getReviews(session?.user.email);
 
   return (
-    <Layout className="h-auto min-h-[84vh] bg-dark-white py-10">
+    <Layout className="h-auto min-h-[84vh] bg-dark-white py-20">
       <main className="w-full mx-auto md:w-[600px]">
         <section className="mb-24">
           <Title>내 정보</Title>
@@ -22,8 +22,8 @@ export default async function My() {
               <CgProfile size="50" color="#756AB6" />
             </section>
             <section className="ml-5 text-dark-gray">
-              <div className="mb-3">{session?.user?.email}</div>
-              <div>{session?.user?.name}</div>
+              <div className="mb-3">{session?.user.email}</div>
+              <NameContainer name={session?.user.name} />
             </section>
           </article>
         </section>
@@ -38,6 +38,7 @@ export default async function My() {
   );
 }
 
+// TODO: 유저 정보도 함께 받아오기
 async function getReviews(email: string) {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
   const encryptedEmail = encodeURIComponent(encrypt(email, process.env.NEXT_PUBLIC_AES_EMAIL_SECRET_KEY));
