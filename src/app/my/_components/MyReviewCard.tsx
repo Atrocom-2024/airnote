@@ -23,6 +23,7 @@ export default function MyReviewCard({ myReview }: PropsType) {
             <div className="text-sm">{ myReview.dislikes }</div>
           </div>
         </div>
+        {/* TODO: 날짜를 03 형태로 변경하는 과정 필요 */}
         <div className="text-sm">{ myReview.create_at.substring(0, 12) }</div>
       </section>
     </article>
