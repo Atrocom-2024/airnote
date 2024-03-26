@@ -1,6 +1,12 @@
 import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
 
 export default function MyReviewCard({ myReview }: PropsType) {
+  // 날짜 월, 일 2자리로 고정
+  const reviewCreateAtSplit = myReview.create_at.split('. ');
+  reviewCreateAtSplit[2] = reviewCreateAtSplit[2].padStart(2, '0');
+  reviewCreateAtSplit[1] = reviewCreateAtSplit[1].padStart(2, '0');
+  const reviewCreateAt = reviewCreateAtSplit.join('. ')
+
   return (
     <article className="w-full bg-white shadow-lg rounded-md p-5 mt-8">
       <section className="flex items-center sm:items-end">
@@ -23,8 +29,7 @@ export default function MyReviewCard({ myReview }: PropsType) {
             <div className="text-xs sm:text-sm">{ myReview.dislikes }</div>
           </div>
         </div>
-        {/* TODO: 날짜를 03 형태로 변경하는 과정 필요 */}
-        <div className="text-xs sm:text-sm">{ myReview.create_at.substring(0, 12) }</div>
+        <div className="text-xs sm:text-sm">{ reviewCreateAt.substring(0, 13) }</div>
       </section>
     </article>
   );
