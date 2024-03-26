@@ -8,6 +8,7 @@ import DaumPostcodeEmbed from "react-daum-postcode"
 import LoadingUI from "@/app/_components/LoadingUI";
 import SubTitle from "@/app/_components/SubTitle";
 import ReviewFormInput from "./ReviewFormInput";
+import { throttle } from "lodash";
 
 export default function ReviewForm() {
   const router = useRouter();
@@ -57,7 +58,7 @@ export default function ReviewForm() {
     }
   });
   
-  const formSubmitHandler = async (data: FormInputs) => {
+  const formSubmitHandler = throttle(async (data: FormInputs) => {
     // 폼 작성요소 검사
     if (!data.address) {
       return alert('후기를 작성할 주소를 입력해주세요.');
@@ -91,7 +92,7 @@ export default function ReviewForm() {
       console.error(err);
       return alert('후기 등록에 실패했습니다.');
     }
-  };
+  }, 2000);
 
   if (isSubmitting) {
     return <LoadingUI />;

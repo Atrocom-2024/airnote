@@ -1,16 +1,16 @@
 import { getServerSession } from "next-auth";
 import { CgProfile } from "react-icons/cg";
 
+import { encrypt } from "@/utills/modules";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import Layout from "../_components/layouts/Layout";
 import Title from "../_components/Title";
-import { encrypt } from "@/utills/modules";
 import MyReviewCard from "./_components/MyReviewCard";
 import NameContainer from "./_components/NameContainer";
 
 export default async function My() {
   const session = await getServerSession(authOptions);
-  const myReviews: MyReviewTypes[] = await getReviews(session?.user.email);
+  const myInfo: MyInfoTypes = await getReviews(session?.user.email);
 
   return (
     <Layout className="h-auto min-h-[84vh] bg-dark-white py-20">
@@ -19,17 +19,17 @@ export default async function My() {
           <Title>내 정보</Title>
           <article className="w-full flex justify-start items-center bg-white shadow-lg rounded-md px-24 py-10 mt-8">
             <section>
-              <CgProfile size="50" color="#756AB6" />
+              <CgProfile size="60" color="#756AB6" />
             </section>
             <section className="ml-5 text-dark-gray">
-              <div className="mb-3">{session?.user.email}</div>
-              <NameContainer name={session?.user.name} />
+              <div className="mb-3">{myInfo.user_info.email}</div>
+              <NameContainer name={myInfo.user_info.name} />
             </section>
           </article>
         </section>
         <section>
           <Title>내가 쓴 후기</Title>
-          {myReviews.map((myReview) => (
+          {myInfo.reviews.map((myReview) => (
             <MyReviewCard myReview={myReview} key={myReview._id} />
           ))}
         </section>
@@ -38,17 +38,25 @@ export default async function My() {
   );
 }
 
-// TODO: 유저 정보도 함께 받아오기
 async function getReviews(email: string) {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
   const encryptedEmail = encodeURIComponent(encrypt(email, process.env.NEXT_PUBLIC_AES_EMAIL_SECRET_KEY));
-  const res = await fetch(`${domain}/api/my/reviews?user=${encryptedEmail}`, { cache: 'no-store' });
+  const res = await fetch(`${domain}/api/my/info?user=${encryptedEmail}`, { cache: 'no-store' });
 
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
   
   return res.json();
+}
+
+interface MyInfoTypes {
+  user_info: {
+    _id: string;
+    email: string;
+    name: string;
+  },
+  reviews: MyReviewTypes[]
 }
 
 interface MyReviewTypes {

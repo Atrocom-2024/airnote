@@ -14,7 +14,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(401).send('접근 권한 없음');
   }
 
-  // TODO: 주소 -> 위도 경도로 변경
   switch (req.method) {
     case 'POST':
       const body: BodyTypes = req.body;
