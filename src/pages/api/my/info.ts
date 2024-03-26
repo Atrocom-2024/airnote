@@ -49,9 +49,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
 
       const body = req.body;
-      const db: Db = await connectDB();
-      const userInfo = await db.collection('reviews_data').insertOne({});
-      return res.status(200).json({});
+      try {
+        const db: Db = await connectDB();
+        const userInfoUpdate = await db.collection('user_data').updateOne(
+          { email: token.email },
+          { $set: { name: body.name } }
+        )
+        const reviewsUpdate = await db.collection('reviews_data').updateMany(
+          { author_email: token.email },
+          { $set: { author_name: body.name } }
+        );
+        return res.status(200).json({});
+      } catch (err) {
+        console.error(err);
+        return res.status(500).send('내부 서버 오류');
+      }
     default:
       return res.status(405).send('잘못된 요청 메서드');
   }
