@@ -13,15 +13,15 @@ export default async function My() {
   const myInfo: MyInfoTypes = await getReviews(session?.user.email);
 
   return (
-    <Layout className="h-auto min-h-[84vh] bg-dark-white py-20">
-      <main className="w-full mx-auto md:w-[600px]">
-        <section className="mb-24">
+    <Layout className="h-auto min-h-[84vh] bg-dark-white py-10 md:py-20">
+      <main className="w-full px-5 mx-auto md:w-[600px] md:px-0">
+        <section className="mb-16 md:mb-24">
           <Title>내 정보</Title>
-          <article className="w-full flex justify-start items-center bg-white shadow-lg rounded-md px-24 py-10 mt-8">
+          <article className="w-full flex justify-center items-center bg-white shadow-lg rounded-md py-10 mt-8 md:justify-start md:px-24">
             <section>
               <CgProfile size="60" color="#756AB6" />
             </section>
-            <section className="ml-5 text-dark-gray">
+            <section className="ml-5 text-dark-gray text-sm sm:text-base">
               <div className="mb-3">{myInfo.user_info.email}</div>
               <NameContainer name={myInfo.user_info.name} />
             </section>
