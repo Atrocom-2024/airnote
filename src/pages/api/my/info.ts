@@ -1,6 +1,4 @@
-// 마이페이지에서 유저 정보를 세션 또는 토큰이 아닌 서버에서 직접 내려주도록 구현
 // 닉네임 변경 시 중복확인 필요
-// 닉네임 변경 시 관련 글에서도 모두 변경되어야 함
 
 import { NextApiRequest, NextApiResponse } from "next";
 import { getToken } from "next-auth/jwt";
@@ -51,6 +49,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const body = req.body;
       try {
         const db: Db = await connectDB();
+
+        // 닉네임 중복확인
+        const duplicateConfirm = await db.collection('user_data').findOne({ name: body.name });
+        if (duplicateConfirm) {
+          return res.status(409).send('닉네임 중복 발생');
+        }
+
+        // 닉네임 변경 수행
         const userInfoUpdate = await db.collection('user_data').updateOne(
           { email: token.email },
           { $set: { name: body.name } }
@@ -59,7 +65,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           { author_email: token.email },
           { $set: { author_name: body.name } }
         );
-        return res.status(200).json({});
+        return res.status(204).send('닉네임 변경 성공');
       } catch (err) {
         console.error(err);
         return res.status(500).send('내부 서버 오류');

@@ -41,6 +41,9 @@ export default function NameContainer({ name }: { name: string; }) {
       if (res.ok) {
         alert('닉네임이 변경되었습니다.');
         window.location.reload();
+      } else if (res.status === 409) {
+        setIsLoading(false);
+        return alert('닉네임이 중복되었거나 이전과 같은 닉네임입니다.');
       } else {
         setIsLoading(false);
         return alert('닉네임 변경에 실패했습니다.');
@@ -60,7 +63,7 @@ export default function NameContainer({ name }: { name: string; }) {
       <input
         className="w-[120px] px-2 py-1 block rounded-md mb-2 bg-dark-white outline-gray disabled:bg-white disabled:p-0"
         value={changeName}
-        disabled={true}
+        disabled={isInputChange}
         onChange={nameInputChangeHandler}
         ref={inputRef}
       />
