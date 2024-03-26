@@ -27,7 +27,21 @@ export default function NameContainer({ name }: { name: string; }) {
   }
 
   const nameUpdateHandler = async () => {
-
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/my/info`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: changeName })
+      });
+      if (res.ok) {
+        return alert('닉네임이 변경되었습니다.');
+      } else {
+        return alert('닉네임 변경에 실패했습니다.');
+      }
+    } catch (err) {
+      console.error(err);
+      return alert('닉네임 변경에 실패했습니다.');
+    }
   }
 
   return (
