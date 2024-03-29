@@ -6,7 +6,7 @@ export default function Home() {
     <Layout>
       <HomeMapSection />
       <div className="absolute top-[10vh] left-5 w-[400px] h-[75vh] bg-white shadow-lg z-50">
-        안녕
+        <div></div>
       </div>
     </Layout>
   );
