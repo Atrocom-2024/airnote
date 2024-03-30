@@ -26,7 +26,7 @@ export default function HomeMain({ topReviews }: PropsType) {
   return (
     <>
       {mapLoc.lat && mapLoc.lng ? <HomeMapSection mapLoc={{ lat: mapLoc.lat, lng: mapLoc.lng }} /> : <LoadingUI />}
-      <PanelSection topReviews={topReviews} />
+      <PanelSection topReviews={topReviews} updateMapLocHandler={updateMapLocHandler} />
     </>
   );
 }

@@ -16,6 +16,7 @@ export default function HomeMapSection({ mapLoc }: PropsType) {
   return (
     <Map
       center={mapLoc}
+      level={9}
       style={{ width: "100%", height: "100%" }}
     ></Map>
   );
