@@ -4,12 +4,12 @@ import PanelReviewCard from "./PanelReviewCard";
 import { LuArrowUpRightSquare } from "react-icons/lu";
 import MapMoveBtn from "./MapMoveBtn";
 
-export default function PanelSection({ topReviews }: PropsType) {
-  const locNameList = ['서울', '경기', '충남', '충북', '전북', '전남', '강원', '경북', '경남', '제주'];
-  
+export default function PanelSection({ topReviews, updateMapLocHandler }: PropsType) {
+  const locNameList: LocationListTypes = ['서울', '경기', '충남', '충북', '전북', '전남', '강원', '경북', '경남', '제주'];
+
   return (
     <section className="absolute top-[10vh] left-5 w-[400px] h-[75vh] bg-white shadow-lg z-50">
-      <article>
+      <article className="mb-3">
         <section className="flex items-center p-3">
           <div>
             <FaArrowTrendUp size="25" color="#756AB6" />
@@ -29,9 +29,9 @@ export default function PanelSection({ topReviews }: PropsType) {
           </div>
           <div className="text-xl text-purple font-bold ml-3">지도 위치 이동하기</div>
         </section>
-        <section className="grid grid-cols-5 gap-4 px-5">
+        <section className="grid grid-cols-5 gap-4 px-5 py-3">
           {locNameList.map((locName) => (
-            <MapMoveBtn locName={locName} key={locName} />
+            <MapMoveBtn locName={locName} updateMapLocHandler={updateMapLocHandler} key={locName} />
           ))}
         </section>
       </article>
@@ -40,7 +40,8 @@ export default function PanelSection({ topReviews }: PropsType) {
 }
 
 interface PropsType {
-  topReviews: TopReviewType[]
+  topReviews: TopReviewType[];
+  updateMapLocHandler: (loc: MapLocationType) => void;
 }
 
 interface TopReviewType {
@@ -54,3 +55,10 @@ interface TopReviewType {
   dislikes: number;
   create_at: string;
 }
+
+interface MapLocationType {
+  lat: number;
+  lng: number;
+}
+
+type LocationListTypes = ['서울', '경기', '충남', '충북', '전북', '전남', '강원', '경북', '경남', '제주'];
