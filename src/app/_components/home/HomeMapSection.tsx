@@ -4,7 +4,7 @@ import { Map, useKakaoLoader } from "react-kakao-maps-sdk";
 
 import PartLoadingUI from "../PartLoadingUI";
 
-export default function HomeMapSection() {
+export default function HomeMapSection({ mapLoc }: PropsType) {
   const [ loading ] = useKakaoLoader({
     appkey: process.env.KAKAO_JS_KEY,
   });
@@ -15,8 +15,15 @@ export default function HomeMapSection() {
 
   return (
     <Map
-      center={{ lat: 33.5563, lng: 126.79581 }}
+      center={mapLoc}
       style={{ width: "100%", height: "100%" }}
     ></Map>
   );
+}
+
+interface PropsType {
+  mapLoc: {
+    lat: number;
+    lng: number;
+  };
 }

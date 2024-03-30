@@ -9,7 +9,7 @@ export default function PanelReviewCard({ topReview }: PropsType) {
         <div className="text-purple font-bold">{topReview.address}</div>
         <div className="text-gray text-sm">{ parseDate(topReview.create_at) }</div>
       </div>
-      <div className="my-5">{ topReview.content }</div>
+      <div className="px-2 my-5 text-sm">{ topReview.content }</div>
       <div className="flex justify-end items-center mr-5 text-gray">
         <div className="flex items-center mr-2">
           <div>
