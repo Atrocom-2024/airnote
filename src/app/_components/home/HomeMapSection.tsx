@@ -3,6 +3,7 @@
 import { Map, useKakaoLoader } from "react-kakao-maps-sdk";
 
 import PartLoadingUI from "../PartLoadingUI";
+import MapComponent from "./MapComponent";
 
 export default function HomeMapSection({ mapLoc }: PropsType) {
   const [ loading ] = useKakaoLoader({
@@ -11,14 +12,16 @@ export default function HomeMapSection({ mapLoc }: PropsType) {
 
   if (loading) {
     return <PartLoadingUI />;
-  }
+  };
 
   return (
     <Map
       center={mapLoc}
       level={9}
       style={{ width: "100%", height: "100%" }}
-    ></Map>
+    >
+      <MapComponent />
+    </Map>
   );
 }
 
