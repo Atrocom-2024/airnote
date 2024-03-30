@@ -9,7 +9,7 @@ export default function PanelSection({ topReviews, updateMapLocHandler }: PropsT
 
   return (
     <section className="absolute top-[10vh] left-5 w-[400px] h-[75vh] bg-white shadow-lg z-50">
-      <article>
+      <article className="mb-3">
         <section className="flex items-center p-3">
           <div>
             <FaArrowTrendUp size="25" color="#756AB6" />
@@ -29,7 +29,7 @@ export default function PanelSection({ topReviews, updateMapLocHandler }: PropsT
           </div>
           <div className="text-xl text-purple font-bold ml-3">지도 위치 이동하기</div>
         </section>
-        <section className="grid grid-cols-5 gap-4 px-5">
+        <section className="grid grid-cols-5 gap-4 px-5 py-3">
           {locNameList.map((locName) => (
             <MapMoveBtn locName={locName} updateMapLocHandler={updateMapLocHandler} key={locName} />
           ))}
