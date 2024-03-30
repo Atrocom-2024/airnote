@@ -2,7 +2,7 @@
 
 import { Map, useKakaoLoader } from "react-kakao-maps-sdk";
 
-import PartLoadingUI from "./PartLoadingUI";
+import PartLoadingUI from "../PartLoadingUI";
 
 export default function HomeMapSection() {
   const [ loading ] = useKakaoLoader({
