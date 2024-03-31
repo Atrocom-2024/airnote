@@ -5,14 +5,17 @@ import { useCallback, useEffect, useState } from "react";
 import { getLocation } from "@/utills/modules";
 import HomeMapSection from "./HomeMapSection";
 import PanelSection from "./PanelSection";
-import LoadingUI from "../LoadingUI";
 
 export default function HomeMain({ topReviews }: PropsType) {
-  const [ mapLoc, setMapLoc ] = useState<MapLocationType>({ lat: null, lng: null });
+  const [ markerInfo, setMarkerInfo ] = useState<MarkerInfoType[]>([]);
+  const [ mapLoc, setMapLoc ] = useState<MapLocationType>({
+    lat: 37.575184758466044,
+    lng: 126.97517453354219
+  });
 
   const updateMapLocHandler = (loc: MapLocationType) => {
     setMapLoc(loc);
-  }
+  };
 
   const getAsyncLocationHandler = useCallback(async () => {
     const userLoc: MapLocationType = await getLocation();
@@ -25,14 +28,21 @@ export default function HomeMain({ topReviews }: PropsType) {
 
   return (
     <>
-      {mapLoc.lat && mapLoc.lng ? <HomeMapSection mapLoc={{ lat: mapLoc.lat, lng: mapLoc.lng }} /> : <LoadingUI />}
-      <PanelSection topReviews={topReviews} updateMapLocHandler={updateMapLocHandler} />
+      <HomeMapSection
+        mapLoc={{ lat: mapLoc.lat, lng: mapLoc.lng }}
+        markerInfo={markerInfo}
+        setMarkerInfo={setMarkerInfo}
+      />
+      <PanelSection
+        topReviews={topReviews}
+        updateMapLocHandler={updateMapLocHandler}
+      />
     </>
   );
 }
 
 interface PropsType {
-  topReviews: TopReviewType[]
+  topReviews: TopReviewType[];
 }
 
 interface TopReviewType {
@@ -47,7 +57,14 @@ interface TopReviewType {
   create_at: string;
 }
 
+interface MarkerInfoType {
+  _id: string;
+  address: string;
+  latitude: number;
+  longitude: number;
+}
+
 interface MapLocationType {
-  lat: number | null;
-  lng: number | null;
+  lat: number;
+  lng: number;
 }

@@ -1,12 +1,13 @@
 'use client'
 
 import { debounce } from "lodash";
-import { useCallback, useEffect } from "react";
+import { Dispatch, SetStateAction, useCallback, useEffect } from "react";
 import { useMap } from "react-kakao-maps-sdk";
 
-export default function MapComponent() {
+export default function MapComponent({ setMarkerInfo }: PropsType) {
   const map = useMap();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchReviews = useCallback(debounce(async (bounds: kakao.maps.LatLngBounds) => {
     const domain = process.env.NEXT_PUBLIC_DOMAIN;
     const params = {
@@ -15,7 +16,13 @@ export default function MapComponent() {
       neLat: bounds.getNorthEast().getLat(),
       neLng: bounds.getNorthEast().getLng()
     };
-    const res = fetch(`${domain}/api/reviews?sw_lat=${params.swLat}&sw_lng=${params.swLng}&ne_lat=${params.neLat}&ne_lng=${params.neLng}`);
+    const res = await fetch(`${domain}/api/markers?sw_lat=${params.swLat}&sw_lng=${params.swLng}&ne_lat=${params.neLat}&ne_lng=${params.neLng}`);
+    const json = await res.json();
+    if (res.ok) {
+      setMarkerInfo(json);
+    } else {
+      return alert('알 수 없는 오류로 데이터 받아오기에 실패했습니다. 네트워크 상태를 확인해주세요.');
+    }
   }, 500), []);
 
   useEffect(() => {
@@ -31,9 +38,20 @@ export default function MapComponent() {
     return () => {
       kakao.maps.event.removeListener(map, 'bounds_changed', handleBoundsChanged);
     };
-  }, [map]);
+  }, [fetchReviews, map]);
 
   return (
     <div></div>
   );
+}
+
+interface PropsType {
+  setMarkerInfo: Dispatch<SetStateAction<MarkerInfoType[]>>;
+}
+
+interface MarkerInfoType {
+  _id: string;
+  address: string;
+  latitude: number;
+  longitude: number;
 }
