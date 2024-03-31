@@ -2,6 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
+import SideBarReviewCard from "./SideBarReviewCard";
 
 export default function SideBar() {
   const [ reviews, setReviews ] = useState<ReviewType[]>([]);
@@ -37,6 +38,11 @@ export default function SideBar() {
     <article className="absolute top-[8vh] left-0 w-[400px] h-[84vh] bg-white border-r-[1.5px] border-purple shadow-lg z-[29]">
       <section className="p-3">
         <div className="text-xl text-purple font-bold">{address}</div>
+      </section>
+      <section>
+        {reviews && reviews.map((review) => (
+          <SideBarReviewCard review={review} key={review._id} />
+        ))}
       </section>
     </article>
   );
