@@ -1,12 +1,16 @@
 'use client'
 
+import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
 import { getLocation } from "@/utills/modules";
 import HomeMapSection from "./HomeMapSection";
 import PanelSection from "./PanelSection";
+import SideBar from "./SideBar";
 
 export default function HomeMain({ topReviews }: PropsType) {
+  const searchParams = useSearchParams();
+  const sidebar = Boolean(searchParams?.get('sidebar'));
   const [ markerInfo, setMarkerInfo ] = useState<MarkerInfoType[]>([]);
   const [ mapLoc, setMapLoc ] = useState<MapLocationType>({
     lat: 37.575184758466044,
@@ -33,10 +37,14 @@ export default function HomeMain({ topReviews }: PropsType) {
         markerInfo={markerInfo}
         setMarkerInfo={setMarkerInfo}
       />
-      <PanelSection
-        topReviews={topReviews}
-        updateMapLocHandler={updateMapLocHandler}
-      />
+      {sidebar ? (
+        <SideBar />
+      ) : (
+        <PanelSection
+          topReviews={topReviews}
+          updateMapLocHandler={updateMapLocHandler}
+        />
+      )}
     </>
   );
 }

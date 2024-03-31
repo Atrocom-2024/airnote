@@ -16,12 +16,17 @@ export default function MapComponent({ setMarkerInfo }: PropsType) {
       neLat: bounds.getNorthEast().getLat(),
       neLng: bounds.getNorthEast().getLng()
     };
-    const res = await fetch(`${domain}/api/markers?sw_lat=${params.swLat}&sw_lng=${params.swLng}&ne_lat=${params.neLat}&ne_lng=${params.neLng}`);
-    const json = await res.json();
-    if (res.ok) {
-      setMarkerInfo(json);
-    } else {
-      return alert('알 수 없는 오류로 데이터 받아오기에 실패했습니다. 네트워크 상태를 확인해주세요.');
+    try {
+      const res = await fetch(`${domain}/api/markers?sw_lat=${params.swLat}&sw_lng=${params.swLng}&ne_lat=${params.neLat}&ne_lng=${params.neLng}`);
+      const json = await res.json();
+      if (res.ok) {
+        setMarkerInfo(json);
+      } else {
+        return alert('알 수 없는 오류로 데이터 받아오기에 실패했습니다. 네트워크 상태를 확인해주세요.');
+      }
+    } catch (err) {
+      console.error(err);
+      return alert('알 수 없는 오류로 데이터 받아오기에 실패했습니다. 네트워크 상태를 확인해주세요.')
     }
   }, 500), []);
 

@@ -1,14 +1,14 @@
 import { FaArrowTrendUp } from "react-icons/fa6";
+import { LuArrowUpRightSquare } from "react-icons/lu";
 
 import PanelReviewCard from "./PanelReviewCard";
-import { LuArrowUpRightSquare } from "react-icons/lu";
 import MapMoveBtn from "./MapMoveBtn";
 
 export default function PanelSection({ topReviews, updateMapLocHandler }: PropsType) {
   const locNameList: LocationListTypes = ['서울', '경기', '충남', '충북', '전북', '전남', '강원', '경북', '경남', '제주'];
 
   return (
-    <section className="absolute top-[10vh] left-5 w-[400px] h-[75vh] bg-white shadow-lg z-50">
+    <section className="absolute top-[10vh] left-5 w-[400px] h-[75vh] bg-white shadow-lg z-[29] hidden sm:block">
       <article className="mb-3">
         <section className="flex items-center p-3">
           <div>
