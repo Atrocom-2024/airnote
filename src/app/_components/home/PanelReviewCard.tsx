@@ -4,7 +4,7 @@ import { parseDate } from "@/utills/modules";
 
 export default function PanelReviewCard({ topReview }: PropsType) {
   return (
-    <article className="border-b-[1.5px] border-purple p-3" key={topReview._id}>
+    <article className="border-b-[1.5px] border-purple p-3">
       <div className="flex justify-between items-center">
         <div className="text-purple font-bold">{topReview.address}</div>
         <div className="text-gray text-sm">{ parseDate(topReview.create_at) }</div>

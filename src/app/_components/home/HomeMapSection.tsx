@@ -1,5 +1,6 @@
 'use client'
 
+import { usePathname, useRouter } from "next/navigation";
 import { Dispatch, SetStateAction } from "react";
 import { Map, MapMarker, useKakaoLoader } from "react-kakao-maps-sdk";
 
@@ -7,6 +8,8 @@ import PartLoadingUI from "../PartLoadingUI";
 import MapComponent from "./MapComponent";
 
 export default function HomeMapSection({ mapLoc, markerInfo, setMarkerInfo }: PropsType) {
+  const router = useRouter();
+  const pathname = usePathname();
   const [ loading ] = useKakaoLoader({
     appkey: process.env.KAKAO_JS_KEY,
   });
@@ -25,6 +28,8 @@ export default function HomeMapSection({ mapLoc, markerInfo, setMarkerInfo }: Pr
       {markerInfo.map((marker) => (
         <MapMarker
           position={{ lat: marker.latitude, lng: marker.longitude }}
+          clickable={true}
+          onClick={() => router.push(`${pathname}?sidebar=true&lat=${marker.latitude}&lng=${marker.longitude}&address=${encodeURIComponent(marker.address)}`)}
           key={marker._id}
         />
       ))}
