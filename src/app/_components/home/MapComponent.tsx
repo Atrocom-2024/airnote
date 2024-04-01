@@ -34,7 +34,8 @@ export default function MapComponent({ setMarkerInfo }: PropsType) {
    // 처음 렌더 시에 실행되는 useEffect
   useEffect(() => {
     fetchReviews();
-  }, [fetchReviews])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // 지도 위치를 이동시켰을 때 실행되는 useRffect
   useEffect(() => {
@@ -47,7 +48,8 @@ export default function MapComponent({ setMarkerInfo }: PropsType) {
     return () => {
       kakao.maps.event.removeListener(map, 'bounds_changed', handleBoundsChanged);
     };
-  }, [fetchReviews, map]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [map]);
 
   return (
     <div></div>

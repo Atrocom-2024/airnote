@@ -11,7 +11,6 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
       const swLngNum = parseFloat(sw_lng);
       const neLatNum = parseFloat(ne_lat);
       const neLngNum = parseFloat(ne_lng);
-
       try {
         const db: Db = await connectDB();
         const markerInfo = await db.collection('reviews_data').find(
