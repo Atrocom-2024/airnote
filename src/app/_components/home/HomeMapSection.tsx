@@ -29,7 +29,7 @@ export default function HomeMapSection({ mapLoc, markerInfo, setMarkerInfo }: Pr
       style={{ width: "100%", height: "100%" }}
     >
       <MapComponent setMarkerInfo={setMarkerInfo} />
-      {markerInfo && markerInfo.map((marker) => (
+      {markerInfo.map((marker) => (
         <MapMarker
           position={{ lat: marker.latitude, lng: marker.longitude }}
           clickable={true}
