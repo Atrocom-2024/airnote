@@ -8,7 +8,8 @@ export default function MapComponent({ setMarkerInfo }: PropsType) {
   const map = useMap();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const fetchReviews = useCallback(debounce(async (bounds: kakao.maps.LatLngBounds) => {
+  const fetchReviews = useCallback(debounce(async () => {
+    const bounds = map.getBounds();
     const domain = process.env.NEXT_PUBLIC_DOMAIN;
     const params = {
       swLat: bounds.getSouthWest().getLat(),
@@ -30,12 +31,15 @@ export default function MapComponent({ setMarkerInfo }: PropsType) {
     }
   }, 500), []);
 
+   // 처음 렌더 시에 실행되는 useEffect
   useEffect(() => {
-    if (!map) return;
+    fetchReviews();
+  }, [fetchReviews])
 
+  // 지도 위치를 이동시켰을 때 실행되는 useRffect
+  useEffect(() => {
     const handleBoundsChanged = () => {
-      const bounds = map.getBounds();
-      fetchReviews(bounds);
+      fetchReviews();
     };
 
     kakao.maps.event.addListener(map, 'bounds_changed', handleBoundsChanged);
