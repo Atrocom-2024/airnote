@@ -14,6 +14,10 @@ export default function HomeMapSection({ mapLoc, markerInfo, setMarkerInfo }: Pr
     appkey: process.env.KAKAO_JS_KEY,
   });
 
+  const moveRouterHandler = (lat: number, lng: number, address: string) => {
+    router.push(`${pathname}?sidebar=true&lat=${lat}&lng=${lng}&address=${encodeURIComponent(address)}`);
+  }
+
   if (loading) {
     return <PartLoadingUI />;
   };
@@ -29,7 +33,7 @@ export default function HomeMapSection({ mapLoc, markerInfo, setMarkerInfo }: Pr
         <MapMarker
           position={{ lat: marker.latitude, lng: marker.longitude }}
           clickable={true}
-          onClick={() => router.push(`${pathname}?sidebar=true&lat=${marker.latitude}&lng=${marker.longitude}&address=${encodeURIComponent(marker.address)}`)}
+          onClick={() => moveRouterHandler(marker.latitude, marker.longitude, marker.address)}
           key={marker._id}
         />
       ))}
