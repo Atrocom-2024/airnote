@@ -6,12 +6,13 @@ import { connectDB } from "@/utills/database";
 export default async function handler(req: CustomApiRequest, res: NextApiResponse) {
   switch (req.method) {
     case 'GET':
+      console.log('요청들어옴!!!');
+      
       const { sw_lat, sw_lng, ne_lat, ne_lng } = req.query;
       const swLatNum = parseFloat(sw_lat);
       const swLngNum = parseFloat(sw_lng);
       const neLatNum = parseFloat(ne_lat);
       const neLngNum = parseFloat(ne_lng);
-
       try {
         const db: Db = await connectDB();
         const markerInfo = await db.collection('reviews_data').find(

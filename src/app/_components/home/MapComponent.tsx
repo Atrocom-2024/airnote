@@ -8,7 +8,8 @@ export default function MapComponent({ setMarkerInfo }: PropsType) {
   const map = useMap();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const fetchReviews = useCallback(debounce(async (bounds: kakao.maps.LatLngBounds) => {
+  const fetchReviews = debounce(async () => {
+    const bounds = map.getBounds();
     const domain = process.env.NEXT_PUBLIC_DOMAIN;
     const params = {
       swLat: bounds.getSouthWest().getLat(),
@@ -28,22 +29,27 @@ export default function MapComponent({ setMarkerInfo }: PropsType) {
       console.error(err);
       return alert('알 수 없는 오류로 데이터 받아오기에 실패했습니다. 네트워크 상태를 확인해주세요.')
     }
-  }, 500), []);
+  }, 500);
 
+   // 처음 렌더 시에 실행되는 useEffect
   useEffect(() => {
-    if (!map) return;
+    fetchReviews();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
+  // 지도 위치를 이동시켰을 때 실행되는 useEffect
+  useEffect(() => {
     const handleBoundsChanged = () => {
-      const bounds = map.getBounds();
-      fetchReviews(bounds);
+      fetchReviews();
     };
 
-    kakao.maps.event.addListener(map, 'bounds_changed', handleBoundsChanged);
+    kakao.maps.event.addListener(map, 'idle', handleBoundsChanged);
 
     return () => {
-      kakao.maps.event.removeListener(map, 'bounds_changed', handleBoundsChanged);
+      kakao.maps.event.removeListener(map, 'idle', handleBoundsChanged);
     };
-  }, [fetchReviews, map]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [map]);
 
   return (
     <div></div>
