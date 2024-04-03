@@ -1,8 +1,10 @@
 'use client'
 
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { FaAngleLeft } from "react-icons/fa6";
 
 import SideBarReviewCard from "./SideBarReviewCard";
 import PartLoadingUI from "../PartLoadingUI";
@@ -31,8 +33,11 @@ export default function SideBar() {
     <article className="absolute top-[8vh] left-0 w-[400px] h-[84vh] bg-white border-r-[1.5px] border-purple shadow-lg z-[29]">
       {isLoading ? <PartLoadingUI /> : (
         <>
-          <section className="p-3">
-            <div className="text-xl text-purple font-bold">{address}</div>
+          <section className="flex items-center p-3">
+            <Link href="/">
+              <FaAngleLeft size="25" fill="#756AB6" />
+            </Link>
+            <div className="text-xl text-purple font-bold ml-2">{address}</div>
           </section>
           <section>
             {reviews && reviews.map((review) => (

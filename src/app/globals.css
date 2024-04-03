@@ -58,3 +58,14 @@ table {
 html, body {
     overflow-x: hidden;
 }
+
+#panel::-webkit-scrollbar {
+    width: 12px;
+}
+
+#panel::-webkit-scrollbar-thumb {
+    background-color: #9D95CA;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+    border-radius: 10px;
+}
