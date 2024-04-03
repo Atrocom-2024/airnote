@@ -8,7 +8,10 @@ export default function PanelSection({ topReviews, updateMapLocHandler }: PropsT
   const locNameList: LocationListTypes = ['서울', '경기', '충남', '충북', '전북', '전남', '강원', '경북', '경남', '제주'];
 
   return (
-    <section className="absolute top-[10vh] left-5 w-[400px] h-[75vh] bg-white border-[1.5px] border-purple shadow-lg z-[29] hidden sm:block">
+    <section
+      id="panel"
+      className="absolute top-[10vh] left-5 w-[400px] h-[75vh] bg-white border-[1.5px] border-purple shadow-lg z-[29] overflow-y-auto hidden sm:block"
+    >
       <article className="mb-3">
         <section className="flex items-center p-3">
           <div>

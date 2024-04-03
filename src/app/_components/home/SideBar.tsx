@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import SideBarReviewCard from "./SideBarReviewCard";
 import PartLoadingUI from "../PartLoadingUI";
 
+// TODO: 사이드바 닫기 구현
 export default function SideBar() {
   const searchParams = useSearchParams();
   const address = searchParams?.get('address');
