@@ -78,7 +78,7 @@ export default function ReviewForm() {
     }
     
     try {
-      const res = await fetch('/api/reviews/add', {
+      const res = await fetch('/api/reviews', {
         method: 'POST',
         headers: { 'Content-type': 'application/json' },
         body: JSON.stringify(data)
