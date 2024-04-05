@@ -6,6 +6,12 @@ import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
 import { parseDate } from "@/utills/modules";
 
 export default function SideBarReviewCard({ review }: PropsType) {
+  const reactionClickHandler = async (kind: 'like' | 'dislike') => {
+    const domain = process.env.NEXT_PUBLIC_DOMAIN;
+    const uri = `${domain}/api/reviews/${review._id}/reactions?kind=${kind}`;
+    const res = await fetch(uri, { method: 'POST' });
+  }
+
   return (
   <article className="border-b-[1.5px] border-purple p-3">
     <section className="flex justify-between items-center">
@@ -21,15 +27,15 @@ export default function SideBarReviewCard({ review }: PropsType) {
     <section className="px-2 my-5 text-sm">{ review.content }</section>
     <section className="flex justify-end items-center mr-5 text-gray">
       <div className="flex items-center mr-3">
-        <div>
+        <button onClick={() => reactionClickHandler('like')}>
           <AiOutlineLike className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
-        </div>
+        </button>
         <div className="text-xs ml-1 sm:text-sm">{ review.likes }</div>
       </div>
       <div className="flex items-center">
-        <div>
+        <button onClick={() => reactionClickHandler('dislike')}>
           <AiOutlineDislike className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
-        </div>
+        </button>
         <div className="text-xs ml-1 sm:text-sm">{ review.dislikes }</div>
       </div>
     </section>

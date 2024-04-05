@@ -11,17 +11,17 @@ export default function PanelReviewCard({ topReview }: PropsType) {
       </div>
       <div className="px-2 my-5 text-sm">{ topReview.content }</div>
       <div className="flex justify-end items-center mr-5 text-gray">
-        <div className="flex items-center mr-2">
+        <div className="flex items-center mr-3">
           <div>
             <AiOutlineLike className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
           </div>
-          <div className="text-xs sm:text-sm">{ topReview.likes }</div>
+          <div className="text-xs ml-1 sm:text-sm">{ topReview.likes }</div>
         </div>
         <div className="flex items-center">
           <div>
             <AiOutlineDislike className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
           </div>
-          <div className="text-xs sm:text-sm">{ topReview.dislikes }</div>
+          <div className="text-xs ml-1 sm:text-sm">{ topReview.dislikes }</div>
         </div>
       </div>
     </article>

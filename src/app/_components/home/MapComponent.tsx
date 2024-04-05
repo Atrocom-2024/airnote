@@ -1,7 +1,7 @@
 'use client'
 
 import { debounce } from "lodash";
-import { Dispatch, SetStateAction, useCallback, useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { useMap } from "react-kakao-maps-sdk";
 
 export default function MapComponent({ setMarkerInfo }: PropsType) {
