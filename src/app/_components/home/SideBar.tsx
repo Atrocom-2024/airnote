@@ -10,7 +10,6 @@ import SideBarReviewCard from "./SideBarReviewCard";
 import PartLoadingUI from "../PartLoadingUI";
 
 // TODO: 좋아요/싫어요 기능 구현
-// TODO: reviews add api -> reviews api 통합
 export default function SideBar() {
   const searchParams = useSearchParams();
   const address = searchParams?.get('address');
