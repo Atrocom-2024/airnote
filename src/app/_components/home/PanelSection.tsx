@@ -10,7 +10,7 @@ export default function PanelSection({ topReviews, updateMapLocHandler }: PropsT
   return (
     <section
       id="panel"
-      className="absolute top-[10vh] left-5 w-[400px] h-[75vh] bg-white border-[1.5px] border-purple shadow-lg z-[29] overflow-y-auto hidden sm:block"
+      className="absolute top-[10vh] left-5 w-[400px] h-[75vh] bg-white border-[1.5px] border-purple shadow-lg overflow-y-auto z-[29] hidden sm:block"
     >
       <article className="mb-3">
         <section className="flex items-center p-3">
