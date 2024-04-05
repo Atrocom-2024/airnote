@@ -55,7 +55,7 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
           create_at: new Date().toLocaleString('ko-KR'),
           auth_file: body.encoded_auth_file,
         }
-        console.log(insert_data);
+
         const db: Db = await connectDB();
         const userInfo = await db.collection('reviews_data').insertOne(insert_data);
         return res.status(201).json(insert_data);
