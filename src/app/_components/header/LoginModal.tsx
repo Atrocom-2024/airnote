@@ -28,6 +28,7 @@ export default function LoginModal({ closeModalHandler, loginHandler }: PropsTyp
             width={500}
             height={0}
             alt="로그인 버튼"
+            priority={true}
           />
         </button>
       </article>
