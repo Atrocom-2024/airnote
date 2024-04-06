@@ -69,17 +69,17 @@ export default function NameContainer({ name }: { name: string; }) {
       />
       {isInputChange ? (
         <button
-          className="border-[1.5px] border-purple rounded-md px-3 py-1"
+          className="border-[1.5px] border-default rounded-md px-3 py-1"
           onClick={onInputHandler}
         >닉네임 변경</button>
       ) : (
         <>
           <button
-            className="border-[1.5px] border-purple rounded-md px-3 py-1 mr-1"
+            className="border-[1.5px] border-default rounded-md px-3 py-1 mr-1"
             onClick={nameUpdateHandler}
           >확인</button>
           <button
-            className="border-[1.5px] border-purple rounded-md px-3 py-1"
+            className="border-[1.5px] border-default rounded-md px-3 py-1"
             onClick={offInputHandler}
           >취소</button>
         </>

@@ -13,14 +13,14 @@ export default function SideBarReviewCard({ review }: PropsType) {
   }
 
   return (
-  <article className="border-b-[1.5px] border-purple p-3">
+  <article className="border-b-[1.5px] border-default p-3">
     <section className="flex justify-between items-center">
       <div className="flex items-center">
         <div>
           <CgProfile size="30" color="#AFAFAF" />
         </div>
         <div className="text-gray ml-1">{review.author_name}</div>
-        <div className="text-purple font-bold ml-2">{review.address_detail}</div>
+        <div className="text-default font-bold ml-2">{review.address_detail}</div>
       </div>
       <div className="text-gray text-sm">{ parseDate(review.create_at) }</div>
     </section>

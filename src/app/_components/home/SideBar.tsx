@@ -39,9 +39,9 @@ export default function SideBar() {
         <>
           <section className="flex items-center p-3">
             <Link href="/">
-              <FaAngleLeft size="25" fill="#756AB6" />
+              <FaAngleLeft size="25" fill="#4A68F5" />
             </Link>
-            <div className="text-xl text-purple font-bold ml-2">{address}</div>
+            <div className="text-xl text-default font-bold ml-2">{address}</div>
           </section>
           <section>
             {reviews && reviews.map((review) => (
