@@ -8,8 +8,8 @@ import Providers from "./_components/Providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "KIMMULJU",
-  description: "Welcome to KIMMULJU"
+  title: "공기수첩",
+  description: "공기수첩에 오신 것을 환영합니다."
 };
 
 export const viewport: Viewport = {
