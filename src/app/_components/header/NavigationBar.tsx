@@ -31,17 +31,17 @@ export default function NavigationBar() {
         onClick={NavigationBarHandler}
       >
         <div
-          className={`absolute transition-all w-[25px] h-[3px] bg-purple rounded-md sm:w-[30px] sm:h-[4px] ${
+          className={`absolute transition-all w-[25px] h-[3px] bg-default rounded-md sm:w-[30px] sm:h-[4px] ${
             isNavigationBar ? 'top-1/2 -translate-y-1/2 rotate-45 bg-white' : 'top-2'
           }`}
         ></div>
         <div
-          className={`absolute transition-all w-[25px] h-[3px] bg-purple rounded-md sm:w-[30px] sm:h-[4px] ${
+          className={`absolute transition-all w-[25px] h-[3px] bg-default rounded-md sm:w-[30px] sm:h-[4px] ${
             isNavigationBar ? 'top-1/2 -translate-y-1/2 -rotate-45 bg-white' : 'top-4'
           }`}
         ></div>
       </div>
-      <div className={`absolute top-0 right-0 duration-300 w-full h-[100vh] bg-purple z-30 ${isNavigationBar ? "translate-y-0" : "-translate-y-[100%]"}`}>
+      <div className={`absolute top-0 right-0 duration-300 w-full h-[100vh] bg-default z-30 ${isNavigationBar ? "translate-y-0" : "-translate-y-[100%]"}`}>
         <div className="px-20 py-24 flex flex-col items-center text-white sm:text-xl">
           <Link
             className="mb-5"

@@ -19,7 +19,7 @@ export default async function My() {
           <Title>내 정보</Title>
           <article className="w-full flex justify-center items-center bg-white shadow-lg rounded-md py-10 mt-8 md:justify-start md:px-24">
             <section>
-              <CgProfile size="60" color="#756AB6" />
+              <CgProfile size="60" color="#4A68F5" />
             </section>
             <section className="ml-5 text-dark-gray text-sm sm:text-base">
               <div className="mb-3">{myInfo.user_info.email}</div>

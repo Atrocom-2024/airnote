@@ -6,8 +6,8 @@ export default function MyReviewCard({ myReview }: PropsType) {
   return (
     <article className="w-full bg-white shadow-lg rounded-md p-5 mt-8">
       <section className="flex items-center sm:items-end">
-        <div className="text-sm text-purple font-bold sm:text-xl">{myReview.address}</div>
-        <div className="text-xs text-purple ml-3 sm:text-sm">{myReview.address_detail}</div>
+        <div className="text-sm text-default font-bold sm:text-xl">{myReview.address}</div>
+        <div className="text-xs text-default ml-3 sm:text-sm">{myReview.address_detail}</div>
       </section>
       <section className="mt-5 text-sm sm:text-base">{ myReview.content }</section>
       <section className="flex justify-end items-center text-gray font-bold mt-5">

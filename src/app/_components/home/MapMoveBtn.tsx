@@ -20,7 +20,7 @@ export default function MapMoveBtn({ locName, updateMapLocHandler }: PropsType) 
 
   return (
     <button
-      className="bg-purple text-white text-sm px-3 py-1 rounded-full"
+      className="bg-default text-white text-sm px-3 py-1 rounded-full"
       onClick={locBtnClickHandler}
     >{ locName }</button>
   );

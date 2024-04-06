@@ -9,6 +9,7 @@ import { FaAngleLeft } from "react-icons/fa6";
 import SideBarReviewCard from "./SideBarReviewCard";
 import PartLoadingUI from "../PartLoadingUI";
 
+// TODO: 좋아요/싫어요 기능 구현
 export default function SideBar() {
   const searchParams = useSearchParams();
   const address = searchParams?.get('address');
@@ -30,14 +31,17 @@ export default function SideBar() {
   }, [error]);
 
   return (
-    <article className="absolute top-[8vh] left-0 w-[400px] h-[84vh] bg-white border-r-[1.5px] border-purple shadow-lg z-[29]">
+    <aside
+      id="sidebar"
+      className="absolute top-[8vh] left-0 w-[400px] h-[84vh] bg-white border-r-[1.5px] border-purple shadow-lg z-[29] overflow-y-auto"
+    >
       {isLoading ? <PartLoadingUI /> : (
         <>
           <section className="flex items-center p-3">
             <Link href="/">
-              <FaAngleLeft size="25" fill="#756AB6" />
+              <FaAngleLeft size="25" fill="#4A68F5" />
             </Link>
-            <div className="text-xl text-purple font-bold ml-2">{address}</div>
+            <div className="text-xl text-default font-bold ml-2">{address}</div>
           </section>
           <section>
             {reviews && reviews.map((review) => (
@@ -46,7 +50,7 @@ export default function SideBar() {
           </section>
         </>
       )}
-    </article>
+    </aside>
   );
 }
 

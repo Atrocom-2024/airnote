@@ -1,14 +1,14 @@
 'use client'
 
 import { debounce } from "lodash";
-import { Dispatch, SetStateAction, useCallback, useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { useMap } from "react-kakao-maps-sdk";
 
 export default function MapComponent({ setMarkerInfo }: PropsType) {
   const map = useMap();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const fetchReviews = debounce(async () => {
+  const fetchMarkers = debounce(async () => {
     const bounds = map.getBounds();
     const domain = process.env.NEXT_PUBLIC_DOMAIN;
     const params = {
@@ -18,7 +18,7 @@ export default function MapComponent({ setMarkerInfo }: PropsType) {
       neLng: bounds.getNorthEast().getLng()
     };
     try {
-      const res = await fetch(`${domain}/api/markers?sw_lat=${params.swLat}&sw_lng=${params.swLng}&ne_lat=${params.neLat}&ne_lng=${params.neLng}`);
+      const res = await fetch(`${domain}/api/reviews/markers?sw_lat=${params.swLat}&sw_lng=${params.swLng}&ne_lat=${params.neLat}&ne_lng=${params.neLng}`);
       const json = await res.json();
       if (res.ok) {
         setMarkerInfo(json);
@@ -33,14 +33,14 @@ export default function MapComponent({ setMarkerInfo }: PropsType) {
 
    // 처음 렌더 시에 실행되는 useEffect
   useEffect(() => {
-    fetchReviews();
+    fetchMarkers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // 지도 위치를 이동시켰을 때 실행되는 useEffect
   useEffect(() => {
     const handleBoundsChanged = () => {
-      fetchReviews();
+      fetchMarkers();
     };
 
     kakao.maps.event.addListener(map, 'idle', handleBoundsChanged);

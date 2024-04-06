@@ -7,7 +7,7 @@ export default function ReviewAddBtn() {
   
   return (
     <button
-      className="bg-purple text-white px-5 py-2 rounded-md"
+      className="bg-default text-white px-5 py-2 rounded-md"
       type="button"
       onClick={reviewsBtnHandler}
     >후기등록</button>

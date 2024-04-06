@@ -15,13 +15,13 @@ const config: Config = {
       },
     },
     colors: {
+      "default": "#4A68F5",
+      "light-default": "#92A4F9",
       "black": "#141414",
       "white": "#FFFFFF",
       "dark-white": "#FAFAFA",
       "gray": "#AFAFAF",
       "dark-gray": "#6A6A6A",
-      "purple": "#756AB6",
-      "light-purple": "#9D95CA",
       "red": "#FF4242"
     }
   },

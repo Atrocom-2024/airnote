@@ -13,21 +13,21 @@ export default async function Header() {
   const session = await getServerSession(authOptions);
 
   return (
-    <header className="w-[100vw] h-[8vh] justify-between flex items-center border-b-[1.5px] border-purple px-5 sm:px-10">
+    <header className="w-[100vw] h-[8vh] justify-between flex items-center border-b-[1.5px] border-default px-5 sm:px-10">
       <section className="flex items-center">
         <article className="mr-5 sm:mr-10">
-          <div className="w-[40px] h-[40px] bg-purple sm:w-[60px] sm:h-[60px]"></div>
+          <div className="w-[40px] h-[40px] bg-default sm:w-[60px] sm:h-[60px]"></div>
         </article>
         <article className="relative">
-          <input className="relative w-[170px] h-[5vh] border-[1.5px] border-purple rounded-full outline-none sm:w-[350px] sm:h-[4vh]" />
-          <IoSearch className="absolute top-1/2 right-3 -translate-y-1/2" size="30" color="#756AB6" />
+          <input className="relative w-[170px] h-[5vh] border-[1.5px] border-default rounded-full outline-none sm:w-[350px] sm:h-[4vh]" />
+          <IoSearch className="absolute top-1/2 right-3 -translate-y-1/2" size="30" color="#4A68F5" />
         </article>
       </section>
-      <section className="flex text-sm text-purple">
+      <section className="flex text-sm text-default">
         <article className="hidden space-x-10 items-center mr-10 lg:flex">
           {session ? (
             <Link
-              className="bg-purple text-white px-5 py-2 rounded-md"
+              className="bg-default text-white px-5 py-2 rounded-md"
               href="/reviews/add"
             >후기등록</Link>
           ) : (
@@ -40,7 +40,7 @@ export default async function Header() {
         <article className="flex items-center">
           {session ? (
             <Link href="/my">
-              <CgProfile size="40" color="#756AB6" />
+              <CgProfile size="40" color="#4A68F5" />
             </Link>
           ) : (
             <LoginBtn />

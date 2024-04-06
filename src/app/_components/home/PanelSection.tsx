@@ -10,14 +10,14 @@ export default function PanelSection({ topReviews, updateMapLocHandler }: PropsT
   return (
     <section
       id="panel"
-      className="absolute top-[10vh] left-5 w-[400px] h-[75vh] bg-white border-[1.5px] border-purple shadow-lg z-[29] overflow-y-auto hidden sm:block"
+      className="absolute top-[10vh] left-5 w-[400px] h-[75vh] bg-white border-[1.5px] border-default shadow-lg overflow-y-auto z-[29] hidden sm:block"
     >
       <article className="mb-3">
         <section className="flex items-center p-3">
           <div>
-            <FaArrowTrendUp size="25" color="#756AB6" />
+            <FaArrowTrendUp size="25" color="#4A68F5" />
           </div>
-          <div className="text-xl text-purple font-bold ml-3">실시간 인기 후기</div>
+          <div className="text-xl text-default font-bold ml-3">실시간 인기 후기</div>
         </section>
         <section>
           {topReviews.map((topReview) => (
@@ -28,9 +28,9 @@ export default function PanelSection({ topReviews, updateMapLocHandler }: PropsT
       <article>
         <section className="flex items-center p-3">
           <div>
-            <LuArrowUpRightSquare size="25" color="#756AB6" />
+            <LuArrowUpRightSquare size="25" color="#4A68F5" />
           </div>
-          <div className="text-xl text-purple font-bold ml-3">지도 위치 이동하기</div>
+          <div className="text-xl text-default font-bold ml-3">지도 위치 이동하기</div>
         </section>
         <section className="grid grid-cols-5 gap-4 px-5 py-3">
           {locNameList.map((locName) => (
