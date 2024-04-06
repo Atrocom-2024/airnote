@@ -28,7 +28,12 @@ export const authOptions: NextAuthOptions = {
       if (!userInfo) {
         const insertUser = await db.collection('user_data').insertOne({
           email: user.email,
-          name: user.name
+          name: user.name,
+          review_likes: [],
+          review_dislikes: [],
+          community_likes: [],
+          community_dislikes: [],
+          create_at: new Date().toLocaleString('ko-KR')
         });
       }
       return true;
