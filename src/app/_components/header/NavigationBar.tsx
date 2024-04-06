@@ -53,7 +53,7 @@ export default function NavigationBar() {
               className="mb-5"
               href="/reviews/add"
               onClick={linkClickHandler}
-            >후기등록</Link>
+            >리뷰등록</Link>
           ) : (
             <button className="mb-5" type="button" onClick={reviewsBtnHandler}>후기등록</button>
           )}

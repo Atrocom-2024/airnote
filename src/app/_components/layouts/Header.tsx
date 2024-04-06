@@ -29,7 +29,7 @@ export default async function Header() {
             <Link
               className="bg-default text-white px-5 py-2 rounded-md"
               href="/reviews/add"
-            >후기등록</Link>
+            >리뷰등록</Link>
           ) : (
             <ReviewAddBtn />
           )}

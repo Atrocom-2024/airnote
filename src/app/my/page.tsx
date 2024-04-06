@@ -28,7 +28,7 @@ export default async function My() {
           </article>
         </section>
         <section>
-          <Title>내가 쓴 후기</Title>
+          <Title>내가 쓴 공간 리뷰</Title>
           {myInfo.reviews.map((myReview) => (
             <MyReviewCard myReview={myReview} key={myReview._id} />
           ))}

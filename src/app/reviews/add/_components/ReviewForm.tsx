@@ -61,11 +61,11 @@ export default function ReviewForm() {
   const formSubmitHandler = throttle(async (data: FormInputs) => {
     // 폼 작성요소 검사
     if (!data.address) {
-      return alert('후기를 작성할 주소를 입력해주세요.');
+      return alert('리뷰를 작성할 주소를 입력해주세요.');
     } else if (!data.address_detail) {
-      return alert('후기를 작성할 상세주소를 입력해주세요.');
+      return alert('리뷰를 작성할 상세주소를 입력해주세요.');
     } else if (!data.content) {
-      return alert('후기 내용을 입력해주세요.');
+      return alert('리뷰 내용을 입력해주세요.');
     } else if (!data.auth_file) {
       return alert('인증서류를 첨부해주세요.');
     }
@@ -86,11 +86,11 @@ export default function ReviewForm() {
       if (res.ok) {
         return router.push('/my');
       } else {
-        return alert('후기 등록에 실패했습니다.');
+        return alert('리뷰 등록에 실패했습니다.');
       }
     } catch (err) {
       console.error(err);
-      return alert('후기 등록에 실패했습니다.');
+      return alert('리뷰 등록에 실패했습니다.');
     }
   }, 2000);
 
@@ -148,7 +148,7 @@ export default function ReviewForm() {
             <li>해당 서류는 작성자 분이 실제로 건물을 사용했었던 인증 용도로만 사용됩니다.</li>
             <li>임대차 계약서 같이 인증 가능한 서류이면 모두 가능합니다.</li>
             <li>이 서류는 절대 공개되지 않고 건물주와 문제가 발생했을 때에만 사용됩니다.</li>
-            <li>후기의 허위사실에 대한 불이익은 모두 후기 작성자 책임입니다.</li>
+            <li>리뷰의 허위사실에 대한 불이익은 모두 후기 작성자 책임입니다.</li>
           </ul>
           <div className="mt-3">
             <ReviewFormInput
@@ -162,7 +162,7 @@ export default function ReviewForm() {
           </div>
         </section>
       </article>
-      <button className="bg-default text-white rounded-md py-3 mt-5">후기등록</button>
+      <button className="bg-default text-white rounded-md py-3 mt-5">리뷰등록</button>
     </form>
   );
 }
