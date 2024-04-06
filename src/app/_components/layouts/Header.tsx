@@ -8,6 +8,7 @@ import NavigationBar from "../header/NavigationBar";
 import LoginBtn from "../header/LoginBtn";
 import LogoutBtn from "../header/LogoutBtn";
 import ReviewAddBtn from "../header/ReviewAddBtn";
+import MoveLink from "../header/MoveLink";
 
 export default async function Header() {
   const session = await getServerSession(authOptions);
@@ -25,16 +26,21 @@ export default async function Header() {
       </section>
       <section className="flex text-sm text-default">
         <article className="hidden space-x-10 items-center mr-10 lg:flex">
+          <MoveLink href="/">홈</MoveLink>
           {session ? (
-            <Link
-              className="bg-default text-white px-5 py-2 rounded-md"
+            <MoveLink
+              // className="bg-default text-white px-5 py-2 rounded-md"
               href="/reviews/add"
-            >리뷰등록</Link>
+            >리뷰등록</MoveLink>
+            // <Link
+            //   // className="bg-default text-white px-5 py-2 rounded-md"
+            //   href="/reviews/add"
+            // >리뷰등록</Link>
           ) : (
             <ReviewAddBtn />
           )}
-          <Link href="/howuse">이용방법</Link>
-          <Link href="https://open.kakao.com/o/sAgQYPhg">고객지원</Link>
+          <MoveLink href="/howuse">이용방법</MoveLink>
+          <MoveLink href="https://open.kakao.com/o/sAgQYPhg">고객지원</MoveLink>
           {session && <LogoutBtn />}
         </article>
         <article className="flex items-center">
