@@ -14,11 +14,16 @@ export default function LoginModal({ closeModalHandler, loginHandler }: PropsTyp
             <IoClose size="40" color="#4A68F5" />
           </div>
         </section>
-        <section className="w-[100px] h-[50px] bg-default mx-auto mt-7 md:w-[200px] md:h-[100px] md:mt-10">
-          <div>로고</div>
-        </section>
+        <Image
+          className="w-[60px] mx-auto mt-5 md:w-[100px] md:mt-10"
+          src="/logo.svg"
+          width={100}
+          height={0}
+          alt="로고"
+          priority={true}
+        />
         <button
-          className="w-[170px] mx-auto mt-7 block md:w-[200px] md:mt-10"
+          className="w-[170px] mx-auto mt-7 block md:w-[200px] md:mt-14"
           type="button"
           onClick={loginHandler}
         >

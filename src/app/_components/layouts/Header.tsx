@@ -1,9 +1,10 @@
 import Link from "next/link";
+import Image from "next/image";
 import { getServerSession } from "next-auth";
-
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { IoSearch } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
+
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import NavigationBar from "../header/NavigationBar";
 import LoginBtn from "../header/LoginBtn";
 import LogoutBtn from "../header/LogoutBtn";
@@ -17,7 +18,7 @@ export default async function Header() {
     <header className="w-[100vw] h-[8vh] justify-between flex items-center border-b-[1.5px] border-default px-5 sm:px-10">
       <section className="flex items-center">
         <article className="mr-5 sm:mr-10">
-          <div className="w-[40px] h-[40px] bg-default sm:w-[60px] sm:h-[60px]"></div>
+          <Image src="/logo.svg" width={60} height={0} alt="로고" priority={true} />
         </article>
         <article className="relative">
           <input className="relative w-[170px] h-[5vh] border-[1.5px] border-default rounded-full outline-none sm:w-[350px] sm:h-[4vh]" />
@@ -29,13 +30,8 @@ export default async function Header() {
           <MoveLink href="/">홈</MoveLink>
           {session ? (
             <MoveLink
-              // className="bg-default text-white px-5 py-2 rounded-md"
               href="/reviews/add"
             >리뷰등록</MoveLink>
-            // <Link
-            //   // className="bg-default text-white px-5 py-2 rounded-md"
-            //   href="/reviews/add"
-            // >리뷰등록</Link>
           ) : (
             <ReviewAddBtn />
           )}

@@ -58,14 +58,3 @@ interface CustomApiRequest extends NextApiRequest {
     kind: 'like' | 'dislike';
   }
 }
-
-// interface CustomUserData extends WithId<Document> {
-//   _id: ObjectId;
-//   email: string;
-//   name: string;
-//   review_likes: string[];
-//   review_dislikes: string[];
-//   community_dislikes: string[];
-//   community_likes: string[];
-//   create_at: string;
-// }
