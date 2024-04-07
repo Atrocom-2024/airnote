@@ -9,7 +9,7 @@ export default function Footer() {
         <article>© 2024 공기수첩 Powered by Next.js, Vercel App</article>
       </section>
       <section>
-        <Image src="/logo.svg" width={60} height={0} alt="로고" priority={true} />
+        <Image src="/logo.svg" width={50} height={50} alt="로고" priority={true} />
       </section>
     </footer>
   );

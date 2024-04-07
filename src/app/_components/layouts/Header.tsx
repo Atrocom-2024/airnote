@@ -18,7 +18,9 @@ export default async function Header() {
     <header className="w-[100vw] h-[8vh] justify-between flex items-center border-b-[1.5px] border-default px-5 sm:px-10">
       <section className="flex items-center">
         <article className="mr-5 sm:mr-10">
-          <Image src="/logo.svg" width={60} height={0} alt="로고" priority={true} />
+          <Link href="/">
+            <Image src="/logo.svg" width={50} height={50} alt="로고" priority={true} />
+          </Link>
         </article>
         <article className="relative">
           <input className="relative w-[170px] h-[5vh] border-[1.5px] border-default rounded-full outline-none sm:w-[350px] sm:h-[4vh]" />

@@ -136,19 +136,19 @@ export default function ReviewForm() {
         <section className="mt-5">
           <textarea
             className="w-full h-[300px] border-[1.5px] border-gray rounded-md outline-none p-3 resize-none"
-            placeholder="건물주에 대해 거짓없이 자유롭게 작성해주세요."
+            placeholder={`공간에 대해 기록을 남겨주세요.(건물주, 추억, 등 공익을 위한 것 혹은 추억을 위한 것을 편히 써주세요)\n\n수정이 어려우니 신중히 작성해주세요.`}
             {...register('content')}
           />
         </section>
       </article>
       <article>
-        <SubTitle>인증서류</SubTitle>
+        <SubTitle>인증서류 & 유의사항</SubTitle>
         <section className="mt-3">
           <ul className="list-disc ml-5">
-            <li>해당 서류는 작성자 분이 실제로 건물을 사용했었던 인증 용도로만 사용됩니다.</li>
-            <li>임대차 계약서 같이 인증 가능한 서류이면 모두 가능합니다.</li>
-            <li>이 서류는 절대 공개되지 않고 건물주와 문제가 발생했을 때에만 사용됩니다.</li>
-            <li>리뷰의 허위사실에 대한 불이익은 모두 후기 작성자 책임입니다.</li>
+            <li>세입자는 임대차 계약서 사업자 등록증 중 하나를 인증할 수 있습니다.</li>
+            <li>서류는 공개되지 않습니다.</li>
+            <li>공익의 목적으로 리뷰를 써주세요.</li>
+            <li>허위 및 조작 리뷰는 삭제 될 수 있습니다.</li>
           </ul>
           <div className="mt-3">
             <ReviewFormInput

@@ -27,7 +27,7 @@ export default function SideBarReviewCard({ review }: PropsType) {
         <div>
           <CgProfile size="30" color="#AFAFAF" />
         </div>
-        <div className="text-gray ml-1">{review.author_name}</div>
+        <div className="text-gray text-sm ml-1">{review.author_name}</div>
         <div className="text-default font-bold ml-2">{review.address_detail}</div>
       </div>
       <div className="text-gray text-sm">{ parseDate(review.create_at) }</div>
