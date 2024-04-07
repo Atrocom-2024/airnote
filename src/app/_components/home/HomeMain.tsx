@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
-import { getLocation } from "@/utills/modules";
+import { getLocation } from "@/utils/modules";
 import HomeMapSection from "./HomeMapSection";
 import PanelSection from "./PanelSection";
 import SideBar from "./SideBar";

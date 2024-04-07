@@ -1,6 +1,6 @@
 import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
 
-import { parseDate } from "@/utills/modules";
+import { parseDate } from "@/utils/modules";
 
 export default function MyReviewCard({ myReview }: PropsType) {
   return (

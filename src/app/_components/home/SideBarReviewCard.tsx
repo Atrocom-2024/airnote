@@ -3,13 +3,21 @@
 import { CgProfile } from "react-icons/cg";
 import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
 
-import { parseDate } from "@/utills/modules";
+import { parseDate } from "@/utils/modules";
 
 export default function SideBarReviewCard({ review }: PropsType) {
+  // TODO: 낙관적 업데이트
   const reactionClickHandler = async (kind: 'like' | 'dislike') => {
     const domain = process.env.NEXT_PUBLIC_DOMAIN;
     const uri = `${domain}/api/reviews/${review._id}/reactions?kind=${kind}`;
-    const res = await fetch(uri, { method: 'POST' });
+
+    try {
+      const res = await fetch(uri, { method: 'POST' });
+
+    } catch (err) {
+      // TODO: 낙관적 업데이트 취소
+      return alert('좋아요 실패');
+    }
   }
 
   return (
