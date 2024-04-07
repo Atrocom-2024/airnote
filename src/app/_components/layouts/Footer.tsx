@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Footer() {
   return (
     <footer className="w-[100vw] h-[8vh] bg-light-default flex justify-evenly items-center">
@@ -7,7 +9,7 @@ export default function Footer() {
         <article>© 2024 공기수첩 Powered by Next.js, Vercel App</article>
       </section>
       <section>
-        <div className="w-[50px] h-[50px] bg-default">로고</div>
+        <Image src="/logo.svg" width={60} height={0} alt="로고" priority={true} />
       </section>
     </footer>
   );

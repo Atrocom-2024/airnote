@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { CgProfile } from "react-icons/cg";
 
-import { encrypt } from "@/utills/modules";
+import { encrypt } from "@/utils/modules";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import Layout from "../_components/layouts/Layout";
 import Title from "../_components/Title";

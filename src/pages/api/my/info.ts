@@ -4,8 +4,8 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getToken } from "next-auth/jwt";
 import { Db } from "mongodb";
 
-import { connectDB } from "@/utills/database";
-import { decrypt } from "@/utills/modules";
+import { connectDB } from "@/utils/database";
+import { decrypt } from "@/utils/modules";
 
 const secret = process.env.NEXT_AUTH_SECRET;
 

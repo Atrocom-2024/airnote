@@ -3,7 +3,7 @@ import NextAuth from "next-auth/next";
 import Kakao from "next-auth/providers/kakao";
 import { Db } from "mongodb";
 
-import { connectDB } from "@/utills/database";
+import { connectDB } from "@/utils/database";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -28,7 +28,12 @@ export const authOptions: NextAuthOptions = {
       if (!userInfo) {
         const insertUser = await db.collection('user_data').insertOne({
           email: user.email,
-          name: user.name
+          name: user.name,
+          review_likes: [],
+          review_dislikes: [],
+          community_likes: [],
+          community_dislikes: [],
+          create_at: new Date().toLocaleString('ko-KR')
         });
       }
       return true;
