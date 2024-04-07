@@ -21,7 +21,7 @@ export default function PanelSection({ topReviews, updateMapLocHandler }: PropsT
         </section>
         <section>
           {topReviews.map((topReview) => (
-            <PanelReviewCard topReview={topReview} key={topReview._id} />
+            <PanelReviewCard topReview={topReview} updateMapLocHandler={updateMapLocHandler} key={topReview._id} />
           ))}
         </section>
       </article>
