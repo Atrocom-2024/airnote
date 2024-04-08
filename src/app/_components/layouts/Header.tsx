@@ -10,6 +10,7 @@ import LoginBtn from "../header/LoginBtn";
 import LogoutBtn from "../header/LogoutBtn";
 import ReviewAddBtn from "../header/ReviewAddBtn";
 import MoveLink from "../header/MoveLink";
+import SearchBar from "../header/SearchBar";
 
 export default async function Header() {
   const session = await getServerSession(authOptions);
@@ -22,10 +23,7 @@ export default async function Header() {
             <Image src="/logo.svg" width={50} height={50} alt="로고" priority={true} />
           </Link>
         </article>
-        <article className="relative">
-          <input className="relative w-[170px] h-[5vh] border-[1.5px] border-default rounded-full outline-none sm:w-[350px] sm:h-[4vh]" />
-          <IoSearch className="absolute top-1/2 right-3 -translate-y-1/2" size="30" color="#4A68F5" />
-        </article>
+        <SearchBar />
       </section>
       <section className="flex text-sm text-default">
         <article className="hidden space-x-10 items-center mr-10 lg:flex">
