@@ -1,7 +1,8 @@
 'use client'
 
+import { debounce } from "lodash";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
 
 export default function SearchBar() {
@@ -10,8 +11,22 @@ export default function SearchBar() {
 
   const searchChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-    router.push(`/?q=${e.target.value}`);
   }
+
+  const searchFetching = debounce(async (keyword: string) => {
+    const domain = process.env.NEXT_PUBLIC_DOMAIN;
+    const res = await fetch(`${domain}/api/search?q=${keyword}`);
+  }, 500);
+
+  // TODO: 디바운스 적용
+  useEffect(() => {
+    if (search) {
+      router.push(`/?q=${search}`);
+      searchFetching(search);
+    } else {
+      router.push('/');
+    }
+  }, [router, search, searchFetching]);
 
   return (
     <article className="relative">

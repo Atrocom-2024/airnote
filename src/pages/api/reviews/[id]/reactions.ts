@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getToken } from "next-auth/jwt";
-import { Db, ObjectId, WithId } from "mongodb";
+import { Db, ObjectId } from "mongodb";
 
 import { connectDB } from "@/utils/database";
 
