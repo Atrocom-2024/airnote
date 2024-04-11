@@ -5,41 +5,55 @@ import { useCallback, useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
 
 import { searchResultFetching } from "@/app/_lib/api";
+import { debounce } from "lodash";
 
 // TODO: 검색 결과 클릭 후 지도 위치 이동 -> 지도 위치 전역 상태 관리
 export default function SearchBar() {
   const router = useRouter();
   const [ searchResults, setSearchResults ] = useState<SearchResult[]>([]);
-  const [ search, setSearch ] = useState('');
+  const [ query, setQuery ] = useState<string>('');
+  const [ debouncedQuery, setDebouncedQuery ] = useState<string>(query);
 
-  const searchChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
+  const qeuryChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
   }
 
+  const debouncedQueryHandler = debounce((keyword: string) => {
+    setDebouncedQuery(keyword)
+  }, 1000);
+
   const searchResultHandler = useCallback(async (keyword: string) => {
-    const json = await searchResultFetching(keyword);
-    setSearchResults(json);
+    const searchItems = await searchResultFetching(keyword);
+    setSearchResults(searchItems);
   }, []);
 
   const searchResultClickHandler = (result: SearchResult) => {
-    setSearch('');
+    setQuery('');
+    setDebouncedQuery('');
     router.push(`/?sidebar=true&lat=${result.latitude}&lng=${result.longitude}&address=${encodeURIComponent(result.address)}`)
   }
 
   useEffect(() => {
-    if (search.length > 0) {
-      searchResultHandler(search);
+    debouncedQueryHandler(query);
+    return () => {
+      debouncedQueryHandler.cancel();
+    }
+  }, [query, debouncedQueryHandler]);
+
+  useEffect(() => {
+    if (debouncedQuery.length > 0) {
+      searchResultHandler(debouncedQuery);
     } else {
       setSearchResults([]);
     }
-  }, [search, searchResultHandler]);
+  }, [debouncedQuery, searchResultHandler]);
 
   return (
     <article className={`relative border-[1.5px] border-default rounded-full `}>
       <input
         className="w-[170px] h-[6vh] px-5 rounded-full outline-none sm:w-[350px] sm:h-[4vh]"
-        value={search}
-        onChange={searchChangeHandler}
+        value={query}
+        onChange={qeuryChangeHandler}
         placeholder="주소를 입력해주세요."
       />
       <IoSearch className="absolute top-1/2 right-3 -translate-y-1/2" size="30" color="#4A68F5" />
