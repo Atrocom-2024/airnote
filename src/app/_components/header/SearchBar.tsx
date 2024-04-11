@@ -1,27 +1,30 @@
 'use client'
 
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
 
 import { searchResultFetching } from "@/app/_lib/api";
-import { debounce } from "lodash";
 
+// TODO: 검색 결과 클릭 후 지도 위치 이동 -> 지도 위치 전역 상태 관리
 export default function SearchBar() {
+  const router = useRouter();
   const [ searchResults, setSearchResults ] = useState<SearchResult[]>([]);
   const [ search, setSearch ] = useState('');
 
-  const searchChangeHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const searchChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-    console.log(e.target.value);
   }
 
   const searchResultHandler = useCallback(async (keyword: string) => {
-    const domain = process.env.NEXT_PUBLIC_DOMAIN;
-  // const res = await fetch(`${domain}/api/search?q=${encodeURIComponent(keyword)}`, { 'cache': 'no-store' });
-    // const json = await res.json();
-    const json = await searchResultFetching(search);
+    const json = await searchResultFetching(keyword);
     setSearchResults(json);
-  }, [search]);
+  }, []);
+
+  const searchResultClickHandler = (result: SearchResult) => {
+    setSearch('');
+    router.push(`/?sidebar=true&lat=${result.latitude}&lng=${result.longitude}&address=${encodeURIComponent(result.address)}`)
+  }
 
   useEffect(() => {
     if (search.length > 0) {
@@ -30,10 +33,6 @@ export default function SearchBar() {
       setSearchResults([]);
     }
   }, [search, searchResultHandler]);
-
-  useEffect(() => {
-    console.log(searchResults);
-  }, [searchResults])
 
   return (
     <article className={`relative border-[1.5px] border-default rounded-full `}>
@@ -44,12 +43,17 @@ export default function SearchBar() {
         placeholder="주소를 입력해주세요."
       />
       <IoSearch className="absolute top-1/2 right-3 -translate-y-1/2" size="30" color="#4A68F5" />
-
-        <ul className="absolute bottom-0 left-0">
-          {searchResults && searchResults.length ? searchResults.map((result) => (
-            <li key={result._id}>{ result.address }</li>
-          )) : ''}
+      {searchResults.length > 0 && (
+        <ul className="absolute top-full left-0 mt-1 w-full bg-white border border-gray-200 rounded-md shadow-lg max-h-60 overflow-auto z-[30]">
+          {searchResults.map((result) => (
+            <li
+              className="block px-4 py-2 hover:bg-gray-100 cursor-pointer hover:bg-gray"
+              onClick={() => searchResultClickHandler(result)}
+              key={result._id}
+            >{ result.address }</li>
+          ))}
         </ul>
+      )}
 
     </article>
   );
