@@ -11,7 +11,6 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
       if (!q || typeof q !== 'string') {
         return res.status(400).send('검색어가 필요합니다');
       }
-      console.log(q);
       const searchPattern = new RegExp(decodeURIComponent(q), 'i');
       const db: Db = await connectDB();
       const searchResults = await db.collection('reviews_data').aggregate([

@@ -1,6 +1,9 @@
 'use client'
 
-export default function MapMoveBtn({ locName, updateMapLocHandler }: PropsType) {
+import { useMapLocation } from "@/app/_lib/store";
+
+export default function MapMoveBtn({ locName }: PropsType) {
+  const { setMapLoc } = useMapLocation();
   const locInfo = {
     '서울': { lat: 37.563653668026305, lng: 126.98495761096676 },
     '경기': { lat: 37.4217854566562, lng: 127.05873408351113 },
@@ -15,7 +18,7 @@ export default function MapMoveBtn({ locName, updateMapLocHandler }: PropsType) 
   }
 
   const locBtnClickHandler = () => {
-    updateMapLocHandler(locInfo[locName]);
+    setMapLoc(locInfo[locName]);
   }
 
   return (
@@ -28,10 +31,4 @@ export default function MapMoveBtn({ locName, updateMapLocHandler }: PropsType) 
 
 interface PropsType extends React.ComponentProps<'button'> {
   locName: '서울' | '경기' | '충남' | '충북' | '전북' | '전남' | '강원' | '경북' | '경남' | '제주';
-  updateMapLocHandler: (loc: MapLocationType) => void;
-}
-
-interface MapLocationType {
-  lat: number;
-  lng: number;
 }

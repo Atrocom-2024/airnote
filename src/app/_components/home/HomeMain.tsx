@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
 import { getLocation } from "@/utils/modules";
+import { useMapLocation } from "@/app/_lib/store";
 import HomeMapSection from "./HomeMapSection";
 import PanelSection from "./PanelSection";
 import SideBar from "./SideBar";
@@ -12,19 +13,12 @@ export default function HomeMain({ topReviews }: PropsType) {
   const searchParams = useSearchParams();
   const sidebar = Boolean(searchParams?.get('sidebar'));
   const [ markerInfo, setMarkerInfo ] = useState<MarkerInfoType[]>([]);
-  const [ mapLoc, setMapLoc ] = useState<MapLocationType>({
-    lat: 37.575184758466044,
-    lng: 126.97517453354219
-  });
-
-  const updateMapLocHandler = (loc: MapLocationType) => {
-    setMapLoc(loc);
-  };
+  const { mapLoc, setMapLoc } = useMapLocation();
 
   const getAsyncLocationHandler = useCallback(async () => {
     const userLoc: MapLocationType = await getLocation();
-    updateMapLocHandler(userLoc);
-  }, []);
+    setMapLoc(userLoc);
+  }, [setMapLoc]);
 
   useEffect(() => {
     getAsyncLocationHandler();
@@ -42,7 +36,6 @@ export default function HomeMain({ topReviews }: PropsType) {
       ) : (
         <PanelSection
           topReviews={topReviews}
-          updateMapLocHandler={updateMapLocHandler}
         />
       )}
     </>

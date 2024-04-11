@@ -3,16 +3,17 @@
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
-
-import { searchResultFetching } from "@/app/_lib/api";
 import { debounce } from "lodash";
 
-// TODO: 검색 결과 클릭 후 지도 위치 이동 -> 지도 위치 전역 상태 관리
+import { searchResultFetching } from "@/app/_lib/api";
+import { useMapLocation } from "@/app/_lib/store";
+
 export default function SearchBar() {
   const router = useRouter();
   const [ searchResults, setSearchResults ] = useState<SearchResult[]>([]);
   const [ query, setQuery ] = useState<string>('');
   const [ debouncedQuery, setDebouncedQuery ] = useState<string>(query);
+  const { setMapLoc } = useMapLocation();
 
   const qeuryChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
@@ -20,7 +21,7 @@ export default function SearchBar() {
 
   const debouncedQueryHandler = debounce((keyword: string) => {
     setDebouncedQuery(keyword)
-  }, 1000);
+  }, 500);
 
   const searchResultHandler = useCallback(async (keyword: string) => {
     const searchItems = await searchResultFetching(keyword);
@@ -30,6 +31,7 @@ export default function SearchBar() {
   const searchResultClickHandler = (result: SearchResult) => {
     setQuery('');
     setDebouncedQuery('');
+    setMapLoc({ lat: result.latitude, lng: result.longitude });
     router.push(`/?sidebar=true&lat=${result.latitude}&lng=${result.longitude}&address=${encodeURIComponent(result.address)}`)
   }
 

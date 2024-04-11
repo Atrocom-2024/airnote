@@ -1,16 +1,19 @@
+import Link from "next/link";
 import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
 
 import { parseDate } from "@/utils/modules";
-import Link from "next/link";
+import { useMapLocation } from "@/app/_lib/store";
 
-export default function PanelReviewCard({ topReview, updateMapLocHandler }: PropsType) {
+export default function PanelReviewCard({ topReview }: PropsType) {
+  const { setMapLoc } = useMapLocation();
+
   return (
     <article className="border-b-[1.5px] border-default p-3">
       <div className="flex justify-between items-center">
         <Link
           className="text-default font-bold"
           href={`/?sidebar=true&lat=${topReview.latitude}&lng=${topReview.longitude}&address=${encodeURIComponent(topReview.address)}`}
-          onClick={() => updateMapLocHandler({ lat: Number(topReview.latitude), lng: Number(topReview.longitude) })}
+          onClick={() => setMapLoc({ lat: Number(topReview.latitude), lng: Number(topReview.longitude) })}
         >{topReview.address}</Link>
         <div className="text-gray text-sm">{ parseDate(topReview.create_at) }</div>
       </div>
@@ -45,10 +48,4 @@ interface PropsType {
     dislikes: number;
     create_at: string;
   };
-  updateMapLocHandler: (loc: MapLocationType) => void;
-}
-
-interface MapLocationType {
-  lat: number;
-  lng: number;
 }
