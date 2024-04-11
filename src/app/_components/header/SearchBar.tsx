@@ -14,23 +14,18 @@ export default function SearchBar() {
     setSearch(e.target.value);
     console.log(e.target.value);
   }
-  // const searchChangeHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setSearch(e.target.value);
-  //   console.log(e.target.value);
-  //   const searchItems: SearchResult[] = await searchResultFetching(e.target.value);
-  //   setSearchResults(searchItems);
-  // }
 
-  const searchResultHandler = useCallback(debounce(async () => {
+  const searchResultHandler = useCallback(async (keyword: string) => {
     const domain = process.env.NEXT_PUBLIC_DOMAIN;
-  const res = await fetch(`${domain}/api/search?q=${encodeURIComponent(search)}`, { 'cache': 'no-store' });
-    const json = await res.json();
+  // const res = await fetch(`${domain}/api/search?q=${encodeURIComponent(keyword)}`, { 'cache': 'no-store' });
+    // const json = await res.json();
+    const json = await searchResultFetching(search);
     setSearchResults(json);
-  }, 1000), [search]);
+  }, [search]);
 
   useEffect(() => {
-    if (search) {
-      searchResultHandler();
+    if (search.length > 0) {
+      searchResultHandler(search);
     } else {
       setSearchResults([]);
     }
