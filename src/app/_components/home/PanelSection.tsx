@@ -4,7 +4,7 @@ import { LuArrowUpRightSquare } from "react-icons/lu";
 import PanelReviewCard from "./PanelReviewCard";
 import MapMoveBtn from "./MapMoveBtn";
 
-export default function PanelSection({ topReviews, updateMapLocHandler }: PropsType) {
+export default function PanelSection({ topReviews }: PropsType) {
   const locNameList: LocationListTypes = ['서울', '경기', '충남', '충북', '전북', '전남', '강원', '경북', '경남', '제주'];
 
   return (
@@ -21,7 +21,7 @@ export default function PanelSection({ topReviews, updateMapLocHandler }: PropsT
         </section>
         <section>
           {topReviews.map((topReview) => (
-            <PanelReviewCard topReview={topReview} updateMapLocHandler={updateMapLocHandler} key={topReview._id} />
+            <PanelReviewCard topReview={topReview} key={topReview._id} />
           ))}
         </section>
       </article>
@@ -34,7 +34,7 @@ export default function PanelSection({ topReviews, updateMapLocHandler }: PropsT
         </section>
         <section className="grid grid-cols-5 gap-4 px-5 py-3">
           {locNameList.map((locName) => (
-            <MapMoveBtn locName={locName} updateMapLocHandler={updateMapLocHandler} key={locName} />
+            <MapMoveBtn locName={locName} key={locName} />
           ))}
         </section>
       </article>
@@ -44,7 +44,6 @@ export default function PanelSection({ topReviews, updateMapLocHandler }: PropsT
 
 interface PropsType {
   topReviews: TopReviewType[];
-  updateMapLocHandler: (loc: MapLocationType) => void;
 }
 
 interface TopReviewType {
