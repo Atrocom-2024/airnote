@@ -60,10 +60,10 @@ export default function SearchBar() {
       />
       <IoSearch className="absolute top-1/2 right-3 -translate-y-1/2" size="30" color="#4A68F5" />
       {searchResults.length > 0 && (
-        <ul className="absolute top-full left-0 mt-1 w-full bg-white border border-gray-200 rounded-md shadow-lg max-h-60 overflow-auto z-[30]">
+        <ul className="absolute top-full left-0 mt-2 w-full bg-white border-[1.5px] border-gray/50 rounded-md shadow-lg max-h-60 overflow-auto z-[30]">
           {searchResults.map((result) => (
             <li
-              className="block px-4 py-2 hover:bg-gray-100 cursor-pointer hover:bg-gray"
+              className="block px-4 py-2 cursor-pointer hover:bg-gray/25"
               onClick={() => searchResultClickHandler(result)}
               key={result._id}
             >{ result.address }</li>
