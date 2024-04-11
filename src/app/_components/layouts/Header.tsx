@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { getServerSession } from "next-auth";
-import { IoSearch } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
 
 import { authOptions } from "@/pages/api/auth/[...nextauth]";

@@ -1,5 +1,6 @@
 import { create } from "zustand";
 
+// 지도 중심 위치
 export const useMapLocation = create<MapLocState & MapLocAction>((set) => ({
   mapLoc: {
     lat: 37.575184758466044,
