@@ -7,10 +7,10 @@ import { useQuery } from "@tanstack/react-query";
 import { FaAngleLeft } from "react-icons/fa6";
 
 import SideBarReviewCard from "./SideBarReviewCard";
-import PartLoadingUI from "../PartLoadingUI";
+import PartLoadingUI from "../../_components/PartLoadingUI";
 
 // TODO: 좋아요/싫어요 기능 구현
-export default function SideBar() {
+export default function ReviewSideBar() {
   const searchParams = useSearchParams();
   const address = searchParams?.get('address');
   const lat = searchParams?.get('lat');

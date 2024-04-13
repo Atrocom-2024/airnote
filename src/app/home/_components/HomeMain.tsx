@@ -5,9 +5,9 @@ import { useCallback, useEffect, useState } from "react";
 
 import { getLocation } from "@/utils/modules";
 import { useMapLocation } from "@/app/_lib/store";
-import HomeMapSection from "./HomeMapSection";
+import MapSection from "../../_components/map/MapSection";
 import PanelSection from "./PanelSection";
-import SideBar from "./SideBar";
+import ReviewSideBar from "./ReviewSideBar";
 
 export default function HomeMain({ topReviews }: PropsType) {
   const searchParams = useSearchParams();
@@ -26,12 +26,12 @@ export default function HomeMain({ topReviews }: PropsType) {
 
   return (
     <>
-      <HomeMapSection
+      <MapSection
         markerInfo={markerInfo}
         setMarkerInfo={setMarkerInfo}
       />
       {sidebar ? (
-        <SideBar />
+        <ReviewSideBar />
       ) : (
         <PanelSection
           topReviews={topReviews}

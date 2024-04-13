@@ -8,7 +8,7 @@ import { useMapLocation } from "@/app/_lib/store";
 import PartLoadingUI from "../PartLoadingUI";
 import MapComponent from "./MapComponent";
 
-export default function HomeMapSection({ markerInfo, setMarkerInfo }: PropsType) {
+export default function MapSection({ markerInfo, setMarkerInfo }: PropsType) {
   const router = useRouter();
   const pathname = usePathname();
   const { mapLoc } = useMapLocation();
