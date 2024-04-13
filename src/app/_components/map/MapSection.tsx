@@ -1,24 +1,36 @@
 'use client'
 
 import { usePathname, useRouter } from "next/navigation";
-import { Dispatch, SetStateAction } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Map, MapMarker, useKakaoLoader } from "react-kakao-maps-sdk";
 
+import { getLocation } from "@/utils/modules";
 import { useMapLocation } from "@/app/_lib/store";
 import PartLoadingUI from "../PartLoadingUI";
 import MapComponent from "./MapComponent";
 
-export default function MapSection({ markerInfo, setMarkerInfo }: PropsType) {
+export default function MapSection() {
   const router = useRouter();
   const pathname = usePathname();
-  const { mapLoc } = useMapLocation();
+  const [ markerInfo, setMarkerInfo ] = useState<MarkerInfoType[]>([]);
+  const { mapLoc, setMapLoc } = useMapLocation();
   const [ loading ] = useKakaoLoader({
     appkey: process.env.KAKAO_JS_KEY,
   });
 
+  const getAsyncLocationHandler = useCallback(async () => {
+    const userLoc: MapLocationType = await getLocation();
+    setMapLoc(userLoc);
+  }, [setMapLoc]);
+  
   const markerClickHandler = (lat: number, lng: number, address: string) => {
     router.push(`${pathname}?sidebar=true&lat=${lat}&lng=${lng}&address=${encodeURIComponent(address)}`);
   }
+
+  useEffect(() => {
+    getAsyncLocationHandler();
+  }, [getAsyncLocationHandler]);
+
 
   if (loading) {
     return <PartLoadingUI />;
@@ -43,14 +55,14 @@ export default function MapSection({ markerInfo, setMarkerInfo }: PropsType) {
   );
 }
 
-interface PropsType {
-  markerInfo: MarkerInfoType[];
-  setMarkerInfo: Dispatch<SetStateAction<MarkerInfoType[]>>;
-}
-
 interface MarkerInfoType {
   _id: string;
   address: string;
   latitude: number;
   longitude: number;
+}
+
+interface MapLocationType {
+  lat: number;
+  lng: number;
 }

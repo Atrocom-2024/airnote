@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { FaAngleLeft } from "react-icons/fa6";
 
+import { getReviews } from "@/app/_lib/api";
 import Sidebar from "@/app/_components/layouts/Sidebar";
 import SideBarReviewCard from "./SideBarReviewCard";
 import PartLoadingUI from "../../_components/PartLoadingUI";
@@ -51,16 +52,6 @@ export default function ReviewSideBar() {
     </Sidebar>
   );
 }
-
-// 리뷰 데이터를 가져오는 함수
-async function getReviews (lat: string, lng: string) {
-  const domain = process.env.NEXT_PUBLIC_DOMAIN;
-  const res = await fetch(`${domain}/api/reviews?lat=${lat}&lng=${lng}`);
-  if (!res.ok) {
-    throw new Error('Network response was not ok');
-  }
-  return res.json();
-};
 
 interface ReviewType {
   _id: string;

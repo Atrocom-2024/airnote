@@ -1,7 +1,6 @@
 import Layout from "../_components/layouts/Layout";
 import HomeMain from "./_components/HomeMain";
 
-
 export default async function Home() {
   const topReviews: TopReviewType[] = await getTopReviews();
   
