@@ -16,7 +16,7 @@ export default function MapSection({ markerInfo, setMarkerInfo }: PropsType) {
     appkey: process.env.KAKAO_JS_KEY,
   });
 
-  const moveRouterHandler = (lat: number, lng: number, address: string) => {
+  const markerClickHandler = (lat: number, lng: number, address: string) => {
     router.push(`${pathname}?sidebar=true&lat=${lat}&lng=${lng}&address=${encodeURIComponent(address)}`);
   }
 
@@ -35,7 +35,7 @@ export default function MapSection({ markerInfo, setMarkerInfo }: PropsType) {
         <MapMarker
           position={{ lat: marker.latitude, lng: marker.longitude }}
           clickable={true}
-          onClick={() => moveRouterHandler(marker.latitude, marker.longitude, marker.address)}
+          onClick={() => markerClickHandler(marker.latitude, marker.longitude, marker.address)}
           key={marker._id}
         />
       ))}

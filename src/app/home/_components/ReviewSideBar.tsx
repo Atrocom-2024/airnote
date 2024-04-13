@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { FaAngleLeft } from "react-icons/fa6";
 
+import Sidebar from "@/app/_components/layouts/Sidebar";
 import SideBarReviewCard from "./SideBarReviewCard";
 import PartLoadingUI from "../../_components/PartLoadingUI";
 
@@ -31,10 +32,7 @@ export default function ReviewSideBar() {
   }, [error]);
 
   return (
-    <aside
-      id="sidebar"
-      className="absolute top-[8vh] left-0 w-[400px] h-[84vh] bg-white border-r-[1.5px] border-default shadow-lg z-[29] overflow-y-auto"
-    >
+    <Sidebar>
       {isLoading ? <PartLoadingUI /> : (
         <>
           <section className="flex items-center p-3">
@@ -50,7 +48,7 @@ export default function ReviewSideBar() {
           </section>
         </>
       )}
-    </aside>
+    </Sidebar>
   );
 }
 
