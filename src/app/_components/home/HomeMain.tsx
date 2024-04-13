@@ -13,7 +13,7 @@ export default function HomeMain({ topReviews }: PropsType) {
   const searchParams = useSearchParams();
   const sidebar = Boolean(searchParams?.get('sidebar'));
   const [ markerInfo, setMarkerInfo ] = useState<MarkerInfoType[]>([]);
-  const { mapLoc, setMapLoc } = useMapLocation();
+  const { setMapLoc } = useMapLocation();
 
   const getAsyncLocationHandler = useCallback(async () => {
     const userLoc: MapLocationType = await getLocation();
@@ -27,7 +27,6 @@ export default function HomeMain({ topReviews }: PropsType) {
   return (
     <>
       <HomeMapSection
-        mapLoc={{ lat: mapLoc.lat, lng: mapLoc.lng }}
         markerInfo={markerInfo}
         setMarkerInfo={setMarkerInfo}
       />

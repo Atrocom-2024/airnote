@@ -4,12 +4,14 @@ import { usePathname, useRouter } from "next/navigation";
 import { Dispatch, SetStateAction } from "react";
 import { Map, MapMarker, useKakaoLoader } from "react-kakao-maps-sdk";
 
+import { useMapLocation } from "@/app/_lib/store";
 import PartLoadingUI from "../PartLoadingUI";
 import MapComponent from "./MapComponent";
 
-export default function HomeMapSection({ mapLoc, markerInfo, setMarkerInfo }: PropsType) {
+export default function HomeMapSection({ markerInfo, setMarkerInfo }: PropsType) {
   const router = useRouter();
   const pathname = usePathname();
+  const { mapLoc } = useMapLocation();
   const [ loading ] = useKakaoLoader({
     appkey: process.env.KAKAO_JS_KEY,
   });
@@ -42,10 +44,6 @@ export default function HomeMapSection({ mapLoc, markerInfo, setMarkerInfo }: Pr
 }
 
 interface PropsType {
-  mapLoc: {
-    lat: number;
-    lng: number;
-  };
   markerInfo: MarkerInfoType[];
   setMarkerInfo: Dispatch<SetStateAction<MarkerInfoType[]>>;
 }
