@@ -37,6 +37,8 @@ export default function SearchBar() {
 
   const searchKeyPressHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
+      setQuery('');
+      setDebouncedQuery('');
       router.push(`/search?sidebar=true&q=${query}`);
     }
   }
