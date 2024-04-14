@@ -64,7 +64,7 @@ html, body {
 }
 
 #sidebar::-webkit-scrollbar-thumb {
-    background-color: #9D95CA;
+    background-color: #92A4F9;
     background-clip: padding-box;
     border: 2px solid transparent;
     border-radius: 10px;
@@ -75,7 +75,7 @@ html, body {
 }
 
 #panel::-webkit-scrollbar-thumb {
-    background-color: #9D95CA;
+    background-color: #92A4F9;
     background-clip: padding-box;
     border: 2px solid transparent;
     border-radius: 10px;

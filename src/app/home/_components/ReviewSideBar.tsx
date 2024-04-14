@@ -6,11 +6,13 @@ import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { FaAngleLeft } from "react-icons/fa6";
 
+import { getReviews } from "@/app/_lib/api";
+import Sidebar from "@/app/_components/layouts/Sidebar";
 import SideBarReviewCard from "./SideBarReviewCard";
-import PartLoadingUI from "../PartLoadingUI";
+import PartLoadingUI from "../../_components/PartLoadingUI";
 
 // TODO: 좋아요/싫어요 기능 구현
-export default function SideBar() {
+export default function ReviewSideBar() {
   const searchParams = useSearchParams();
   const address = searchParams?.get('address');
   const lat = searchParams?.get('lat');
@@ -31,10 +33,7 @@ export default function SideBar() {
   }, [error]);
 
   return (
-    <aside
-      id="sidebar"
-      className="absolute top-[8vh] left-0 w-[400px] h-[84vh] bg-white border-r-[1.5px] border-default shadow-lg z-[29] overflow-y-auto"
-    >
+    <Sidebar>
       {isLoading ? <PartLoadingUI /> : (
         <>
           <section className="flex items-center p-3">
@@ -50,19 +49,9 @@ export default function SideBar() {
           </section>
         </>
       )}
-    </aside>
+    </Sidebar>
   );
 }
-
-// 리뷰 데이터를 가져오는 함수
-async function getReviews (lat: string, lng: string) {
-  const domain = process.env.NEXT_PUBLIC_DOMAIN;
-  const res = await fetch(`${domain}/api/reviews?lat=${lat}&lng=${lng}`);
-  if (!res.ok) {
-    throw new Error('Network response was not ok');
-  }
-  return res.json();
-};
 
 interface ReviewType {
   _id: string;
