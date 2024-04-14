@@ -7,9 +7,8 @@ export default function ReviewAddBtn() {
   
   return (
     <button
-      // className="bg-default text-white px-5 py-2 rounded-md"
       type="button"
       onClick={reviewsBtnHandler}
-    >리뷰등록</button>
+    >기록작성</button>
   );
 }

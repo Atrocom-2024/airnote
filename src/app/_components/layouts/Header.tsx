@@ -26,16 +26,16 @@ export default async function Header() {
       </section>
       <section className="flex text-sm text-default">
         <article className="hidden space-x-10 items-center mr-10 lg:flex">
-          <MoveLink href="/">홈</MoveLink>
+          <MoveLink href="/home">홈</MoveLink>
           {session ? (
             <MoveLink
               href="/reviews/add"
-            >리뷰등록</MoveLink>
+            >기록작성</MoveLink>
           ) : (
             <ReviewAddBtn />
           )}
-          <MoveLink href="/howuse">이용방법</MoveLink>
-          <MoveLink href="https://open.kakao.com/o/sAgQYPhg">고객지원</MoveLink>
+          <MoveLink href="https://cafe.naver.com/airnote" target="_blank">커뮤니티</MoveLink>
+          <MoveLink href="https://open.kakao.com/o/sAgQYPhg" target="_blank">고객지원</MoveLink>
           {session && <LogoutBtn />}
         </article>
         <article className="flex items-center">
