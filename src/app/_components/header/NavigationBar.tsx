@@ -45,7 +45,7 @@ export default function NavigationBar() {
         <div className="px-20 py-24 flex flex-col items-center text-white sm:text-xl">
           <Link
             className="mb-5"
-            href="/"
+            href="/home"
             onClick={linkClickHandler}
           >홈</Link>
           {session ? (
@@ -53,15 +53,15 @@ export default function NavigationBar() {
               className="mb-5"
               href="/reviews/add"
               onClick={linkClickHandler}
-            >리뷰등록</Link>
+            >기록작성</Link>
           ) : (
-            <button className="mb-5" type="button" onClick={reviewsBtnHandler}>후기등록</button>
+            <button className="mb-5" type="button" onClick={reviewsBtnHandler}>기록작성</button>
           )}
           <Link
             className="mb-5"
-            href="/howuse"
+            href="https://cafe.naver.com/airnote"
             onClick={linkClickHandler}
-          >이용방법</Link>
+          >커뮤니티</Link>
           <Link
             className="mb-5"
             href="https://open.kakao.com/o/sAgQYPhg"
