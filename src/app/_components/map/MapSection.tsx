@@ -24,7 +24,7 @@ export default function MapSection() {
   }, [setMapLoc]);
   
   const markerClickHandler = (lat: number, lng: number, address: string) => {
-    router.push(`${pathname}?sidebar=true&lat=${lat}&lng=${lng}&address=${encodeURIComponent(address)}`);
+    router.push(`/home?sidebar=true&lat=${lat}&lng=${lng}&address=${encodeURIComponent(address)}`);
   }
 
   useEffect(() => {
