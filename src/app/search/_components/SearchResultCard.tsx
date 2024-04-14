@@ -14,7 +14,7 @@ export default function SearchResultCard({ review }: PropsType) {
       <div className="flex justify-between items-center">
         <Link
           className="text-default font-bold"
-          href={`/?sidebar=true&lat=${review.latitude}&lng=${review.longitude}&address=${encodeURIComponent(review.address)}`}
+          href={`/home?sidebar=true&lat=${review.latitude}&lng=${review.longitude}&address=${encodeURIComponent(review.address)}`}
           onClick={() => setMapLoc({ lat: Number(review.latitude), lng: Number(review.longitude) })}
         >{review.address}</Link>
         <div className="text-gray text-sm">{ parseDate(review.create_at) }</div>
