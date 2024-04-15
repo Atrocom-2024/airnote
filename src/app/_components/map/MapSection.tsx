@@ -33,11 +33,6 @@ export default function MapSection() {
     paramLat && paramLng ? setMapLoc({ lat: Number(paramLat), lng: Number(paramLng) }) : getAsyncLocationHandler();
   }, [getAsyncLocationHandler, paramLat, paramLng, setMapLoc]);
 
-
-  if (loading) {
-    return <PartLoadingUI />;
-  };
-
   return (
     <Map
       center={mapLoc}
@@ -45,6 +40,7 @@ export default function MapSection() {
       style={{ width: "100%", height: "100%" }}
       isPanto={true}
     >
+      {loading && <PartLoadingUI />}
       <MapComponent setMarkerInfo={setMarkerInfo} />
       {markerInfo.map((marker) => (
         <MapMarker
