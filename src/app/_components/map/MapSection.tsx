@@ -1,6 +1,6 @@
 'use client'
 
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { Map, MapMarker, useKakaoLoader } from "react-kakao-maps-sdk";
 
@@ -10,8 +10,10 @@ import PartLoadingUI from "../PartLoadingUI";
 import MapComponent from "./MapComponent";
 
 export default function MapSection() {
+  const searchParams = useSearchParams();
+  const paramLat = searchParams?.get('lat');
+  const paramLng = searchParams?.get('lng');
   const router = useRouter();
-  const pathname = usePathname();
   const [ markerInfo, setMarkerInfo ] = useState<MarkerInfoType[]>([]);
   const { mapLoc, setMapLoc } = useMapLocation();
   const [ loading ] = useKakaoLoader({
@@ -24,12 +26,13 @@ export default function MapSection() {
   }, [setMapLoc]);
   
   const markerClickHandler = (lat: number, lng: number, address: string) => {
+    setMapLoc({ lat, lng });
     router.push(`/home?sidebar=true&lat=${lat}&lng=${lng}&address=${encodeURIComponent(address)}`);
   }
 
   useEffect(() => {
-    getAsyncLocationHandler();
-  }, [getAsyncLocationHandler]);
+    paramLat && paramLng ? setMapLoc({ lat: Number(paramLat), lng: Number(paramLng) }) : getAsyncLocationHandler();
+  }, [getAsyncLocationHandler, paramLat, paramLng, setMapLoc]);
 
 
   if (loading) {
@@ -41,6 +44,7 @@ export default function MapSection() {
       center={mapLoc}
       level={9}
       style={{ width: "100%", height: "100%" }}
+      isPanto={true}
     >
       <MapComponent setMarkerInfo={setMarkerInfo} />
       {markerInfo.map((marker) => (
