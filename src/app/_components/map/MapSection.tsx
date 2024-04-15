@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import { Map, MapMarker, useKakaoLoader } from "react-kakao-maps-sdk";
+import { Map, MapMarker, MarkerClusterer, useKakaoLoader } from "react-kakao-maps-sdk";
 
 import { getLocation } from "@/utils/modules";
 import { useMapLocation } from "@/app/_lib/store";
@@ -42,14 +42,16 @@ export default function MapSection() {
     >
       {loading && <PartLoadingUI />}
       <MapComponent setMarkerInfo={setMarkerInfo} />
-      {markerInfo.map((marker) => (
-        <MapMarker
-          position={{ lat: marker.latitude, lng: marker.longitude }}
-          clickable={true}
-          onClick={() => markerClickHandler(marker.latitude, marker.longitude, marker.address)}
-          key={marker._id}
-        />
-      ))}
+      <MarkerClusterer averageCenter={true} minLevel={10}>
+        {markerInfo.map((marker) => (
+          <MapMarker
+            position={{ lat: marker.latitude, lng: marker.longitude }}
+            clickable={true}
+            onClick={() => markerClickHandler(marker.latitude, marker.longitude, marker.address)}
+            key={marker._id}
+          />
+        ))}
+      </MarkerClusterer>
     </Map>
   );
 }
