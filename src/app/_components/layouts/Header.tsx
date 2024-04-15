@@ -28,9 +28,7 @@ export default async function Header() {
         <article className="hidden space-x-10 items-center mr-10 lg:flex">
           <MoveLink href="/home">홈</MoveLink>
           {session ? (
-            <MoveLink
-              href="/reviews/add"
-            >기록작성</MoveLink>
+            <MoveLink href="/reviews/add">기록작성</MoveLink>
           ) : (
             <ReviewAddBtn />
           )}
