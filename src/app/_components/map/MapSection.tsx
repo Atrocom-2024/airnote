@@ -42,7 +42,22 @@ export default function MapSection() {
     >
       {loading && <PartLoadingUI />}
       <MapComponent setMarkerInfo={setMarkerInfo} />
-      <MarkerClusterer averageCenter={true} minLevel={10}>
+      <MarkerClusterer
+        averageCenter={true}
+        minLevel={10}
+        styles={[
+          {
+            width: '60px',
+            height: '60px',
+            backgroundColor: '#4a69f5bd',
+            backdropFilter: 'blur(1px)',
+            borderRadius: '100%',
+            fontSize: 'large',
+            textAlign: 'center',
+            lineHeight: '60px',
+            color: 'white',
+          }
+        ]}>
         {markerInfo.map((marker) => (
           <MapMarker
             position={{ lat: marker.latitude, lng: marker.longitude }}
