@@ -9,6 +9,16 @@ export const useMapLocation = create<MapLocState & MapLocAction>((set) => ({
   setMapLoc: (locInfo: MapInfo) => {set({ mapLoc: locInfo })}
 }));
 
+export const useAdmin = create<IsAdminStore>((set) => ({
+  isAdmin: false,
+  adminLogin: () => {
+    set(() => ({ isAdmin: true }));
+  },
+  adminLogout: () => {
+    set(() => ({ isAdmin: false }));
+  }
+}));
+
 
 interface MapInfo {
   lat: number;
@@ -21,4 +31,10 @@ interface MapLocState {
 
 interface MapLocAction {
   setMapLoc: (locInfo: MapInfo) => void;
+}
+
+interface IsAdminStore {
+  isAdmin: boolean;
+  adminLogin: () => void;
+  adminLogout: () => void;
 }
