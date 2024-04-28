@@ -1,18 +1,14 @@
 'use client'
 
-import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FaUser } from "react-icons/fa6";
 import { RiLock2Fill } from "react-icons/ri";
 import { throttle } from "lodash";
 
 import { encrypt } from "@/utils/modules";
-import { useAdmin } from "@/app/_lib/store";
 import LoadingUI from "@/app/_components/LoadingUI";
 
-export default function AdminLoginForm() {
-  const router = useRouter();
-  const { adminLogin } = useAdmin();
+export default function AdminLoginForm() {;
   const { register, handleSubmit, formState: { isSubmitting } } = useForm<FormInputs>({
     defaultValues: { id: '', password: ''}
   });
@@ -35,8 +31,7 @@ export default function AdminLoginForm() {
       if (!res.ok) {
         return alert('아이디 또는 비밀번호가 일치하지 않습니다.');
       } else {
-        adminLogin();
-        router.push(`/admin/home?id=${encodeURIComponent(encrypt(data.id, process.env.NEXT_PUBLIC_AES_ID_SECRET_KEY))}`);
+        alert('로그인 성공');
       }
     } catch (err) {
       console.error('로그인 실패', err);
@@ -44,7 +39,7 @@ export default function AdminLoginForm() {
   }, 2000);
   
   return (
-    <form className="grid grid-cols-1">
+    <form className="grid grid-cols-1" onSubmit={handleSubmit(onSubmit)}>
       {isSubmitting && <LoadingUI />}
       <section className="mb-3 flex justify-center items-center">
         <div className="mr-2">
