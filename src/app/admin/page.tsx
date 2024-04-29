@@ -11,3 +11,13 @@ export default function Admin() {
     </Layout>
   );
 }
+
+async function tokenConfirm() {
+  const domain = process.env.NEXT_PUBLIC_DOMAIN;
+  const res = await fetch(`${domain}/api/admin/verify`, { cache: 'no-store' });
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+  
+  return res.json();
+}

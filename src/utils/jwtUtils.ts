@@ -13,10 +13,10 @@ export const sign = (userId: string) => {
 // access token 검증
 export const verify = (token: string) => {
   try {
-    const decoded = jwt.verify(token, secret) as { userId: string };
+    const decoded = jwt.verify(token, secret) as { id: string };
     return {
       ok: true,
-      userId: decoded.userId
+      userId: decoded.id
     };
   } catch (err: any) {
     return {

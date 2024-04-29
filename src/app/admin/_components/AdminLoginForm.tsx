@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FaUser } from "react-icons/fa6";
 import { RiLock2Fill } from "react-icons/ri";
@@ -7,8 +8,10 @@ import { throttle } from "lodash";
 
 import { encrypt } from "@/utils/modules";
 import LoadingUI from "@/app/_components/LoadingUI";
+import { useEffect } from "react";
 
-export default function AdminLoginForm() {;
+export default function AdminLoginForm() {
+  const router = useRouter();
   const { register, handleSubmit, formState: { isSubmitting } } = useForm<FormInputs>({
     defaultValues: { id: '', password: ''}
   });
@@ -31,12 +34,16 @@ export default function AdminLoginForm() {;
       if (!res.ok) {
         return alert('아이디 또는 비밀번호가 일치하지 않습니다.');
       } else {
-        alert('로그인 성공');
+        router.push('/admin/home');
       }
     } catch (err) {
       console.error('로그인 실패', err);
     }
   }, 2000);
+
+  useEffect(() => {
+    tokenConfirm();
+  }, [])
   
   return (
     <form className="grid grid-cols-1" onSubmit={handleSubmit(onSubmit)}>
@@ -66,6 +73,16 @@ export default function AdminLoginForm() {;
       <button className="mt-10 bg-default text-white px-5 py-2 rounded-md font-normal">로그인</button>
     </form>
   );
+}
+
+async function tokenConfirm() {
+  const domain = process.env.NEXT_PUBLIC_DOMAIN;
+  const res = await fetch(`${domain}/api/admin/verify`, { cache: 'no-store' });
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+  
+  return res.json();
 }
 
 interface FormInputs {
