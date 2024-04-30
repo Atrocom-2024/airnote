@@ -3,7 +3,7 @@ import { Db } from "mongodb";
 
 import { connectDB } from "@/utils/database";
 import { decrypt } from "@/utils/modules";
-import { refresh, sign } from "@/utils/jwtUtils";
+import { generateAccessToken, generateRefreshToken } from "@/utils/jwtUtils";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
@@ -23,8 +23,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
 
         // 토큰 생성
-        const accessToken = sign(decryptedId);
-        const refreshToken = refresh(decryptedId);
+        const { accessToken } = await generateAccessToken({ userId: decryptedId });
+        const { refreshToken } = await generateRefreshToken({ userId: decryptedId });
         res.setHeader('Set-Cookie', [
           `accessToken=${accessToken}; Path=/; Expires=${new Date(
             Date.now() + 60 * 60 * 1000

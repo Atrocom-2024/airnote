@@ -1,44 +1,46 @@
+import { JWTPayload, SignJWT, jwtVerify } from 'jose';
 import jwt from 'jsonwebtoken';
 
 const secret = 'wefbi23iui39898fg9432uifg';
 
 // access token 발급
-export const sign = (userId: string) => {
-  return jwt.sign({ id: userId }, secret, {
-    algorithm: 'HS256',
-    expiresIn: '1h'
-  });
+export const generateAccessToken = async (payload: JWTPayload) => {
+  const iat = Math.floor(Date.now() / 1000);
+  const accessExp = iat + 60 * 60;
+  const accessToken =  await new SignJWT(payload)
+    .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
+    .setExpirationTime(accessExp)
+    .setIssuedAt(iat)
+    .setNotBefore(iat)
+    .sign(new TextEncoder().encode(secret));
+  return { accessToken };
 };
 
-// access token 검증
-export const verify = (token: string) => {
-  try {
-    const decoded = jwt.verify(token, secret) as { id: string };
-    return {
-      ok: true,
-      userId: decoded.id
-    };
-  } catch (err: any) {
-    return {
-      ok: false,
-      message: err.message
-    }
-  }
-}
-
 // refresh token 발급
-export const refresh = (userId: string) => {
-  return jwt.sign({ id: userId }, secret, {
-    algorithm: 'HS256',
-    expiresIn: '14d'
-  })
+export const generateRefreshToken = async (payload: JWTPayload) => {
+  const iat = Math.floor(Date.now() / 1000);
+  const refreshExp = iat + 60 * 60 * 24 * 3;
+  const refreshToken =  await new SignJWT(payload)
+    .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
+    .setExpirationTime(refreshExp)
+    .setIssuedAt(iat)
+    .setNotBefore(iat)
+    .sign(new TextEncoder().encode(secret));
+  return { refreshToken };
 }
 
-export const refreshVerify = (token: string) => {
+// token 검증
+export const verifyToken = async (token: string) => {
   try {
-    jwt.verify(token, secret);
-    return true;
+    const { payload } = await jwtVerify(token, new TextEncoder().encode(secret));
+    return {
+      valid: true,
+      payload
+    };
   } catch (err) {
-    return false;
+    return {
+      valid: false,
+      message: err
+    }
   }
 }

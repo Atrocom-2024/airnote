@@ -8,7 +8,6 @@ import { throttle } from "lodash";
 
 import { encrypt } from "@/utils/modules";
 import LoadingUI from "@/app/_components/LoadingUI";
-import { useEffect } from "react";
 
 export default function AdminLoginForm() {
   const router = useRouter();
@@ -40,10 +39,6 @@ export default function AdminLoginForm() {
       console.error('로그인 실패', err);
     }
   }, 2000);
-
-  useEffect(() => {
-    tokenConfirm();
-  }, [])
   
   return (
     <form className="grid grid-cols-1" onSubmit={handleSubmit(onSubmit)}>
@@ -73,16 +68,6 @@ export default function AdminLoginForm() {
       <button className="mt-10 bg-default text-white px-5 py-2 rounded-md font-normal">로그인</button>
     </form>
   );
-}
-
-async function tokenConfirm() {
-  const domain = process.env.NEXT_PUBLIC_DOMAIN;
-  const res = await fetch(`${domain}/api/admin/verify`, { cache: 'no-store' });
-  if (!res.ok) {
-    throw new Error('Failed to fetch data');
-  }
-  
-  return res.json();
 }
 
 interface FormInputs {
