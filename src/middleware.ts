@@ -23,19 +23,10 @@ export async function middleware(req: NextRequest) {
   // 관리자 로그인 상태 리다이렉트 설정
   if (pathname === '/admin') {
     const accessToken = req.cookies.get('accessToken');
-    const refreshToken = req.cookies.get('refreshToken');
     if (accessToken) {
       const { valid } = await verifyToken(accessToken.value);
       if (valid) {
         return NextResponse.redirect(new URL('/admin/home', req.url));
-      }
-    } else if (refreshToken) {
-      const { valid, payload } = await verifyToken(refreshToken.value);
-      if (valid && payload) {
-        const { accessToken } = await generateAccessToken({ username: payload.userId });
-        const res = NextResponse.next();
-        res.cookies.set('accessToken', accessToken);
-        return res;
       }
     }
   }
