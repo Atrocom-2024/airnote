@@ -8,5 +8,7 @@ namespace NodeJS {
     MONGODB_URI: string;
     NEXT_PUBLIC_DOMAIN: string;
     NEXT_PUBLIC_AES_EMAIL_SECRET_KEY: string;
+    NEXT_PUBLIC_AES_ID_SECRET_KEY: string;
+    NEXT_PUBLIC_AES_PW_SECRET_KEY: string;
   }
 }
