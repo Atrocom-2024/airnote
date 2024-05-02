@@ -1,7 +1,6 @@
 import { JWTPayload, SignJWT, jwtVerify } from 'jose';
-import jwt from 'jsonwebtoken';
 
-const secret = 'wefbi23iui39898fg9432uifg';
+const secret = process.env.JWT_SECRET;
 
 // access token 발급
 export const generateAccessToken = async (payload: JWTPayload) => {
