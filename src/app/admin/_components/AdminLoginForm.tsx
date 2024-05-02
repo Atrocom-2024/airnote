@@ -22,7 +22,8 @@ export default function AdminLoginForm() {
       return alert('비밀번호를 입력해주세요.');
     }
     try {
-      const res = await fetch('/api/admin/login', {
+      const domain = process.env.NEXT_PUBLIC_DOMAIN;
+      const res = await fetch(`${domain}/api/admin/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
