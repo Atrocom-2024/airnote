@@ -1,6 +1,7 @@
-import { encrypt } from "@/utils/modules";
 import { throttle } from "lodash";
 import { SubmitHandler } from "react-hook-form";
+
+import { encrypt } from "@/utils/modules";
 
 // 위치에 따른 리뷰 데이터를 가져오는 함수
 export const getReviews = async (lat: string, lng: string) => {
@@ -65,14 +66,14 @@ export const postLogin: SubmitHandler<FormInputs> = throttle(async (data) => {
 }, 2000);
 
 // 관리자 로그아웃 요청
-export const postLogout = throttle(async () => {
+export const postLogout = async () => {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
   const res = await fetch(`${domain}/api/admin/logout`, { method: 'POST' });
   if (!res.ok) {
     throw new Error('Failed to logout');
   }
   return res.status;
-}, 2000);
+};
 
 
 
