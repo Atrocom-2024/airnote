@@ -31,3 +31,13 @@ export const getSearchResults = async (keyword: string) => {
   
   return res.json();
 };
+
+// 관리자 로그아웃 요청
+export const postLogout = async () => {
+  const domain = process.env.NEXT_PUBLIC_DOMAIN;
+  const res = await fetch(`${domain}/api/admin/logout`, { method: 'POST' });
+  if (!res.ok) {
+    throw new Error('Failed to logout');
+  }
+  return res.status;
+}
