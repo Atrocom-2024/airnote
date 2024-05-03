@@ -59,7 +59,7 @@ export default function SearchBar() {
   }, [debouncedQuery, searchSuggestionHandler]);
 
   return (
-    <article className={`relative border-[1.5px] border-default rounded-full `}>
+    <article className="relative border-[1.5px] border-default rounded-full">
       <input
         className="w-[170px] h-[6vh] px-5 rounded-full outline-none sm:w-[350px] sm:h-[4vh]"
         value={query}
@@ -79,7 +79,6 @@ export default function SearchBar() {
           ))}
         </ul>
       )}
-
     </article>
   );
 }
