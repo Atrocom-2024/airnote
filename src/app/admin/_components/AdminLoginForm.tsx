@@ -30,7 +30,7 @@ export default function AdminLoginForm() {
           id: encrypt(data.id, process.env.NEXT_PUBLIC_AES_ID_SECRET_KEY),
           password: encrypt(data.password, process.env.NEXT_PUBLIC_AES_PW_SECRET_KEY)
         })
-      })
+      });
       if (!res.ok) {
         return alert('아이디 또는 비밀번호가 일치하지 않습니다.');
       } else {
@@ -38,6 +38,7 @@ export default function AdminLoginForm() {
       }
     } catch (err) {
       console.error('로그인 실패', err);
+      alert('로그인에 실패하였습니다. 잠시 후 다시 시도해주세요.');
     }
   }, 2000);
   
