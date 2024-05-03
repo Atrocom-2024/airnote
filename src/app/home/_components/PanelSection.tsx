@@ -17,7 +17,7 @@ export default function PanelSection({ topReviews }: PropsType) {
           <div>
             <FaArrowTrendUp size="25" color="#4A68F5" />
           </div>
-          <div className="text-xl text-default font-bold ml-3">실시간 인기 리뷰</div>
+          <div className="text-xl text-default font-bold ml-3">실시간 인기 공간 기록</div>
         </section>
         <section>
           {topReviews.map((topReview) => (
