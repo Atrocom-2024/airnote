@@ -14,7 +14,7 @@ export default function AdminLoginForm() {
   const { register, handleSubmit, formState: { isSubmitting } } = useForm<FormInputs>({
     defaultValues: { id: '', password: ''}
   });
-
+ 
   const onSubmit: SubmitHandler<FormInputs> = throttle(async (data) => {
     if (!data.id) {
       return alert('아이디를 입력해주세요.');
