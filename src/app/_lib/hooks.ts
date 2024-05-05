@@ -14,8 +14,15 @@ export const useAdminLogout = () => {
 };
 
 export const useUserSearch = (userName: string) => {
-  return useQuery({
+  return useQuery<UserInfoTypes>({
     queryKey: ['userInfo'],
     queryFn: () => getUserInfo(userName)
   });
+}
+
+interface UserInfoTypes {
+  _id: string;
+  email: string;
+  name: string;
+  create_at: string;
 }
