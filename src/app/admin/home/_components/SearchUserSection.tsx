@@ -21,7 +21,7 @@ export default function SearchUserSection() {
   }
 
   return (
-    <section className="p-10 col-span-9">
+    <section className="p-10 col-span-8 md:col-span-9 lg:col-span-10">
       <article className="flex items-center">
         <section className="font-bold text-default text-2xl mr-5">사용자 정보 찾기</section>
         <section className="w-[350px] relative border-[1.5px] border-default rounded-full">
