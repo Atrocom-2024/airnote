@@ -1,6 +1,6 @@
 # AirNote
 
-## Stacks
+### Stacks
 - TypeScript
 - TailwindCss
 - Next.js
