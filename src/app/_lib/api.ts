@@ -75,6 +75,20 @@ export const postLogout = async () => {
   return res.status;
 };
 
+// 사용자 정보 요청
+export const getUserInfo = async (userName: string) => {
+  const domain = process.env.NEXT_PUBLIC_DOMAIN;
+  try {
+    const res = await fetch(`${domain}/api/admin/users?username=${userName}`, { cache: 'no-store' });
+    if (!res.ok) {
+      throw new Error('Failed to fetch user data');
+    }
+    return res.json();
+  } catch (err) {
+    console.error('유저 정보 데이터 페칭 실패', err);
+  }
+}
+
 
 
 
