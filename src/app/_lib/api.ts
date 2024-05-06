@@ -75,11 +75,11 @@ export const postLogout = async () => {
   return res.status;
 };
 
-// 사용자 정보 요청
+// 사용자 정보 요청(관리자)
 export const getUserInfo = async (userName: string) => {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
   try {
-    const res = await fetch(`${domain}/api/admin/users?username=${userName}`, { cache: 'no-store' });
+    const res = await fetch(`${domain}/api/admin/users?username=${encodeURIComponent(userName)}`, { cache: 'no-store' });
     if (!res.ok) {
       throw new Error('Failed to fetch user data');
     }
@@ -89,10 +89,19 @@ export const getUserInfo = async (userName: string) => {
   }
 }
 
-
-
-
-
+// 공간 기록 목록 요청(관리자)
+export const getAdminReviews = async (address: string) => {
+  const domain = process.env.NEXT_PUBLIC_DOMAIN;
+  try {
+    const res = await fetch(`${domain}/api/admin/reviews?address=${encodeURIComponent(address)}`, { cache: 'no-store' });
+    if (!res.ok) {
+      throw new Error('Failed to fetch reviews data');
+    }
+    return res.json();
+  } catch (err) {
+    console.error('공간 기록 데이터 페칭 실패', err);
+  }
+}
 
 interface FormInputs {
   id: string;
