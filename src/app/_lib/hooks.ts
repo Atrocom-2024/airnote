@@ -22,7 +22,7 @@ export const useUserSearch = (userName: string) => {
 
 export const useReviewSearch = (address: string) => {
   return useQuery<ReviewType[]>({
-    queryKey: ['reviews'],
+    queryKey: ['reviewSearch'],
     queryFn: () => getReviewsAdmin(address)
   });
 };
@@ -30,7 +30,7 @@ export const useReviewSearch = (address: string) => {
 export const useDeleteReview = () => {
   return useMutation({
     mutationFn: deleteReviewAdmin,
-    // onSuccess: () => window.location.reload(),
+    onSuccess: () => window.location.reload(),
     onError: (err) => {
       console.error(err);
       return alert('기록 제거에 실패했습니다. 잠시 후 다시 시도해주세요.');
