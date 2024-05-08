@@ -76,7 +76,7 @@ export const postLogout = async () => {
 };
 
 // 사용자 정보 요청(관리자)
-export const getUserInfo = async (userName: string) => {
+export const getUserInfoAdmin = async (userName: string) => {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
   try {
     const res = await fetch(`${domain}/api/admin/users?username=${encodeURIComponent(userName)}`, { cache: 'no-store' });
@@ -90,7 +90,7 @@ export const getUserInfo = async (userName: string) => {
 }
 
 // 공간 기록 목록 요청(관리자)
-export const getAdminReviews = async (address: string) => {
+export const getReviewsAdmin = async (address: string) => {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
   try {
     const res = await fetch(`${domain}/api/admin/reviews?address=${encodeURIComponent(address)}`, { cache: 'no-store' });
@@ -100,6 +100,23 @@ export const getAdminReviews = async (address: string) => {
     return res.json();
   } catch (err) {
     console.error('공간 기록 데이터 페칭 실패', err);
+  }
+}
+
+// 공간 기록 제거 요청(관리자)
+export const deleteReviewAdmin = async (reviewId: string) => {
+  const domain = process.env.NEXT_PUBLIC_DOMAIN;
+  try {
+    const res = await fetch(`${domain}/api/admin/reviews/${reviewId}`, {
+      method: 'DELETE',
+      cache: 'no-store'
+    });
+    if (!res.ok) {
+      throw new Error('Failed to delete review');
+    }
+    return res.json();
+  } catch (err) {
+    console.error('공간 기록 제거 실패', err);
   }
 }
 
