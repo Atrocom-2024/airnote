@@ -34,14 +34,16 @@ export default function SearchReviewSection() {
           <IoSearch className="absolute top-1/2 right-3 -translate-y-1/2" size="30" color="#4A68F5" />
         </section>
       </article>
-      <article className="min-h-[500px] mt-10 space-y-10">
-        {isPending ? <PartLoadingUI /> : (
-          reviews && reviews.length ? reviews.map((review) => (
-            <AdminReviewCard review={review} key={review._id} />
-          )) : (
-            <section className="text-default font-bold text-xl">기록이 없습니다. 주소로 검색해주세요.</section>
-          )
-        )}
+      <article className="min-h-[500px] mt-10 flex justify-center items-center">
+        <div className="space-y-10">
+          {isPending ? <PartLoadingUI /> : (
+            reviews && reviews.length ? reviews.map((review) => (
+              <AdminReviewCard review={review} key={review._id} />
+            )) : (
+              <section className="text-default font-bold text-xl">기록이 없습니다. 주소로 검색해주세요.</section>
+            )
+          )}
+        </div>
       </article>
     </section>
   );
