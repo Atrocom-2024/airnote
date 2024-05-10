@@ -22,7 +22,8 @@ const config: Config = {
       "dark-white": "#FAFAFA",
       "gray": "#AFAFAF",
       "dark-gray": "#6A6A6A",
-      "red": "#FF4242"
+      "red": "#FF4242",
+      "kakao": "#FEE500"
     }
   },
   plugins: [],
