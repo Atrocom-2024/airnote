@@ -21,9 +21,9 @@ export default function AdminReviewCard({ review }: PropsType) {
       </section>
       <section className="w-[70%]">
         <div className="flex justify-between">
-          <div className="flex items-center">
+          <div>
             <div className="font-bold text-default text-lg">{review.address}</div>
-            <div className="text-dark-gray font-bold ml-2">{review.address_detail}</div>
+            <div className="text-dark-gray text-sm font-bold">{review.address_detail}</div>
           </div>
           <div className="text-dark-gray text-sm">{ parseDate(review.create_at) }</div>
         </div>

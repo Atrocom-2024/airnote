@@ -25,8 +25,7 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
         return res.status(400).send('잘못된 요청 구문');
       }
       const db: Db = await connectDB();
-      const deleteReview = await db.collection('review_data').deleteOne({ _id: new ObjectId(review_id) })
-      console.log(deleteReview);
+      const deleteReview = await db.collection('reviews_data').deleteOne({ _id: new ObjectId(review_id) });
       return res.status(200).json(deleteReview);
     default:
       return res.status(405).send('잘못된 요청 메서드');
