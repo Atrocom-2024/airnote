@@ -4,6 +4,7 @@ import PartLoadingUI from "@/app/_components/PartLoadingUI";
 import { useDeleteReview } from "@/app/_lib/hooks";
 import { parseDate } from "@/utils/modules";
 import Image from "next/image";
+import { AiOutlineLoading } from "react-icons/ai";
 
 export default function AdminReviewCard({ review }: PropsType) {
   const { mutate, isPending } = useDeleteReview();
@@ -30,10 +31,10 @@ export default function AdminReviewCard({ review }: PropsType) {
         <div className="px-2 mt-5 mb-20 text-sm">{review.content}</div>
         <div className="text-end">
           <button
-            className="bg-default rounded-md text-white text-sm font-bold px-4 py-2"
+            className="w-[80px] h-[36px] bg-default rounded-md text-white text-sm font-bold text-center py-2"
             onClick={() => mutate(review._id)}
             disabled={isPending}
-          >{isPending ? <PartLoadingUI /> : '기록제거'}</button>
+          >{isPending ? <AiOutlineLoading className="animate-spin mx-auto" size="30" color="white" /> : '기록제거'}</button>
         </div>
       </section>
     </article>
