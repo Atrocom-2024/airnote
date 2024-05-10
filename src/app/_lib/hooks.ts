@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
 
-import { getAdminReviews, getUserInfo, postLogout } from "./api"
+import { deleteReviewAdmin, getReviewsAdmin, getUserInfoAdmin, postLogout } from "./api"
 
 export const useAdminLogout = () => {
   return useMutation({
@@ -16,16 +16,27 @@ export const useAdminLogout = () => {
 export const useUserSearch = (userName: string) => {
   return useQuery<UserInfoTypes>({
     queryKey: ['userInfo'],
-    queryFn: () => getUserInfo(userName)
+    queryFn: () => getUserInfoAdmin(userName)
   });
 };
 
 export const useReviewSearch = (address: string) => {
   return useQuery<ReviewType[]>({
-    queryKey: ['reviews'],
-    queryFn: () => getAdminReviews(address)
+    queryKey: ['reviewSearch'],
+    queryFn: () => getReviewsAdmin(address)
   });
 };
+
+export const useDeleteReview = () => {
+  return useMutation({
+    mutationFn: deleteReviewAdmin,
+    onSuccess: () => window.location.reload(),
+    onError: (err) => {
+      console.error(err);
+      return alert('기록 제거에 실패했습니다. 잠시 후 다시 시도해주세요.');
+    }
+  })
+}
 
 interface UserInfoTypes {
   _id: string;
