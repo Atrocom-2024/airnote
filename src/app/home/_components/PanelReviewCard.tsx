@@ -12,7 +12,7 @@ export default function PanelReviewCard({ topReview }: PropsType) {
       <div className="flex justify-between items-center">
         <Link
           className="text-default font-bold"
-          href={`/?sidebar=true&lat=${topReview.latitude}&lng=${topReview.longitude}&address=${encodeURIComponent(topReview.address)}`}
+          href={`/home?sidebar=true&lat=${topReview.latitude}&lng=${topReview.longitude}&address=${encodeURIComponent(topReview.address)}`}
           onClick={() => setMapLoc({ lat: Number(topReview.latitude), lng: Number(topReview.longitude) })}
         >{topReview.address}</Link>
         <div className="text-gray text-sm">{ parseDate(topReview.create_at) }</div>
