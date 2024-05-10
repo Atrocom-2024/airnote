@@ -23,18 +23,23 @@ export default function LoginModal({ closeModalHandler, loginHandler }: PropsTyp
           priority={true}
         />
         <button
-          className="w-[170px] mx-auto mt-7 block md:w-[200px] md:mt-14"
+          className="w-[170px] mx-auto mt-7 block md:w-[220px] md:mt-14"
           type="button"
           onClick={loginHandler}
         >
-          <Image
-            className="w-full"
-            src="/kakao_login_btn.png"
-            width={500}
-            height={0}
-            alt="로그인 버튼"
-            priority={true}
-          />
+          <div className="bg-kakao flex justify-center items-center py-3 rounded-md">
+            <div>
+              <Image
+                className="w-[30px]"
+                src="/kakao-logo.svg"
+                width={500}
+                height={0}
+                alt="카카오 로고"
+                priority={true}
+              />
+            </div>
+            <div className="text-black text-lg ml-1">카카오로 시작하기</div>
+          </div>
         </button>
       </article>
     </section>
