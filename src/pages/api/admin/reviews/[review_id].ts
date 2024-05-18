@@ -4,7 +4,6 @@ import { Db, ObjectId } from "mongodb";
 import { connectDB } from "@/utils/database";
 import { verifyToken } from "@/utils/jwtUtils";
 
-// TODO: 기록 제거 안되는 원인 찾기
 export default async function handler(req: CustomApiRequest, res: NextApiResponse) {
   // 토큰 확인
   const accessToken = req.cookies.accessToken;
