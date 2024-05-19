@@ -31,7 +31,7 @@ export default function MapComponent({ setMarkerInfo }: PropsType) {
     }
   }, 500);
 
-   // 처음 렌더 시에 실행되는 useEffect
+  // 처음 렌더 시에 실행되는 useEffect
   useEffect(() => {
     fetchMarkers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
