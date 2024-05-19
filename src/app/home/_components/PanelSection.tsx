@@ -12,7 +12,7 @@ export default function PanelSection({ topReviews }: PropsType) {
       id="panel"
       className="absolute top-[10vh] left-5 w-[400px] h-[75vh] bg-white border-[1.5px] border-default shadow-lg overflow-y-auto z-[29] hidden sm:block"
     >
-      <article className="mb-3">
+      <article className="mb-3 min-h-[600px]">
         <section className="flex items-center p-3">
           <div>
             <FaArrowTrendUp size="25" color="#4A68F5" />
@@ -20,9 +20,14 @@ export default function PanelSection({ topReviews }: PropsType) {
           <div className="text-xl text-default font-bold ml-3">실시간 인기 공간 기록</div>
         </section>
         <section>
-          {topReviews.map((topReview) => (
+          {topReviews.length ? topReviews.map((topReview) => (
             <PanelReviewCard topReview={topReview} key={topReview._id} />
-          ))}
+          )) : (
+            <article className="text-lg text-center text-default font-bold mt-56">
+              <div>공간 기록이 아직 존재하지 않습니다.</div>
+              <div>첫 공간 기록을 작성해보세요.</div>
+            </article>
+          )}
         </section>
       </article>
       <article>
