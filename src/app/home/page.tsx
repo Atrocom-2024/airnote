@@ -1,6 +1,5 @@
 import Layout from "../_components/layouts/Layout";
 import HomeMain from "./_components/HomeMain";
-import TermsModal from "./_components/TermsModal";
 
 export default async function Home() {
   const topReviews: TopReviewType[] = await getTopReviews();
@@ -8,7 +7,6 @@ export default async function Home() {
   return (
     <Layout>
       <HomeMain topReviews={topReviews} />
-      <TermsModal />
     </Layout>
   );
 }

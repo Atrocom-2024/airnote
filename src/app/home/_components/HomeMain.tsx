@@ -1,14 +1,29 @@
 'use client'
 
 import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import MapSection from "../../_components/map/MapSection";
 import PanelSection from "./PanelSection";
 import ReviewSideBar from "./ReviewSideBar";
+import TermsModal from "./TermsModal";
 
 export default function HomeMain({ topReviews }: PropsType) {
+  const [isTerms, setIsTerms] = useState(false);
   const searchParams = useSearchParams();
   const sidebar = Boolean(searchParams?.get('sidebar'));
+
+  const termsConfirmHandler = () => {
+    setIsTerms(false);
+    sessionStorage.setItem('terms-agree', 'agree');
+  }
+
+  useEffect(() => {
+    const sessionTermsAgree = sessionStorage.getItem('terms-agree');
+    if (sessionTermsAgree !== 'agree') {
+      return setIsTerms(true);
+    }
+  }, [])
 
   return (
     <>
@@ -20,6 +35,7 @@ export default function HomeMain({ topReviews }: PropsType) {
           topReviews={topReviews}
         />
       )}
+      {isTerms && <TermsModal termsConfirmHandler={termsConfirmHandler} />}
     </>
   );
 }
