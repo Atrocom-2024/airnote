@@ -23,7 +23,10 @@ export default function PanelSection({ topReviews }: PropsType) {
           {topReviews.length ? topReviews.map((topReview) => (
             <PanelReviewCard topReview={topReview} key={topReview._id} />
           )) : (
-            <div className="text-lg text-center text-default font-bold mt-56">공간 기록이 아직 존재하지 않습니다.</div>
+            <article className="text-lg text-center text-default font-bold mt-56">
+              <div>공간 기록이 아직 존재하지 않습니다.</div>
+              <div>첫 공간 기록을 작성해보세요.</div>
+            </article>
           )}
         </section>
       </article>
