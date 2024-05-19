@@ -16,14 +16,14 @@ export default function HomeMain({ topReviews }: PropsType) {
   const termsConfirmHandler = () => {
     setIsTerms(false);
     sessionStorage.setItem('terms-agree', 'agree');
-  }
+  };
 
   useEffect(() => {
     const sessionTermsAgree = sessionStorage.getItem('terms-agree');
     if (sessionTermsAgree !== 'agree') {
       return setIsTerms(true);
     }
-  }, [])
+  }, []);
 
   return (
     <>
