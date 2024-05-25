@@ -23,7 +23,7 @@ export default async function My() {
             </section>
             <section className="ml-5 text-dark-gray text-sm sm:text-base">
               <div className="mb-3">{myInfo.user_info.email}</div>
-              <NameContainer name={myInfo.user_info.name} />
+              <NameContainer nickname={myInfo.user_info.nickname} />
             </section>
           </article>
         </section>
@@ -54,7 +54,7 @@ interface MyInfoTypes {
   user_info: {
     _id: string;
     email: string;
-    name: string;
+    nickname: string;
   },
   reviews: MyReviewTypes[]
 }
