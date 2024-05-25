@@ -40,11 +40,14 @@ export default function SearchUserSection() {
           userInfo ? (
             <article className="flex justify-center items-center shadow-lg rounded-md py-10 mt-8 md:justify-start md:px-24">
               <section>
+                <div className="text-default text-xl font-bold mb-2">{userInfo.nickname}</div>
                 <CgProfile size="60" color="#4A68F5" />
               </section>
               <section className="ml-5 text-dark-gray text-sm sm:text-base">
-                <div className="mb-3">{userInfo.email}</div>
-                <div className="">{userInfo.name}</div>
+                <div>이메일: {userInfo.email}</div>
+                <div>이름: {userInfo.name}</div>
+                <div>전화번호: {`0${userInfo.phone_number.split(' ')[1]}`}</div>
+                <div>가입날짜: {userInfo.create_at}</div>
               </section>
             </article>
           ) : (

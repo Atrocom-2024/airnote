@@ -25,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
       const db: Db = await connectDB();
       const userInfo = await db.collection('user_data').findOne(
-        { name: username }, { projection: { email: 1, name: 1, create_at: 1 } }
+        { nickname: username }, { projection: { email: 1, nickname: 1, name: 1, phone_number: 1, create_at: 1 } }
       );
       return res.json(userInfo);
     default:

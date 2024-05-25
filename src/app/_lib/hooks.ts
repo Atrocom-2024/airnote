@@ -42,6 +42,8 @@ interface UserInfoTypes {
   _id: string;
   email: string;
   name: string;
+  nickname: string;
+  phone_number: string;
   create_at: string;
 }
 
