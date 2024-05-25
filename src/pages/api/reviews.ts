@@ -41,24 +41,31 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
         });
         const address_json = await address_res.json();
 
-        // insert 할 데이터 형식
-        const insert_data = {
-          author_email: token.email,
-          author_name: token.name,
-          address: body.address,
-          address_detail: body.address_detail,
-          latitude: parseFloat(address_json.documents[0].y),
-          longitude: parseFloat(address_json.documents[0].x),
-          content: body.content,
-          likes: 0,
-          dislikes: 0,
-          create_at: new Date().toLocaleString('ko-KR'),
-          auth_file: body.encoded_auth_file,
-        }
-
+        // 사용자 정보 얻기
         const db: Db = await connectDB();
-        const userInfo = await db.collection('reviews_data').insertOne(insert_data);
-        return res.status(201).json(insert_data);
+        const userInfo = await db.collection('user_data').findOne(
+          { email: token.email }, { projection: { nickname: 1 } }
+        );
+
+        if (userInfo) {
+          // insert 할 데이터 형식
+          const insert_data = {
+            author_email: token.email,
+            author_name: userInfo.nickname,
+            address: body.address,
+            address_detail: body.address_detail,
+            latitude: parseFloat(address_json.documents[0].y),
+            longitude: parseFloat(address_json.documents[0].x),
+            content: body.content,
+            likes: 0,
+            dislikes: 0,
+            create_at: new Date().toLocaleString('ko-KR'),
+            auth_file: body.encoded_auth_file,
+          }
+  
+          const insertReview = await db.collection('reviews_data').insertOne(insert_data);
+          return res.status(201).json(insert_data);
+        }
       } catch (err) {
         console.error(err);
         return res.status(500).send('내부 서버 오류');

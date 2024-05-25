@@ -42,6 +42,10 @@ export default function ReviewForm() {
   const fileVerifyHandler = register('auth_file', {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.files) {
+        const limitsize = 1024 ** 2 * 3; // 3MB
+        if (e.target.files[0].size > limitsize) {
+          return alert('파일은 최대 3MB까지만 업로드 할 수 있습니다.');
+        }
         const fileType = e.target.files[0].type.split('/')[1];
         if (fileType !== 'png' && fileType !== 'jpg' && fileType !== 'jpeg') {
           setValue('auth_file', null);
@@ -66,15 +70,15 @@ export default function ReviewForm() {
       return alert('리뷰를 작성할 상세주소를 입력해주세요.');
     } else if (!data.content) {
       return alert('리뷰 내용을 입력해주세요.');
-    } else if (!data.auth_file) {
-      return alert('인증서류를 첨부해주세요.');
     }
 
     // 인증서류 이미지 인코딩
     const reader = new FileReader();
-    reader.readAsDataURL(data.auth_file[0]);
-    reader.onloadend = () => {
-      typeof(reader.result) === 'string' && setValue('encoded_auth_file', reader.result);
+    if (data.auth_file) {
+      reader.readAsDataURL(data.auth_file[0]);
+      reader.onloadend = () => {
+        typeof(reader.result) === 'string' && setValue('encoded_auth_file', reader.result);
+      }
     }
     
     try {
@@ -158,7 +162,7 @@ export default function ReviewForm() {
               register={{...register('auth_file')}}
               onChange={fileVerifyHandler.onChange}
             />
-            <label className="text-xs text-red ml-3">파일은 .png 또는 .jpg 형식의 파일만 지원합니다.</label>
+            <label className="text-xs text-red ml-3">파일은 .png 또는 .jpg 형식의 파일만 지원하고 최대 용량은 3MB입니다.</label>
           </div>
         </section>
       </article>
