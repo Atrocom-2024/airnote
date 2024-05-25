@@ -5,9 +5,9 @@ import { throttle } from "lodash";
 
 import LoadingUI from "@/app/_components/LoadingUI";
 
-export default function NameContainer({ name }: { name: string; }) {
+export default function NameContainer({ nickname }: { nickname: string; }) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [changeName, setChangeName] = useState(name);
+  const [changeName, setChangeName] = useState(nickname);
   const [isInputChange, setIsInputChange] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -36,7 +36,7 @@ export default function NameContainer({ name }: { name: string; }) {
       const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/my/info`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: changeName })
+        body: JSON.stringify({ nickname: changeName })
       });
       if (res.ok) {
         alert('닉네임이 변경되었습니다.');

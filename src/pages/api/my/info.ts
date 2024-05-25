@@ -1,5 +1,3 @@
-// 닉네임 변경 시 중복확인 필요
-
 import { NextApiRequest, NextApiResponse } from "next";
 import { getToken } from "next-auth/jwt";
 import { Db } from "mongodb";
@@ -22,7 +20,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const decrypted_user = decrypt(decodeURIComponent(user), process.env.NEXT_PUBLIC_AES_EMAIL_SECRET_KEY);
       try {
         const db: Db = await connectDB();
-        const user_info = await db.collection('user_data').findOne({ email: decrypted_user });
+        const user_info = await db.collection('user_data').findOne(
+          { email: decrypted_user },
+          { projection: { email: 1, nickname: 1 } }
+        );
         const reviews = await db.collection('reviews_data').find(
           { author_email: decrypted_user },
           {
@@ -51,7 +52,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const db: Db = await connectDB();
 
         // 닉네임 중복확인
-        const duplicateConfirm = await db.collection('user_data').findOne({ name: body.name });
+        const duplicateConfirm = await db.collection('user_data').findOne({ nickname: body.nickname });
         if (duplicateConfirm) {
           return res.status(409).send('닉네임 중복 발생');
         }
@@ -59,11 +60,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         // 닉네임 변경 수행
         const userInfoUpdate = await db.collection('user_data').updateOne(
           { email: token.email },
-          { $set: { name: body.name } }
+          { $set: { nickname: body.nickname } }
         )
         const reviewsUpdate = await db.collection('reviews_data').updateMany(
           { author_email: token.email },
-          { $set: { author_name: body.name } }
+          { $set: { author_name: body.nickname } }
         );
         return res.status(204).send('닉네임 변경 성공');
       } catch (err) {
