@@ -22,13 +22,15 @@ export const authOptions: NextAuthOptions = {
       } 
       return token;
     },
-    async signIn({ user }) {
+    async signIn({ user, profile }) {
       const db: Db = await connectDB();
       const userInfo = await db.collection('user_data').findOne({ email: user.email });
-      if (!userInfo) {
+      if (!userInfo && profile) {
         const insertUser = await db.collection('user_data').insertOne({
-          email: user.email,
-          name: user.name,
+          email: profile.kakao_account.email,
+          name: profile.kakao_account.name,
+          nickname: profile.kakao_account.profile.nickname,
+          phone_number: profile.kakao_account.phone_number,
           review_likes: [],
           review_dislikes: [],
           community_likes: [],
