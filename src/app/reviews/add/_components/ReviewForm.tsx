@@ -129,7 +129,7 @@ export default function ReviewForm() {
           </div>
           <div>
             <ReviewFormInput
-              placeholder="상세주소를 입력해주세요. ex) 1층 101호 김물주 부동산"
+              placeholder="상세주소를 입력해주세요. ex) 1층 101호 독도는 우리땅 부동산"
               register={{...register('address_detail')}}
             />
           </div>
@@ -140,7 +140,7 @@ export default function ReviewForm() {
         <section className="mt-5">
           <textarea
             className="w-full h-[300px] border-[1.5px] border-gray rounded-md outline-none p-3 resize-none"
-            placeholder={`공간에 대해 기록을 남겨주세요.(건물주, 추억, 등 공익을 위한 것 혹은 추억을 위한 것을 편히 써주세요)\n\n수정이 어려우니 신중히 작성해주세요.`}
+            placeholder={`공간에 대해 기록을 남겨주세요.(건물주, 추억, 등 공익을 위한 것 혹은 추억을 위한 것을 편히 써주세요)\n\n공간 기록 수첩은 사실만을 써야 합니다.\n다수의 이익을 위해 공익적으로 사용되는 기록입니다.\n비방 혹은 비난 등 공익에 벗어난 글은 모니터링 됩니다.\n공간의 다음사람을 위한 기록을 남겨주세요.`}
             {...register('content')}
           />
         </section>
