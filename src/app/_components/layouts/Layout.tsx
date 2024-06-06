@@ -1,12 +1,9 @@
-import { Analytics } from "@vercel/analytics/next";
-
 import Footer from "./Footer";
 import Header from "./Header";
 
 export default function Layout({ children, className }: PropsType) {
   return (
     <main className="bg-white">
-      <Analytics />
       {/*  */}
       <Header />
       {/*  */}
