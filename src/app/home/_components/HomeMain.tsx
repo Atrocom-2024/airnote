@@ -9,6 +9,7 @@ import ReviewSideBar from "./ReviewSideBar";
 import TermsModal from "./TermsModal";
 
 export default function HomeMain({ topReviews }: PropsType) {
+  const [isMap, setIsMap] = useState(false);
   const [isTerms, setIsTerms] = useState(false);
   const searchParams = useSearchParams();
   const sidebar = Boolean(searchParams?.get('sidebar'));
@@ -17,6 +18,10 @@ export default function HomeMain({ topReviews }: PropsType) {
     setIsTerms(false);
     sessionStorage.setItem('terms-agree', 'agree');
   };
+  
+  const isMapHandler = () => {
+    setIsMap((prev) => !prev)
+  }
 
   useEffect(() => {
     const sessionTermsAgree = sessionStorage.getItem('terms-agree');
@@ -27,14 +32,19 @@ export default function HomeMain({ topReviews }: PropsType) {
 
   return (
     <>
+      <button
+        className="absolute top-5 right-5 bg-white border-[1.5px] border-default text-sm px-4 py-2 rounded-md z-[29]"
+        type="button"
+        onClick={isMapHandler}
+      >{isMap ? '목록으로 보기' : '지도로 보기'}</button>
       <MapSection />
       {sidebar ? (
         <ReviewSideBar />
-      ) : (
+      ) : (!isMap && (
         <PanelSection
           topReviews={topReviews}
         />
-      )}
+      ))}
       {isTerms && <TermsModal termsConfirmHandler={termsConfirmHandler} />}
     </>
   );

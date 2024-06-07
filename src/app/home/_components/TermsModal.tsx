@@ -21,14 +21,14 @@ export default function TermsModal({ termsConfirmHandler }: PropsType) {
           />
         </section>
         <section className="flex justify-between items-center">
-          <div className="text-lg">(필수) 공기수첩 서비스 이용약관</div>
+          <div className="text-xs md:text-lg">(필수) 공기수첩 서비스 이용약관</div>
           <Link
-            className="text-gray"
+            className="text-xs text-gray md:text-base"
             href="/terms"
           >자세히 보기</Link>
         </section>
         <button
-          className="bg-default w-full py-2 text-white text-lg font-bold rounded-md"
+          className="bg-default w-full py-2 text-white text-sm font-bold rounded-md md:text-lg"
           onClick={termsConfirmHandler}
         >동의하기</button>
       </article>

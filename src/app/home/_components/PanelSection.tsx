@@ -10,7 +10,7 @@ export default function PanelSection({ topReviews }: PropsType) {
   return (
     <section
       id="panel"
-      className="absolute top-[10vh] left-5 w-[400px] h-[75vh] bg-white border-[1.5px] border-default shadow-lg overflow-y-auto z-[29] hidden sm:block"
+      className="absolute top-0 left-0 w-[100vw] h-[84vh] bg-white md:border-[1.5px] border-default overflow-y-auto z-[28] md:top-[10vh] md:left-5 md:w-[400px] md:h-[75vh] md:shadow-lg"
     >
       <article className="mb-3 min-h-[600px]">
         <section className="flex items-center p-3">
@@ -30,7 +30,7 @@ export default function PanelSection({ topReviews }: PropsType) {
           )}
         </section>
       </article>
-      <article>
+      <article className="hidden md:block">
         <section className="flex items-center p-3">
           <div>
             <LuArrowUpRightSquare size="25" color="#4A68F5" />

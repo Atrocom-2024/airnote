@@ -38,7 +38,7 @@ export default function LoginModal({ closeModalHandler, loginHandler }: PropsTyp
                 priority={true}
               />
             </div>
-            <div className="text-black text-lg ml-1">카카오로 시작하기</div>
+            <div className="text-black text-sm ml-1 md:text-lg">카카오로 시작하기</div>
           </div>
         </button>
       </article>
