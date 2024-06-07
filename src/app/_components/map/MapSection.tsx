@@ -37,7 +37,7 @@ export default function MapSection() {
     <Map
       center={mapLoc}
       level={9}
-      style={{ width: "100%", height: "100%" }}
+      style={{ width: "100%", height: "84vh" }}
       isPanto={true}
     >
       {loading && <PartLoadingUI />}
