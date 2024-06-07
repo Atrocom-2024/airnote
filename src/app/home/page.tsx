@@ -5,7 +5,7 @@ export default async function Home() {
   const topReviews: TopReviewType[] = await getTopReviews();
   
   return (
-    <Layout>
+    <Layout className="relative">
       <HomeMain topReviews={topReviews} />
     </Layout>
   );

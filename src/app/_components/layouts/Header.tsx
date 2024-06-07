@@ -19,7 +19,7 @@ export default async function Header() {
       <section className="flex items-center">
         <article className="mr-5 sm:mr-10">
           <Link href="/">
-            <Image src="/logo.svg" width={50} height={50} alt="로고" priority={true} />
+            <Image className="w-[35px] md:w-[50px]" src="/logo.svg" width={50} height={50} alt="로고" priority={true} />
           </Link>
         </article>
         <SearchBar />
