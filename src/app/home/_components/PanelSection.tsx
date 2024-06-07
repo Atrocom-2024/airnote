@@ -10,7 +10,7 @@ export default function PanelSection({ topReviews }: PropsType) {
   return (
     <section
       id="panel"
-      className="absolute top-0 left-0 w-[100vw] h-[84vh] bg-white md:border-[1.5px] border-default overflow-y-auto z-[28] md:top-[10vh] md:left-5 md:w-[400px] md:h-[75vh] md:shadow-lg"
+      className="absolute top-0 left-0 w-[100vw] h-[84vh] bg-white md:border-[1.5px] border-default overflow-y-auto z-[28] md:top-[3vh] md:left-5 md:w-[400px] md:h-[75vh] md:shadow-lg"
     >
       <article className="mb-3 min-h-[600px]">
         <section className="flex items-center p-3">

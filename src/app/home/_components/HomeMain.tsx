@@ -33,7 +33,7 @@ export default function HomeMain({ topReviews }: PropsType) {
   return (
     <>
       <button
-        className="absolute top-5 right-5 bg-white border-[1.5px] border-default text-sm px-4 py-2 rounded-md z-[29]"
+        className="absolute top-5 right-5 bg-white border-[1.5px] border-default text-sm px-4 py-2 rounded-md z-[29] md:hidden"
         type="button"
         onClick={isMapHandler}
       >{isMap ? '목록으로 보기' : '지도로 보기'}</button>
