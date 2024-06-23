@@ -1,3 +1,5 @@
+'use client'
+
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { LuArrowUpRightSquare } from "react-icons/lu";
 
