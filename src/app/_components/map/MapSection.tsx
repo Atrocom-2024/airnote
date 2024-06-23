@@ -28,7 +28,7 @@ export default function MapSection() {
   const markerClickHandler = (lat: number, lng: number, address: string) => {
     router.push(`/home?sidebar=true&lat=${lat}&lng=${lng}&address=${encodeURIComponent(address)}`);
   }
-
+  
   useEffect(() => {
     paramLat && paramLng ? setMapLoc({ lat: Number(paramLat), lng: Number(paramLng) }) : getAsyncLocationHandler();
   }, [getAsyncLocationHandler, paramLat, paramLng, setMapLoc]);
