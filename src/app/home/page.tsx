@@ -13,7 +13,6 @@ export default async function Home() {
 
 async function getTopReviews() {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
-  console.log(domain);
   const res = await fetch(`${domain}/api/reviews/top`, { cache: 'no-store' });
 
   if (!res.ok) {
