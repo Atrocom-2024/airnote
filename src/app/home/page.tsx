@@ -10,7 +10,7 @@ export default async function Home() {
     </Layout>
   );
 }
-
+    
 async function getTopReviews() {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
   const res = await fetch(`${domain}/api/reviews/top`, { cache: 'no-store' });
