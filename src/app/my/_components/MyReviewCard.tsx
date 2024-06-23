@@ -1,3 +1,5 @@
+'use client'
+
 import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
 
 import { parseDate } from "@/utils/modules";
