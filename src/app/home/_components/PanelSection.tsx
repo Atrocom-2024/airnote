@@ -5,10 +5,21 @@ import { LuArrowUpRightSquare } from "react-icons/lu";
 
 import PanelReviewCard from "./PanelReviewCard";
 import MapMoveBtn from "./MapMoveBtn";
+import { useEffect, useState } from "react";
 
-export default function PanelSection({ topReviews }: PropsType) {
+export default function PanelSection() {
   const locNameList: LocationListTypes = ['서울', '경기', '충남', '충북', '전북', '전남', '강원', '경북', '경남', '제주'];
+  const [topReviews, setTopReviews] = useState<TopReviewType[]>([]);
+  const getReviews = async () => {
+    const domain = process.env.NEXT_PUBLIC_DOMAIN;
+    const res = await fetch(`${domain}/api/reviews/top`, { cache: 'no-store' });
+    const result = await res.json();
+    setTopReviews(result);
+  }
 
+  useEffect(() => {
+    getReviews();
+  }, []);
   return (
     <section
       id="panel"
