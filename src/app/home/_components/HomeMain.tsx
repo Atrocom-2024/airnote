@@ -8,7 +8,7 @@ import PanelSection from "./PanelSection";
 import ReviewSideBar from "./ReviewSideBar";
 import TermsModal from "./TermsModal";
 
-export default function HomeMain({ topReviews }: PropsType) {
+export default function HomeMain() {
   const [isMap, setIsMap] = useState(false);
   const [isTerms, setIsTerms] = useState(false);
   const searchParams = useSearchParams();
@@ -42,26 +42,10 @@ export default function HomeMain({ topReviews }: PropsType) {
         <ReviewSideBar />
       ) : (!isMap && (
         <PanelSection
-          topReviews={topReviews}
+
         />
       ))}
       {isTerms && <TermsModal termsConfirmHandler={termsConfirmHandler} />}
     </>
   );
-}
-
-interface PropsType {
-  topReviews: TopReviewType[];
-}
-
-interface TopReviewType {
-  _id: string;
-  address: string;
-  address_detail: string;
-  latitude: string;
-  longitude: string;
-  content: string;
-  likes: number;
-  dislikes: number;
-  create_at: string;
 }

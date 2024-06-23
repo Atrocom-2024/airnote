@@ -11,12 +11,12 @@ import NameContainer from "./_components/NameContainer";
 export default async function My() {
   const session = await getServerSession(authOptions);
   const myInfo: MyInfoTypes = await getReviews(session?.user.email);
-
+  
   return (
     <Layout className="h-auto min-h-[84vh] bg-dark-white py-10 md:py-20">
       <main className="w-full px-5 mx-auto md:w-[600px] md:px-0">
         <section className="mb-16 md:mb-24">
-          <Title>내 정보</Title>
+          <Title>내 정보아!!!</Title>
           <article className="w-full flex justify-center items-center bg-white shadow-lg rounded-md py-10 mt-8 md:justify-start md:px-24">
             <section>
               <CgProfile size="60" color="#4A68F5" />

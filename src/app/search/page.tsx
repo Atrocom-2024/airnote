@@ -3,7 +3,7 @@ import SearchMain from "./_components/SearchMain";
 
 export default async function Search() {
   return (
-    <Layout>
+    <Layout className="relative">
       <SearchMain />
     </Layout>
   );
