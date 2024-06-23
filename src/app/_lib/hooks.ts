@@ -1,6 +1,13 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
 
-import { deleteReviewAdmin, getReviewsAdmin, getUserInfoAdmin, postLogout } from "./api"
+import { deleteReviewAdmin, getReviewsAdmin, getTopReviews, getUserInfoAdmin, postLogout } from "./api"
+
+export const useTopReviews = () => {
+  return useQuery<TopReviewType[]>({
+    queryKey: ['topReviews'],
+    queryFn: () => getTopReviews()
+  });
+};
 
 export const useAdminLogout = () => {
   return useMutation({
@@ -36,6 +43,18 @@ export const useDeleteReview = () => {
       return alert('기록 제거에 실패했습니다. 잠시 후 다시 시도해주세요.');
     }
   })
+}
+
+interface TopReviewType {
+  _id: string;
+  address: string;
+  address_detail: string;
+  latitude: string;
+  longitude: string;
+  content: string;
+  likes: number;
+  dislikes: number;
+  create_at: string;
 }
 
 interface UserInfoTypes {
