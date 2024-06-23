@@ -49,16 +49,3 @@ export default function HomeMain() {
     </>
   );
 }
-
-
-interface TopReviewType {
-  _id: string;
-  address: string;
-  address_detail: string;
-  latitude: string;
-  longitude: string;
-  content: string;
-  likes: number;
-  dislikes: number;
-  create_at: string;
-}
