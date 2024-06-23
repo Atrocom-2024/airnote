@@ -11,7 +11,7 @@ import NameContainer from "./_components/NameContainer";
 export default async function My() {
   const session = await getServerSession(authOptions);
   const myInfo: MyInfoTypes = await getReviews(session?.user.email);
-
+  
   return (
     <Layout className="h-auto min-h-[84vh] bg-dark-white py-10 md:py-20">
       <main className="w-full px-5 mx-auto md:w-[600px] md:px-0">
