@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useQuery, useMutation } from "@tanstack/react-query";
 
 import {
   getTopReviews,
@@ -7,7 +7,7 @@ import {
   getUserInfoAdmin,
   getReviewsAdmin,
   deleteReviewAdmin
-} from "./api"
+} from "./api";
 
 // 상위 4개 공간 기록 데이터를 가져오는 훅
 export const useTopReviews = () => {
@@ -22,8 +22,8 @@ export const useMyInfo = (email: string) => {
   return useQuery<MyInfoTypes>({
     queryKey: ['myInfo'],
     queryFn: () => getMyInfo(email)
-  })
-}
+  });
+};
 
 // 관리자 로그아웃 요청 훅
 export const useAdminLogout = () => {
@@ -62,8 +62,8 @@ export const useDeleteReview = () => {
       console.error(err);
       return alert('기록 제거에 실패했습니다. 잠시 후 다시 시도해주세요.');
     }
-  })
-}
+  });
+};
 
 interface TopReviewType {
   _id: string;
@@ -84,7 +84,7 @@ interface MyInfoTypes {
     nickname: string;
   },
   reviews: MyReviewTypes[]
-}
+};
 
 interface MyReviewTypes {
   _id: string;
@@ -96,7 +96,7 @@ interface MyReviewTypes {
   likes: number;
   dislikes: number;
   create_at: string;
-}
+};
 
 interface UserInfoTypes {
   _id: string;
