@@ -31,9 +31,14 @@ export default function MyMain({ email }: PropsType) {
         </section>
         <section>
           <Title>내가 쓴 공간 기록</Title>
-          {myInfo.reviews.map((myReview) => (
+          {myInfo.reviews.length ? myInfo.reviews.map((myReview) => (
             <MyReviewCard myReview={myReview} key={myReview._id} />
-          ))}
+          )) : (
+            <article className="mt-36 text-lg text-center text-default font-bold">
+              <div>아직 작성한 공간 기록이 없어요.</div>
+              <div>첫 공간 기록을 남겨보세요.</div>
+            </article>
+          )}
         </section>
       </main>
   );
