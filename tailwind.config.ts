@@ -26,6 +26,6 @@ const config: Config = {
       "kakao": "#FEE500"
     }
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar-hide")],
 };
 export default config;
