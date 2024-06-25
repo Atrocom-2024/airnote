@@ -57,7 +57,6 @@ export default async function Home() {
               alt="예시 이미지"
               priority={true}
             />
-            {/* <Link className="bg-white text-default text-sm font-bold rounded-md px-6 py-2 md:text-xl" href="/home">시작하기</Link> */}
           </article>
         </section>
         <section className="h-full flex justify-center items-center">
@@ -86,10 +85,10 @@ export default async function Home() {
           </article>
         </section>
       </section>
-      <section className="text-lg text-default font-bold flex flex-col items-center md:text-2xl">
+      <section className="text-lg text-default font-bold flex flex-col items-center">
         <div>더 알아보려면 아래로 스크롤하세요</div>
         <div>
-          <FaAngleDown className=" size-[30px] md:size-[50px]" size="50" fill="#4A68F5" />
+          <FaAngleDown className="size-[30px] md:size-[40px]" size="50" fill="#4A68F5" />
         </div>
       </section>
     </main>
