@@ -4,11 +4,11 @@ import { FaAngleDown } from "react-icons/fa6";
 
 export default async function Home() {
   return (
-    <main className="w-[100vw] h-[100vh] px-10 py-4 flex flex-col justify-between bg-gradient-to-b from-default from-60% to-white">
-      <section className="py-4 md:px-4 md:py-8">
+    <main className="w-[100vw] h-[100vh] px-4 md:px-10 py-4 flex flex-col justify-between bg-gradient-to-b from-default from-70% to-white">
+      <section className="px-2 py-4 md:px-4 md:py-8">
         <Image className="w-[50px] md:w-[80px]" src="/landing-logo.svg" width={100} height={0} alt="로고" />
       </section>
-      <section className="min-h-[60vh] px-4 overflow-y-scroll" id="landing-container">
+      <section className="h-[60vh] px-4 overflow-y-scroll" id="landing-container">
         <section className="h-full flex justify-center items-center">
           <article className="text-white md:mr-20">
             <div className="text-xl font-bold mb-2 md:text-2xl lg:text-3xl">남녀노소 누구든지</div>
