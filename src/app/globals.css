@@ -81,6 +81,19 @@ html, body {
     border-radius: 10px;
 }
 
+#landing-container::-webkit-scrollbar {
+    width: 12px;
+    background-color: #3F56C2;
+    border-radius: 100px;
+}
+
+#landing-container::-webkit-scrollbar-thumb {
+    background-color: #ffffff;
+    background-clip: padding-box;
+    border: 1px solid transparent;
+    border-radius: 10px;
+}
+
 #link-bar {
     animation: link-bar-on 0.3s ease-in-out;
 }
