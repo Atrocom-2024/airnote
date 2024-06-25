@@ -20,6 +20,7 @@ export default async function Home() {
               width={500}
               height={0}
               alt="예시 이미지"
+              priority={true}
             />
             <Link className="bg-white text-default text-sm font-bold rounded-md px-6 py-2 md:text-xl" href="/home">시작하기</Link>
           </article>
@@ -30,6 +31,7 @@ export default async function Home() {
               width={800}
               height={0}
               alt="예시 이미지"
+              priority={true}
             />
           </article>
         </section>
@@ -41,6 +43,7 @@ export default async function Home() {
               width={800}
               height={0}
               alt="예시 이미지"
+              priority={true}
             />
           </article>
           <article className="text-white md:ml-20">
@@ -52,6 +55,7 @@ export default async function Home() {
               width={500}
               height={0}
               alt="예시 이미지"
+              priority={true}
             />
             {/* <Link className="bg-white text-default text-sm font-bold rounded-md px-6 py-2 md:text-xl" href="/home">시작하기</Link> */}
           </article>
@@ -66,6 +70,7 @@ export default async function Home() {
               width={500}
               height={0}
               alt="예시 이미지"
+              priority={true}
             />
             <Link className="bg-white text-default text-sm font-bold rounded-md px-6 py-2 md:text-xl" href="/home">시작하기</Link>
           </article>
@@ -76,6 +81,7 @@ export default async function Home() {
               width={800}
               height={0}
               alt="예시 이미지"
+              priority={true}
             />
           </article>
         </section>
