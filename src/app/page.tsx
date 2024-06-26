@@ -10,7 +10,7 @@ export default async function Home() {
       </section>
       <section className="h-[60vh] px-4 scrollbar-hide overflow-y-scroll md:scrollbar-default" id="landing-container">
         <section className="h-full flex justify-center items-center">
-          <article className="text-white md:mr-20">
+          <article className="text-white md:mr-20" data-aos="fade-right">
             <div className="text-xl font-bold mb-2 md:text-2xl lg:text-3xl">남녀노소 누구든지</div>
             <div className="text-xl font-bold mb-5 md:text-2xl lg:text-3xl">공간에 대한 기록을 남길 수 있어요</div>
             <div className="text-sm mb-10 md:mb-16 md:text-base lg:text-lg">여러분들의 소중한 기록이 모든 사람에게 도움이 될 수 있어요</div>
