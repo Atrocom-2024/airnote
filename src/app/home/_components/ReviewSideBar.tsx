@@ -10,6 +10,7 @@ import { getReviews } from "@/app/_lib/api";
 import Sidebar from "@/app/_components/layouts/Sidebar";
 import SideBarReviewCard from "./SideBarReviewCard";
 import PartLoadingUI from "../../_components/PartLoadingUI";
+import { Roadview, RoadviewMarker } from "react-kakao-maps-sdk";
 
 // TODO: 좋아요/싫어요 기능 구현
 export default function ReviewSideBar() {
@@ -17,6 +18,7 @@ export default function ReviewSideBar() {
   const address = searchParams?.get('address');
   const lat = searchParams?.get('lat');
   const lng = searchParams?.get('lng');
+  const position = { lat: Number(lat), lng: Number(lng) };
   const { data: reviews, error, isLoading } = useQuery<ReviewType[]>({
     queryKey: ['reviews', { lat, lng }],
     queryFn: () => getReviews(lat!, lng!),
@@ -42,6 +44,20 @@ export default function ReviewSideBar() {
             </Link>
             <div className="text-xl text-default font-bold ml-2">{address}</div>
           </section>
+          {lat && lng && (
+            <section className=" border-y-[1.5px] border-default">
+              <Roadview
+                position={{ ...position, radius: 50 }}
+                style={{
+                  // 지도의 크기
+                  width: "100%",
+                  height: "300px",
+                }}
+              >
+                <RoadviewMarker position={position} />
+              </Roadview>
+            </section>
+          )}
           <section>
             {reviews && reviews.map((review) => (
               <SideBarReviewCard review={review} key={review._id} />
