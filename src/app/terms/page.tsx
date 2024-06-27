@@ -7,7 +7,7 @@ import TermsDetail from "./_components/TermsDetail";
 export default function TermsPage() {
   return (
     <Layout>
-      <main className="w-full px-5 pt-10 md:mx-auto md:w-[600px]">
+      <main className="w-full px-5 pt-10 pb-20 md:mx-auto md:w-[600px]">
         <Title>공기수첩 이용약관</Title>
         <article className="mt-10">
           <TermsDetail />
