@@ -5,7 +5,6 @@ import { Analytics } from "@vercel/analytics/next";
 
 import "./globals.css";
 import Providers from "./_components/Providers";
-import AosInit from "./_components/AosInit";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,7 +32,6 @@ export default function RootLayout({
           src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.KAKAO_JS_KEY}&libraries=services,clusterer&autoload=false`}
           strategy="beforeInteractive"
         />
-        <AosInit />
         <Providers>
           {children}
           <Analytics />
