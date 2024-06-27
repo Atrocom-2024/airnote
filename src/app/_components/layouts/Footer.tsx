@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <footer className="w-[100vw] h-[8vh] bg-light-default flex justify-evenly items-center">
+    <footer className="w-[100vw] h-[8vh] bg-light-default flex justify-evenly items-center fixed bottom-0 left-0 z-[29]">
       <section className="text-[0.6rem] md:text-[0.7rem] text-white space-y-1">
         <article>대표: 허무관</article>
         <article>주소: 서울특별시 강남구 테헤란로21길 5</article>

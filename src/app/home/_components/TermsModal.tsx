@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function TermsModal({ termsConfirmHandler }: PropsType) {
   return (
-    <div className="w-[100vw] h-[100vh] absolute top-0 left-0 bg-black/30 z-30">
+    <div className="w-[100vw] h-[100vh] fixed top-0 left-0 bg-black/30 z-30">
       <article
         className="w-[300px] h-[250px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white flex flex-col justify-between rounded-md shadow-2xl p-5 z-50 md:w-[500px] md:h-[400px]"
       >
