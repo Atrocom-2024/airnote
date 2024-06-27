@@ -1,7 +1,7 @@
 'use client'
 
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { FaAngleLeft } from "react-icons/fa6";
@@ -14,6 +14,7 @@ import { Roadview, RoadviewMarker } from "react-kakao-maps-sdk";
 
 // TODO: 좋아요/싫어요 기능 구현
 export default function ReviewSideBar() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const address = searchParams?.get('address');
   const lat = searchParams?.get('lat');
@@ -39,9 +40,9 @@ export default function ReviewSideBar() {
       {isLoading ? <PartLoadingUI /> : (
         <>
           <section className="flex items-center p-3">
-            <Link href="/">
+            <button type="button" onClick={() => router.back()}>
               <FaAngleLeft size="25" fill="#4A68F5" />
-            </Link>
+            </button>
             <div className="text-xl text-default font-bold ml-2">{address}</div>
           </section>
           {lat && lng && (
