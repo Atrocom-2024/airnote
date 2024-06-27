@@ -166,7 +166,7 @@ export default function ReviewForm() {
           </div>
         </section>
       </article>
-      <button className="bg-default text-white rounded-md py-3 mt-5">기록작성</button>
+      <button className="bg-default text-white rounded-md py-3 mt-5 mb-20">기록작성</button>
     </form>
   );
 }
