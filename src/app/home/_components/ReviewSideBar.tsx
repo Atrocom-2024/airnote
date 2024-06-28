@@ -1,18 +1,20 @@
 'use client'
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { CustomOverlayRoadview, Roadview } from "react-kakao-maps-sdk";
 import { FaAngleLeft } from "react-icons/fa6";
 
 import { getReviews } from "@/app/_lib/api";
 import Sidebar from "@/app/_components/layouts/Sidebar";
 import SideBarReviewCard from "./SideBarReviewCard";
 import PartLoadingUI from "../../_components/PartLoadingUI";
-import { Roadview, RoadviewMarker } from "react-kakao-maps-sdk";
+import CustomOverlay from "./CustomOverlay";
 
 // TODO: 좋아요/싫어요 기능 구현
 export default function ReviewSideBar() {
+  const roadviewRef = useRef(null);
   const router = useRouter();
   const searchParams = useSearchParams();
   const address = searchParams?.get('address');
@@ -53,10 +55,22 @@ export default function ReviewSideBar() {
                   width: "100%",
                   height: "300px",
                 }}
+                ref={roadviewRef}
               >
-                <RoadviewMarker position={position}>
-                  <div style={{ color: "#000", width: "100%", height: "max-content" }}>{address}</div>
-                </RoadviewMarker>
+                <CustomOverlayRoadview
+                  position={position}
+                  onCreate={(overlay) => {
+                    const roadview: any = roadviewRef.current;
+                    const projection = roadview.getProjection();
+                    const viewPoint = projection.viewpointFromCoords(
+                      overlay.getPosition(),
+                      overlay.getAltitude()
+                    );
+                    roadview.setViewpoint(viewPoint);
+                  }}
+                >
+                  {address && <CustomOverlay address={address} />}
+                </CustomOverlayRoadview>
               </Roadview>
             </section>
           )}

@@ -13,18 +13,18 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      colors: {
+        "default": "#4A68F5",
+        "light-default": "#92A4F9",
+        "black": "#141414",
+        "white": "#FFFFFF",
+        "dark-white": "#FAFAFA",
+        "gray": "#AFAFAF",
+        "dark-gray": "#6A6A6A",
+        "red": "#FF4242",
+        "kakao": "#FEE500"
+      }
     },
-    colors: {
-      "default": "#4A68F5",
-      "light-default": "#92A4F9",
-      "black": "#141414",
-      "white": "#FFFFFF",
-      "dark-white": "#FAFAFA",
-      "gray": "#AFAFAF",
-      "dark-gray": "#6A6A6A",
-      "red": "#FF4242",
-      "kakao": "#FEE500"
-    }
   },
   plugins: [require("tailwind-scrollbar-hide")],
 };
