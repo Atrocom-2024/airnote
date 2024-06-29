@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Map, MapMarker, MarkerClusterer, useKakaoLoader } from "react-kakao-maps-sdk";
 
 import { getLocation } from "@/utils/modules";
+import { getAddress, getBuildingInfo } from "@/app/_lib/api";
 import { useMapLocation } from "@/app/_lib/store";
 import PartLoadingUI from "../PartLoadingUI";
 import MapComponent from "./MapComponent";
@@ -20,7 +21,7 @@ export default function MapSection() {
     appkey: process.env.KAKAO_JS_KEY,
   });
 
-  const getAsyncLocationHandler = useCallback(async () => {
+  const getUserLocation = useCallback(async () => {
     const userLoc: MapLocationType = await getLocation();
     setMapLoc(userLoc);
   }, [setMapLoc]);
@@ -29,39 +30,20 @@ export default function MapSection() {
     router.push(`/home?sidebar=true&lat=${lat}&lng=${lng}&address=${encodeURIComponent(address)}`);
   }
 
-  const getAddress = async (_: any, mouseEvent: any) => {
-    const url = 'https://dapi.kakao.com/v2/local/geo/coord2address.json';
-    const headerAuthorization = `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}`
+  const buildingClickHandler = async (_: any, mouseEvent: any) => {
     const latlng = mouseEvent.latLng;
-    const x = latlng.getLng();
-    const y = latlng.getLat();
-    const res = await fetch(`${url}?x=${x}&y=${y}`, {
-      headers: {
-        'Authorization': headerAuthorization
-      }
-    });
-    const json = await res.json();
-    const address = await json.documents[0].address.address_name;
-    const buildingInfo = await getLocationInfo(address);
-    console.log(buildingInfo);
-  }
-
-  const getLocationInfo = async (address: string) => {
-    const url = 'https://dapi.kakao.com/v2/local/search/address';
-    const headerAuthorization = `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}`
-    const res = await fetch(`${url}?query=${address}`, {
-      headers: {
-        'Authorization': headerAuthorization
-      }
-    });
-    const json = await res.json();
-    const buildingInfo = json.documents[0].road_address;
-    return buildingInfo;
+    const lat = latlng.getLat();
+    const lng = latlng.getLng();
+    const addressInfo = await getAddress(lat, lng);
+    const buildingInfo = await getBuildingInfo(addressInfo.documents[0].address.address_name);
+    const buildingRoadAddress = buildingInfo.documents[0].road_address;
+    const buildingName = buildingRoadAddress ? buildingRoadAddress.building_name : null;
+    console.log(buildingName);
   }
   
   useEffect(() => {
-    paramLat && paramLng ? setMapLoc({ lat: Number(paramLat), lng: Number(paramLng) }) : getAsyncLocationHandler();
-  }, [getAsyncLocationHandler, paramLat, paramLng, setMapLoc]);
+    paramLat && paramLng ? setMapLoc({ lat: Number(paramLat), lng: Number(paramLng) }) : getUserLocation();
+  }, [getUserLocation, paramLat, paramLng, setMapLoc]);
 
   return (
     <Map
@@ -69,7 +51,7 @@ export default function MapSection() {
       level={9}
       style={{ width: "100%", height: "84vh" }}
       isPanto={true}
-      onClick={getAddress}
+      onClick={buildingClickHandler}
     >
       {loading && <PartLoadingUI />}
       <MapComponent setMarkerInfo={setMarkerInfo} />
