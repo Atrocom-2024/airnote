@@ -7,8 +7,8 @@ import { Map, MapMarker, MarkerClusterer, useKakaoLoader } from "react-kakao-map
 import { getLocation } from "@/utils/modules";
 import { getAddress, getBuildingInfo } from "@/app/_lib/api";
 import { useMapLocation } from "@/app/_lib/store";
-import PartLoadingUI from "../PartLoadingUI";
 import MapComponent from "./MapComponent";
+import PartLoadingUI from "../PartLoadingUI";
 
 export default function MapSection() {
   const searchParams = useSearchParams();

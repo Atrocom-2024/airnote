@@ -1,4 +1,4 @@
-export default function CustomOverlay({ address }: PropsType) {
+export default function RoadviewCustomOverlay({ address }: PropsType) {
   return (
     <div className="relative bg-white px-4 py-2 rounded-lg shadow-lg">
       <div className="text-sm font-bold">{address}</div>

@@ -10,7 +10,7 @@ import { getReviews } from "@/app/_lib/api";
 import Sidebar from "@/app/_components/layouts/Sidebar";
 import SideBarReviewCard from "./SideBarReviewCard";
 import PartLoadingUI from "../../_components/PartLoadingUI";
-import CustomOverlay from "./CustomOverlay";
+import RoadviewCustomOverlay from "./RoadviewCustomOverlay";
 
 // TODO: 좋아요/싫어요 기능 구현
 export default function ReviewSideBar() {
@@ -69,7 +69,7 @@ export default function ReviewSideBar() {
                     roadview.setViewpoint(viewPoint);
                   }}
                 >
-                  {address && <CustomOverlay address={address} />}
+                  {address && <RoadviewCustomOverlay address={address} />}
                 </CustomOverlayRoadview>
               </Roadview>
             </section>
