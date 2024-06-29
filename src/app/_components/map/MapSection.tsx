@@ -2,19 +2,27 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import { Map, MapMarker, MarkerClusterer, useKakaoLoader } from "react-kakao-maps-sdk";
+import { CustomOverlayMap, Map, MapMarker, MarkerClusterer, useKakaoLoader } from "react-kakao-maps-sdk";
 
 import { getLocation } from "@/utils/modules";
 import { getAddress, getBuildingInfo } from "@/app/_lib/api";
 import { useMapLocation } from "@/app/_lib/store";
 import MapComponent from "./MapComponent";
 import PartLoadingUI from "../PartLoadingUI";
+import CustomOverlay from "./CustomOverlay";
 
 export default function MapSection() {
   const searchParams = useSearchParams();
   const paramLat = searchParams?.get('lat');
   const paramLng = searchParams?.get('lng');
   const router = useRouter();
+  const [ overlayInfo, setOverlayInfo ] = useState<OverlayInfoType>({
+    lat: 0,
+    lng: 0,
+    address: '',
+    buildingName: null
+  });
+  const [ isOverlay, setIsOverlay ] = useState(false);
   const [ markerInfo, setMarkerInfo ] = useState<MarkerInfoType[]>([]);
   const { mapLoc, setMapLoc } = useMapLocation();
   const [ loading ] = useKakaoLoader({
@@ -28,7 +36,7 @@ export default function MapSection() {
   
   const markerClickHandler = (lat: number, lng: number, address: string) => {
     router.push(`/home?sidebar=true&lat=${lat}&lng=${lng}&address=${encodeURIComponent(address)}`);
-  }
+  };
 
   const buildingClickHandler = async (_: any, mouseEvent: any) => {
     const latlng = mouseEvent.latLng;
@@ -38,7 +46,14 @@ export default function MapSection() {
     const buildingInfo = await getBuildingInfo(addressInfo.documents[0].address.address_name);
     const buildingRoadAddress = buildingInfo.documents[0].road_address;
     const buildingName = buildingRoadAddress ? buildingRoadAddress.building_name : null;
-    console.log(buildingName);
+    const result = {
+      lat: lat,
+      lng: lng,
+      address: buildingRoadAddress ? buildingRoadAddress.address : addressInfo.documents[0].address.address_name,
+      buildingName: buildingName
+    };
+    setOverlayInfo(result);
+    setIsOverlay(true);
   }
   
   useEffect(() => {
@@ -80,6 +95,11 @@ export default function MapSection() {
           />
         ))}
       </MarkerClusterer>
+      {isOverlay && (
+        <CustomOverlayMap position={{ lat: overlayInfo.lat, lng: overlayInfo.lng }}>
+          <CustomOverlay address={overlayInfo.address} buildingName={overlayInfo.buildingName} />
+        </CustomOverlayMap>
+      )}
     </Map>
   );
 }
@@ -89,9 +109,16 @@ interface MarkerInfoType {
   address: string;
   latitude: number;
   longitude: number;
-}
+};
 
 interface MapLocationType {
   lat: number;
   lng: number;
-}
+};
+
+interface OverlayInfoType {
+  lat: number;
+  lng: number;
+  address: string;
+  buildingName: string | null;
+};
