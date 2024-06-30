@@ -23,7 +23,7 @@ export default function LoginBtn() {
   return (
     <>
       <button
-        className="border-[1.5px] border-default px-5 py-2 rounded-md text-xs md:text-sm"
+        className="bg-default text-white px-5 py-2 rounded-md text-xs md:text-sm"
         type="button"
         onClick={openModalHandler}
       >로그인</button>
