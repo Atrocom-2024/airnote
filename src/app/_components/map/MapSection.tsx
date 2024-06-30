@@ -47,15 +47,15 @@ export default function MapSection() {
     const buildingRoadAddress = buildingInfo.documents[0].road_address;
     const buildingName = buildingRoadAddress ? buildingRoadAddress.building_name : null;
     const result = {
-      lat: lat,
-      lng: lng,
-      address: buildingRoadAddress ? buildingRoadAddress.address : addressInfo.documents[0].address.address_name,
+      lat: buildingInfo.documents[0].address.y,
+      lng: buildingInfo.documents[0].address.x,
+      address: buildingRoadAddress ? buildingRoadAddress.address_name : buildingInfo.documents[0].address.address_name,
       buildingName: buildingName
     };
     setOverlayInfo(result);
     setIsOverlay(true);
   }
-  
+
   useEffect(() => {
     paramLat && paramLng ? setMapLoc({ lat: Number(paramLat), lng: Number(paramLng) }) : getUserLocation();
   }, [getUserLocation, paramLat, paramLng, setMapLoc]);
@@ -95,11 +95,18 @@ export default function MapSection() {
           />
         ))}
       </MarkerClusterer>
-      {isOverlay && (
-        <CustomOverlayMap position={{ lat: overlayInfo.lat, lng: overlayInfo.lng }}>
-          <CustomOverlay address={overlayInfo.address} buildingName={overlayInfo.buildingName} />
+      {isOverlay ? (
+        <CustomOverlayMap
+          position={{ lat: overlayInfo.lat, lng: overlayInfo.lng }}
+          yAnchor={1.2}
+        >
+          <CustomOverlay
+            address={overlayInfo.address}
+            buildingName={overlayInfo.buildingName}
+            setIsOverlay={setIsOverlay}
+          />
         </CustomOverlayMap>
-      )}
+      ) : null}
     </Map>
   );
 }
