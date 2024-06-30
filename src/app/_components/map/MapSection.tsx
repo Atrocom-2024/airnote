@@ -98,6 +98,7 @@ export default function MapSection() {
       {isOverlay ? (
         <CustomOverlayMap
           position={{ lat: overlayInfo.lat, lng: overlayInfo.lng }}
+          clickable={true}
           yAnchor={1.2}
         >
           <CustomOverlay
