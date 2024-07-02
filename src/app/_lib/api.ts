@@ -3,6 +3,46 @@ import { SubmitHandler } from "react-hook-form";
 
 import { encrypt } from "@/utils/modules";
 
+// 마커 위치 정보들을 가져오는 함수
+export const getMarkerInfo = async (params: GetMarkerParam) => {
+  const domain = process.env.NEXT_PUBLIC_DOMAIN;
+  const res = await fetch(`${domain}/api/reviews/markers?sw_lat=${params.swLat}&sw_lng=${params.swLng}&ne_lat=${params.neLat}&ne_lng=${params.neLng}`);
+  if (!res.ok) {
+    throw new Error('Failed to get markerinfo');
+  }
+  return res.json();
+}
+
+// 위도/경도에 해당하는 위치의 주소 정보를 가져오는 함수
+export const getAddress = async (lat: string, lng: string) => {
+  const url = 'https://dapi.kakao.com/v2/local/geo/coord2address.json';
+  const headerAuthorization = `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}`
+  const res = await fetch(`${url}?x=${lng}&y=${lat}`, {
+    headers: {
+      'Authorization': headerAuthorization
+    }
+  });
+  if (!res.ok) {
+    throw new Error('Failed to get address information');
+  }
+  return res.json();
+}
+
+// 주소 기반의 건물 정보를 가져오는 함수
+export const getBuildingInfo = async (address: string) => {
+  const url = 'https://dapi.kakao.com/v2/local/search/address';
+  const headerAuthorization = `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}`
+  const res = await fetch(`${url}?query=${address}`, {
+    headers: {
+      'Authorization': headerAuthorization
+    }
+  });
+  if (!res.ok) {
+    throw new Error('Failed to get building information');
+  }
+  return res.json();
+}
+
 // 상위 4개 공간 기록 데이터를 가져오는 함수
 export const getTopReviews = async () => {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
@@ -141,6 +181,13 @@ export const deleteReviewAdmin = async (reviewId: string) => {
   } catch (err) {
     console.error('공간 기록 제거 실패', err);
   }
+}
+
+interface GetMarkerParam {
+  swLat: number;
+  swLng: number;
+  neLat: number;
+  neLng: number;
 }
 
 interface FormInputs {
