@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { CustomOverlayMap, Map, MapMarker, MarkerClusterer, useKakaoLoader } from "react-kakao-maps-sdk";
 import { debounce } from "lodash";
 
@@ -16,6 +16,7 @@ export default function MapSection() {
   const paramLat = searchParams?.get('lat');
   const paramLng = searchParams?.get('lng');
   const router = useRouter();
+  const mapRef = useRef<any>(null);
   const [ overlayInfo, setOverlayInfo ] = useState<OverlayInfoType>({
     lat: 0,
     lng: 0,
@@ -74,6 +75,16 @@ export default function MapSection() {
   };
 
   useEffect(() => {
+    const mapContainer = mapRef.current;
+    if (mapContainer) {
+      mapContainer.addEventListener('touchend', buildingClickHandler);
+      return () => {
+        mapContainer.removeEventListener('touched', buildingClickHandler);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
     paramLat && paramLng ? setMapLoc({ lat: Number(paramLat), lng: Number(paramLng) }) : getUserLocation();
   }, [getUserLocation, paramLat, paramLng, setMapLoc]);
 
@@ -85,6 +96,7 @@ export default function MapSection() {
       isPanto={true}
       onClick={buildingClickHandler}
       onIdle={mapIdleHandler}
+      ref={mapRef}
     >
       {loading && <PartLoadingUI />}
       <MarkerClusterer
