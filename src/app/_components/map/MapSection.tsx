@@ -3,11 +3,11 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { CustomOverlayMap, Map, MapMarker, MarkerClusterer, useKakaoLoader } from "react-kakao-maps-sdk";
+import { debounce } from "lodash";
 
 import { getLocation } from "@/utils/modules";
-import { getAddress, getBuildingInfo } from "@/app/_lib/api";
+import { getAddress, getBuildingInfo, getMarkerInfo } from "@/app/_lib/api";
 import { useMapLocation } from "@/app/_lib/store";
-import MapComponent from "./MapComponent";
 import PartLoadingUI from "../PartLoadingUI";
 import CustomOverlay from "./CustomOverlay";
 
@@ -28,6 +28,23 @@ export default function MapSection() {
   const [ loading ] = useKakaoLoader({
     appkey: process.env.KAKAO_JS_KEY,
   });
+
+  const mapIdleHandler = debounce(async (target: kakao.maps.Map) => {
+    const bounds = target.getBounds();
+    const params = {
+      swLat: bounds.getSouthWest().getLat(),
+      swLng: bounds.getSouthWest().getLng(),
+      neLat: bounds.getNorthEast().getLat(),
+      neLng: bounds.getNorthEast().getLng()
+    };
+    try {
+      const res = await getMarkerInfo(params);
+      setMarkerInfo(res);
+    } catch (err) {
+      console.error(err);
+      return alert('알 수 없는 오류로 데이터 받아오기에 실패했습니다. 네트워크 상태를 확인해주세요.')
+    }
+  }, 500);
 
   const getUserLocation = useCallback(async () => {
     const userLoc: MapLocationType = await getLocation();
@@ -54,7 +71,7 @@ export default function MapSection() {
     };
     setOverlayInfo(result);
     setIsOverlay(true);
-  }
+  };
 
   useEffect(() => {
     paramLat && paramLng ? setMapLoc({ lat: Number(paramLat), lng: Number(paramLng) }) : getUserLocation();
@@ -67,9 +84,9 @@ export default function MapSection() {
       style={{ width: "100%", height: "84vh" }}
       isPanto={true}
       onClick={buildingClickHandler}
+      onIdle={mapIdleHandler}
     >
       {loading && <PartLoadingUI />}
-      <MapComponent setMarkerInfo={setMarkerInfo} />
       <MarkerClusterer
         averageCenter={true}
         minLevel={10}
