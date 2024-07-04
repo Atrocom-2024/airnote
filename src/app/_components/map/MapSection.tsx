@@ -16,7 +16,7 @@ export default function MapSection() {
   const paramLat = searchParams?.get('lat');
   const paramLng = searchParams?.get('lng');
   const router = useRouter();
-  // const mapRef = useRef<any>(null);
+  const mapRef = useRef<any>(null);
   const [ overlayInfo, setOverlayInfo ] = useState<OverlayInfoType>({
     lat: 0,
     lng: 0,
@@ -74,18 +74,18 @@ export default function MapSection() {
     setIsOverlay(true);
   };
 
-  // useEffect(() => {
-  //   const mapContainer = mapRef.current;
-  //   const testfunction = () => {
-  //     console.log('터치됨');
-  //   }
-  //   if (mapContainer) {
-  //     mapContainer.addEventListener('touchend', testfunction);
-  //     return () => {
-  //       mapContainer.removeEventListener('touched', testfunction);
-  //     }
-  //   }
-  // }, []);
+  useEffect(() => {
+    const mapContainer = mapRef.current;
+    const testfunction = () => {
+      console.log('터치됨');
+    }
+    if (mapContainer) {
+      kakao.maps.event.addListener(mapContainer, 'touchend', testfunction);
+      return () => {
+        kakao.maps.event.removeListener(mapContainer, 'touchend', testfunction)
+      }
+    }
+  }, []);
 
   useEffect(() => {
     paramLat && paramLng ? setMapLoc({ lat: Number(paramLat), lng: Number(paramLng) }) : getUserLocation();
@@ -99,7 +99,7 @@ export default function MapSection() {
       isPanto={true}
       onClick={buildingClickHandler}
       onIdle={mapIdleHandler}
-      // ref={mapRef}
+      ref={mapRef}
     >
       {loading && <PartLoadingUI />}
       <MarkerClusterer
