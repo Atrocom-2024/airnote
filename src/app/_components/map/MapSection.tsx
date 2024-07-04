@@ -103,7 +103,8 @@ export default function MapSection() {
       {loading && <PartLoadingUI />}
       <MarkerClusterer
         averageCenter={true}
-        minLevel={10}
+        minClusterSize={1}
+        minLevel={5}
         styles={[
           {
             width: '60px',
