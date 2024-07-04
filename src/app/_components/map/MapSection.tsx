@@ -74,11 +74,9 @@ export default function MapSection() {
     setIsOverlay(true);
   };
 
+  // 모바일 터치 이벤트를 위한 useEffect
   useEffect(() => {
     const mapContainer = mapRef.current;
-    const testfunction = () => {
-      console.log('터치됨');
-    }
     if (mapContainer) {
       kakao.maps.event.addListener(mapContainer, 'touchend', buildingClickHandler);
       return () => {
@@ -87,6 +85,7 @@ export default function MapSection() {
     }
   }, []);
 
+  // 쿼리 파라미터에 위도/경도가 있을 때를 위한 useEffect
   useEffect(() => {
     paramLat && paramLng ? setMapLoc({ lat: Number(paramLat), lng: Number(paramLng) }) : getUserLocation();
   }, [getUserLocation, paramLat, paramLng, setMapLoc]);
