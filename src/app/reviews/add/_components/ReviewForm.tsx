@@ -10,7 +10,7 @@ import SubTitle from "@/app/_components/SubTitle";
 import ReviewFormInput from "./ReviewFormInput";
 import { throttle } from "lodash";
 
-export default function ReviewForm() {
+export default function ReviewForm({ address }: PropsType) {
   const router = useRouter();
   const [openPostcode, setOpenPostcode] = useState<boolean>(false);
   const {
@@ -20,7 +20,7 @@ export default function ReviewForm() {
     formState: { isSubmitting }
   } = useForm<FormInputs>({
     defaultValues: {
-      address: "",
+      address: address ? address : "",
       address_detail: "",
       content: "",
       auth_file: null,
@@ -109,7 +109,7 @@ export default function ReviewForm() {
         <section className="mt-5">
           <div className="grid grid-cols-4 gap-2 mb-3 md:grid-cols-5">
             <ReviewFormInput
-              className="col-span-3 md:col-span-4"
+              className="text-dark-gray col-span-3 md:col-span-4"
               placeholder="주소를 입력해주세요."
               disabled={true}
               register={{...register('address')}}
@@ -169,6 +169,10 @@ export default function ReviewForm() {
       <button className="bg-default text-white rounded-md py-3 mt-5 mb-20">기록작성</button>
     </form>
   );
+}
+
+interface PropsType {
+  address: string | undefined;
 }
 
 interface FormInputs {
