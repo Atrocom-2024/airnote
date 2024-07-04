@@ -80,9 +80,9 @@ export default function MapSection() {
       console.log('터치됨');
     }
     if (mapContainer) {
-      kakao.maps.event.addListener(mapContainer, 'touchend', testfunction);
+      kakao.maps.event.addListener(mapContainer, 'touchend', buildingClickHandler);
       return () => {
-        kakao.maps.event.removeListener(mapContainer, 'touchend', testfunction)
+        kakao.maps.event.removeListener(mapContainer, 'touchend', buildingClickHandler)
       }
     }
   }, []);
