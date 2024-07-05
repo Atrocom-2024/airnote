@@ -22,7 +22,7 @@ const config: Config = {
         "gray": "#AFAFAF",
         "dark-gray": "#6A6A6A",
         "red": "#FF4242",
-        "kakao": "#FEE500"
+        "kakao": "#FFE812"
       }
     },
   },
