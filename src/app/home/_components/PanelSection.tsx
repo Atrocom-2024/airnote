@@ -15,7 +15,7 @@ export default function PanelSection() {
   return (
     <section
       id="panel"
-      className="absolute top-0 left-0 w-[100vw] h-[84vh] bg-white border-default overflow-y-auto z-[28] md:top-[3vh] md:left-5 md:border-[1.5px] md:rounded-lg md:w-[400px] md:h-[75vh] md:shadow-lg"
+      className="absolute top-0 left-0 w-[100vw] h-[84vh] bg-white overflow-y-auto z-[28] md:top-[3vh] md:left-5 md:rounded-lg md:w-[400px] md:h-[75vh] md:shadow-lg"
     >
       {isPending ? <PartLoadingUI /> : (
         <>
