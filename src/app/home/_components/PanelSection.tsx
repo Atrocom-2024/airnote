@@ -26,7 +26,7 @@ export default function PanelSection() {
               </div>
               <div className="text-xl text-default font-bold ml-3">실시간 인기 공간 기록</div>
             </section>
-            <section>
+            <section className="mb-20 md:mb-0">
               {topReviews && topReviews.length ? topReviews.map((topReview) => (
                 <PanelReviewCard topReview={topReview} key={topReview._id} />
               )) : (
