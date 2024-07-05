@@ -15,18 +15,18 @@ export default function PanelSection() {
   return (
     <section
       id="panel"
-      className="absolute top-0 left-0 w-[100vw] h-[84vh] bg-white md:border-[1.5px] border-default overflow-y-auto z-[28] md:top-[3vh] md:left-5 md:w-[400px] md:h-[75vh] md:shadow-lg"
+      className="absolute top-0 left-0 w-[100vw] h-[84vh] bg-white overflow-y-auto z-[28] md:top-[3vh] md:left-5 md:rounded-lg md:w-[400px] md:h-[75vh] md:shadow-lg"
     >
       {isPending ? <PartLoadingUI /> : (
         <>
-          <article className="mb-3 min-h-[600px]">
+          <article className="min-h-[600px]">
             <section className="flex items-center p-3">
               <div>
                 <FaArrowTrendUp size="25" color="#4A68F5" />
               </div>
               <div className="text-xl text-default font-bold ml-3">실시간 인기 공간 기록</div>
             </section>
-            <section>
+            <section className="mb-20 md:mb-0">
               {topReviews && topReviews.length ? topReviews.map((topReview) => (
                 <PanelReviewCard topReview={topReview} key={topReview._id} />
               )) : (
@@ -37,7 +37,7 @@ export default function PanelSection() {
               )}
             </section>
           </article>
-          <article className="hidden md:block">
+          <article className="hidden md:block md:py-3">
             <section className="flex items-center p-3">
               <div>
                 <LuArrowUpRightSquare size="25" color="#4A68F5" />
