@@ -6,6 +6,7 @@ import { useMapLocation } from "@/app/_lib/store";
 
 export default function PanelReviewCard({ topReview }: PropsType) {
   const { setMapLoc } = useMapLocation();
+  const topReviewContent = topReview.content.split('\n');
 
   return (
     <article className="border-b-[1.5px] border-default p-3">
@@ -17,7 +18,14 @@ export default function PanelReviewCard({ topReview }: PropsType) {
         >{topReview.address}</Link>
         <div className="text-gray text-sm">{ parseDate(topReview.create_at) }</div>
       </div>
-      <div className="px-2 my-5 text-sm">{ topReview.content }</div>
+      <div className="px-2 my-5 text-sm">
+        {topReviewContent.map((content, idx) => {
+          if (!content) {
+            return <br key={idx} />;
+          }
+          return <p className="break-words" key={idx}>{content}</p>;
+        })}
+      </div>
       <div className="flex justify-end items-center mr-5 text-gray">
         <div className="flex items-center mr-3">
           <div>
