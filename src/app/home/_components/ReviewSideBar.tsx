@@ -74,7 +74,7 @@ export default function ReviewSideBar() {
               </Roadview>
             </section>
           )}
-          <section>
+          <section className="mb-20 md:mb-0">
             {reviews && reviews.map((review) => (
               <SideBarReviewCard review={review} key={review._id} />
             ))}
