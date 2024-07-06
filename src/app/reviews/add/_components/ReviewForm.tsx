@@ -72,12 +72,21 @@ export default function ReviewForm({ address }: PropsType) {
       return alert('리뷰 내용을 입력해주세요.');
     }
 
-    // 인증서류 이미지 인코딩
-    const reader = new FileReader();
+    // 인증서류 S3 업로드 요청
     if (data.auth_file) {
-      reader.readAsDataURL(data.auth_file[0]);
-      reader.onloadend = () => {
-        typeof(reader.result) === 'string' && setValue('encoded_auth_file', reader.result);
+      try {
+        const form = new FormData();
+        form.append('auth_file', data.auth_file[0]);
+
+        const res = await fetch('/api/reviews/auth-file', {
+          method: 'POST',
+          body: form
+        });
+        const json = await res.json();
+        console.log(json);
+        return;
+      } catch (err) {
+        console.error(err);
       }
     }
     
