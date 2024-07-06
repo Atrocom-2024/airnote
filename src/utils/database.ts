@@ -1,4 +1,5 @@
 import { MongoClient, Db } from "mongodb";
+import { Pool } from "pg";
 
 let cachedDb: Db | null = null;
 
@@ -13,3 +14,12 @@ export async function connectDB(): Promise<Db> {
   cachedDb = db;
   return db;
 }
+
+export const pool = new Pool({
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: Number(process.env.DB_PORT),
+  options: `-c search_path=${process.env.DB_SCHEMA}`
+});
