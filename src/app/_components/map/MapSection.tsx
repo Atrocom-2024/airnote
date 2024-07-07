@@ -123,7 +123,7 @@ export default function MapSection() {
             position={{ lat: marker.latitude, lng: marker.longitude }}
             clickable={true}
             onClick={() => markerClickHandler(marker.latitude, marker.longitude, marker.address)}
-            key={marker._id}
+            key={marker.post_id}
           />
         ))}
       </MarkerClusterer>
@@ -145,7 +145,7 @@ export default function MapSection() {
 }
 
 interface MarkerInfoType {
-  _id: string;
+  post_id: string;
   address: string;
   latitude: number;
   longitude: number;
