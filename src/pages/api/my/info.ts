@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getToken } from "next-auth/jwt";
 import { Db } from "mongodb";
 
-import { connectDB } from "@/utils/database";
+import { connectDB, pool } from "@/utils/database";
 import { decrypt } from "@/utils/modules";
 
 const secret = process.env.NEXT_AUTH_SECRET;
@@ -19,22 +19,27 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       const decrypted_user = decrypt(decodeURIComponent(user), process.env.NEXT_PUBLIC_AES_EMAIL_SECRET_KEY);
       try {
-        const db: Db = await connectDB();
-        const user_info = await db.collection('user_data').findOne(
-          { email: decrypted_user },
-          { projection: { email: 1, nickname: 1 } }
-        );
-        const reviews = await db.collection('reviews_data').find(
-          { author_email: decrypted_user },
-          {
-            projection: {
-              latitude: 0,
-              longitude: 0,
-              auth_file: 0
-            }
-          }
-        ).toArray();
-        return res.status(200).json({ user_info, reviews });
+        const client = await pool.connect();
+        const userInfoQuery = `SELECT email, nickname FROM USERS_TB WHERE email = $1`;
+        const userInfoQueryResult = await client.query(userInfoQuery, [decrypted_user]);
+        const userReviewsQuery = `
+          SELECT
+            r.post_id,
+            r.address,
+            r.address_detail,
+            r.content,
+            SUM(CASE WHEN rt.reaction_type = 'like' THEN 1 ELSE 0 END) AS likes,
+            SUM(CASE WHEN rt.reaction_type = 'dislike' THEN 1 ELSE 0 END) AS dislikes,
+            r.create_at
+          FROM RECORD_TB r
+          JOIN USERS_TB u ON r.author_id = u.id
+          LEFT JOIN REACTION_TB rt ON r.post_id = rt.post_id
+          WHERE u.email = $1
+          GROUP BY r.post_id, r.address, r.address_detail, r.content, r.create_at
+        `
+        const userReviewsQueryResult = await client.query(userReviewsQuery, [decrypted_user]);
+        client.release();
+        return res.status(200).json({ user_info: userInfoQueryResult.rows[0], reviews: userReviewsQueryResult.rows });
       } catch (err) {
         console.error(err);
         return res.status(500).send('내부 서버 오류')
