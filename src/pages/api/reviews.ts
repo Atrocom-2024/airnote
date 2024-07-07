@@ -29,6 +29,7 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
           GROUP BY r.post_id, u.nickname, r.address, r.address_detail, r.content, r.create_at
         `;
         const reviewsQueryResult = await client.query(reviewsQuery, [parseFloat(lat), parseFloat(lng)]);
+        client.release();
         return res.status(200).json(reviewsQueryResult.rows);
       } catch (err) {
         console.error(err);
