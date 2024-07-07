@@ -24,7 +24,7 @@ export default function ReviewForm({ address }: PropsType) {
       address_detail: "",
       content: "",
       auth_file: null,
-      encoded_auth_file: ''
+      auth_file_url: ''
     }
   });
 
@@ -50,13 +50,6 @@ export default function ReviewForm({ address }: PropsType) {
         if (fileType !== 'png' && fileType !== 'jpg' && fileType !== 'jpeg') {
           setValue('auth_file', null);
           return alert('파일은 .png 또는 .jpg 형식의 파일만 지원합니다.');
-        } else {
-          // 인증서류 이미지 인코딩
-          const reader = new FileReader();
-          reader.readAsDataURL(e.target.files[0]);
-          reader.onloadend = () => {
-            typeof(reader.result) === 'string' && setValue('encoded_auth_file', reader.result);
-          }
         }
       }
     }
@@ -83,18 +76,24 @@ export default function ReviewForm({ address }: PropsType) {
           body: form
         });
         const json = await res.json();
-        console.log(json);
+        setValue('auth_file_url', json.auth_file_url);
         return;
       } catch (err) {
         console.error(err);
       }
     }
     
+    // 기록 작성 요청
     try {
       const res = await fetch('/api/reviews', {
         method: 'POST',
         headers: { 'Content-type': 'application/json' },
-        body: JSON.stringify(data)
+        body: JSON.stringify({
+          address: data.address,
+          address_detail: data.address_detail,
+          content: data.content,
+          auth_file_url: data.auth_file_url
+        })
       });
       if (res.ok) {
         return router.push('/my');
@@ -189,7 +188,7 @@ interface FormInputs {
   address_detail: string;
   content: string;
   auth_file: FileList | null;
-  encoded_auth_file: string;
+  auth_file_url: string;
 }
 
 interface AddressParam {

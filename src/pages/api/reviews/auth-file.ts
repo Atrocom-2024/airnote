@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { Endpoint, S3 } from "aws-sdk";
 import formidable from "formidable";
 import fs from 'fs';
+import { generateRandomString } from "@/utils/modules";
 
 export const config = {
   api: {
@@ -26,16 +27,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       if (files.auth_file) {
         const readStream = fs.createReadStream(files.auth_file[0].filepath);
+        const fileType = files.auth_file[0].mimetype?.split('/')[1];
         const uploadParams = {
           Bucket: process.env.NAVER_BUCKET_NAME,
-          Key: files.auth_file[0].originalFilename || '',
+          Key: `${generateRandomString(30)}.${fileType}`,
           ACL: 'public-read',
           Body: readStream
         };
         try {
           const result = await s3.upload(uploadParams).promise();
-          console.log(result.Location);
-          return res.status(201).json({ img_url: result.Location });
+          return res.status(201).json({ auth_file_url: result.Location });
         } catch (err) {
           console.error('S3 업로드 실패', err);
           return res.status(500).send('서버 관련 오류');

@@ -66,11 +66,9 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
           parseFloat(address_json.documents[0].y),
           parseFloat(address_json.documents[0].x),
           body.content,
-          ''
+          body.auth_file_url
         ];
         const recordInsertResult = await client.query(recordInsertQuery, recordInsertValues);
-
-        return;
         return res.status(201).json(recordInsertResult.rows[0]);
       } catch (err) {
         console.error(err);
@@ -92,6 +90,5 @@ interface BodyTypes {
   address: string;
   address_detail: string;
   content: string;
-  auth_file: FileList | null;
-  encoded_auth_file: string;
+  auth_file_url: string;
 }

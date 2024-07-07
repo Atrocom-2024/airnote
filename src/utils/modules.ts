@@ -55,9 +55,6 @@ export function generateRandomString(length = 20) {
   let result = '';
   const charsLength = chars.length;
   
-  // 길이가 20을 초과하면 20으로 제한
-  length = Math.min(length, 20);
-  
   for (let i = 0; i < length; i++) {
     result += chars.charAt(Math.floor(Math.random() * charsLength));
   }
