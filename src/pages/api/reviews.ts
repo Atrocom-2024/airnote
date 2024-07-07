@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getToken } from "next-auth/jwt";
-import { Db } from "mongodb";
 
-import { connectDB, pool } from "@/utils/database";
+import { pool } from "@/utils/database";
 import { generateRandomString } from "@/utils/modules";
 
 const secret = process.env.NEXT_AUTH_SECRET;
@@ -12,12 +11,25 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
     case 'GET':
       const { lat, lng } = req.query;
       try {
-        const db: Db = await connectDB();
-        const reviews = await db.collection('reviews_data').find(
-          { latitude: parseFloat(lat), longitude: parseFloat(lng) },
-          { projection: { author_email: 0, latitude: 0, longitude: 0, auth_file: 0 } }
-        ).toArray();
-        return res.status(200).json(reviews);
+        const client = await pool.connect();
+        const reviewsQuery = `
+          SELECT
+            r.post_id,
+            u.nickname AS author_nickname,
+            r.address,
+            r.address_detail,
+            r.content,
+            SUM(CASE WHEN rt.reaction_type = 'like' THEN 1 ELSE 0 END) AS likes,
+            SUM(CASE WHEN rt.reaction_type = 'dislike' THEN 1 ELSE 0 END) AS dislikes,
+            r.create_at
+          FROM RECORD_TB r
+          JOIN USERS_TB u ON r.author_id = u.id
+          LEFT JOIN REACTION_TB rt ON r.post_id = rt.post_id
+          WHERE r.latitude = $1 AND r.longitude = $2
+          GROUP BY r.post_id, u.nickname, r.address, r.address_detail, r.content, r.create_at
+        `;
+        const reviewsQueryResult = await client.query(reviewsQuery, [parseFloat(lat), parseFloat(lng)]);
+        return res.status(200).json(reviewsQueryResult.rows);
       } catch (err) {
         console.error(err);
         return res.status(500).send('내부 서버 오류');
@@ -69,6 +81,7 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
           body.auth_file_url
         ];
         const recordInsertResult = await client.query(recordInsertQuery, recordInsertValues);
+        client.release();
         return res.status(201).json(recordInsertResult.rows[0]);
       } catch (err) {
         console.error(err);
