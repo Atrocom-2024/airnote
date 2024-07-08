@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { Db } from "mongodb";
 
-import { connectDB } from "@/utils/database";
+import { pool } from "@/utils/database";
 
 export default async function handler(req: CustomApiRequest, res: NextApiResponse) {
   switch (req.method) {
@@ -12,15 +11,16 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
       const neLatNum = parseFloat(ne_lat);
       const neLngNum = parseFloat(ne_lng);
       try {
-        const db: Db = await connectDB();
-        const markerInfo = await db.collection('reviews_data').find(
-          {
-            latitude: { $gte: swLatNum, $lte: neLatNum },
-            longitude: { $gte: swLngNum, $lte: neLngNum },
-          },
-          { projection: { address: 1, latitude: 1, longitude: 1 } }
-        ).toArray();
-        return res.status(200).json(markerInfo);
+        const client = await pool.connect();
+        const markerInfoQuery = `
+          SELECT post_id, address, latitude, longitude
+          FROM RECORD_TB
+          WHERE latitude BETWEEN $1 AND $2 AND longitude BETWEEN $3 AND $4;
+        `;
+        const locationValues = [swLatNum, neLatNum, swLngNum, neLngNum];
+        const markerInfoQueryResult = await client.query(markerInfoQuery, locationValues);
+        client.release();
+        return res.status(200).json(markerInfoQueryResult.rows);
       } catch (err) {
         console.error(err);
         return res.status(500).send('내부 서버 오류');

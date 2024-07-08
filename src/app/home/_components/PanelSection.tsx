@@ -28,7 +28,7 @@ export default function PanelSection() {
             </section>
             <section className="mb-20 md:mb-0">
               {topReviews && topReviews.length ? topReviews.map((topReview) => (
-                <PanelReviewCard topReview={topReview} key={topReview._id} />
+                <PanelReviewCard topReview={topReview} key={topReview.post_id} />
               )) : (
                 <article className="text-lg text-center text-default font-bold mt-56">
                   <div>공간 기록이 아직 존재하지 않습니다.</div>

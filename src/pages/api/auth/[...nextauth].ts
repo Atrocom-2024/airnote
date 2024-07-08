@@ -1,9 +1,9 @@
 import { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
 import Kakao from "next-auth/providers/kakao";
-import { Db } from "mongodb";
 
-import { connectDB } from "@/utils/database";
+import { pool } from "@/utils/database";
+import { generateRandomString } from "@/utils/modules";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -15,7 +15,7 @@ export const authOptions: NextAuthOptions = {
   ],
   secret: process.env.NEXT_AUTH_SECRET, // 프로덕션 모드에서는 시크릿이 필요함
   callbacks: {
-    async jwt({token, user, profile}) {
+    async jwt({token, user}) {
       if (user) {
         token.user = user;
         token.id = user.id;
@@ -23,21 +23,28 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async signIn({ user, profile }) {
-      const db: Db = await connectDB();
-      const userInfo = await db.collection('user_data').findOne({ email: user.email });
-      if (!userInfo && profile) {
-        const insertUser = await db.collection('user_data').insertOne({
-          email: profile.kakao_account.email,
-          name: profile.kakao_account.name,
-          nickname: profile.kakao_account.profile.nickname,
-          phone_number: profile.kakao_account.phone_number,
-          review_likes: [],
-          review_dislikes: [],
-          community_likes: [],
-          community_dislikes: [],
-          create_at: new Date().toLocaleString('ko-KR')
-        });
-      }
+      const client = await pool.connect();
+      const checkUserQuery = 'SELECT * FROM USERS_TB WHERE email = $1';
+      const checkResult = await client.query(checkUserQuery, [user.email]);
+      if (!checkResult.rows.length && profile) {
+        const id = generateRandomString();
+        const insertQuery = `
+          INSERT INTO USERS_TB (id, email, name, nickname, phone_number, provider)
+          VALUES ($1, $2, $3, $4, $5, $6)
+          RETURNING id
+        `
+        const values = [
+          id,
+          profile.kakao_account.email,
+          profile.kakao_account.name,
+          profile.kakao_account.profile.nickname,
+          profile.kakao_account.phone_number,
+          'kakao'
+        ];
+        const result = await client.query(insertQuery, values);
+        const newUserId = result.rows[0]; // 회원가입 성공시 id 반환
+        client.release();
+      };
       return true;
     }
   },

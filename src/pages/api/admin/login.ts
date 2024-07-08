@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { Db } from "mongodb";
 
-import { connectDB } from "@/utils/database";
+import { pool } from "@/utils/database";
 import { decrypt } from "@/utils/modules";
 import { generateAccessToken, generateRefreshToken } from "@/utils/jwtUtils";
 
@@ -14,11 +13,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
       const decryptedId = decrypt(id, process.env.NEXT_PUBLIC_AES_ID_SECRET_KEY);
       const decryptedPw = decrypt(password, process.env.NEXT_PUBLIC_AES_PW_SECRET_KEY);
-    
       try {
-        const db: Db = await connectDB();
-        const adminInfo = await db.collection('admin_data').findOne({ id: decryptedId });
-        if (!adminInfo || adminInfo.password !== decryptedPw) {
+        const client = await pool.connect();
+        const adminIdQuery = `SELECT * FROM ADMIN_ID_TB;`;
+        const adminIdQueryResult = await client.query(adminIdQuery);
+        const adminIdInfo = adminIdQueryResult.rows[0];
+        client.release();
+
+        if ((adminIdInfo.id !== decryptedId) || (decrypt(adminIdInfo.password, process.env.NEXT_PUBLIC_AES_PW_SECRET_KEY) !== decryptedPw)) {
           return res.status(401).send('아이디 또는 비밀번호가 잘못되었습니다.');
         }
 

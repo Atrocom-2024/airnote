@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getToken } from "next-auth/jwt";
-import { Db, ObjectId } from "mongodb";
 
-import { connectDB } from "@/utils/database";
+import { pool } from "@/utils/database";
+import { generateRandomString } from "@/utils/modules";
 
 const secret = process.env.NEXT_AUTH_SECRET;
 
@@ -17,34 +17,53 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
       }
 
       const { id, kind } = req.query;
-      const db: Db = await connectDB();
-      const user_data = await db.collection('user_data').findOne({ email: token.email });
+      const client = await pool.connect();
+      const userInfoQuery = `SELECT id FROM USERS_TB WHERE email = $1;`;
+      const userInfoQueryResult = await client.query(userInfoQuery, [token.email]);
 
-      if (!user_data) {
+      if (!userInfoQueryResult.rows.length) {
         return res.status(401).send('접근 권한 없음');
       }
 
-      const reviewsDataAction = kind === 'like' ? 'likes' : 'dislikes';
-      const reviewDataOppositeAction = kind === 'like' ? 'dislikes' : 'likes';
-      const actionField = kind === 'like' ? 'review_likes' : 'review_dislikes';
-      const oppositeField = kind === 'like' ? 'review_dislikes' : 'review_likes';
-      const alreadyExists = user_data[actionField]?.includes(id);
-      const oppositeExists = user_data[oppositeField]?.includes(id);
+      const postId = id;
+      const userId = userInfoQueryResult.rows[0].id;
+      const actionType = kind === 'like' ? 'like' : 'dislike';
+      const oppositeActionType = kind === 'like' ? 'dislike' : 'like';
 
-      if (alreadyExists) {
+      // 이미 반응이 있는지 확인
+      const reactionQuery = `
+        SELECT * FROM REACTION_TB
+        WHERE post_id = $1 AND user_id = $2 AND reaction_type = $3;
+      `;
+      const reactionResult = await client.query(reactionQuery, [postId, userId, actionType]);
+      
+      if (reactionResult.rows.length > 0) {
         // 이미 좋아요/싫어요를 클릭했다면 취소
-        const result_reactions = user_data[actionField].filter((review_id: string) => review_id !== id);
-        await db.collection('user_data').updateOne({ email: token.email }, { $set: { [actionField]: result_reactions } });
-        await db.collection('reviews_data').updateOne({ _id: new ObjectId(id) }, { $inc: { [reviewsDataAction]: -1 } });
+        const deleteQuery = `
+          DELETE FROM REACTION_TB
+          WHERE post_id = $1 AND user_id = $2 AND reaction_type = $3;
+        `;
+        await client.query(deleteQuery, [postId, userId, actionType]);
       } else {
-        // 싫어요/좋아요를 클릭했다면 취소 후 좋아요/싫어요로 변경
-        if (oppositeExists) {
-          const result_reactions = user_data[oppositeField].filter((review_id: string) => review_id !== id);
-          await db.collection('user_data').updateOne({ email: token.email }, { $set: { [oppositeField]: result_reactions } });
-          await db.collection('reviews_data').updateOne({ _id: new ObjectId(id) }, { $inc: { [reviewDataOppositeAction]: -1 } });
+        // 반대 반응이 있는지 확인하고 제거
+        const oppositeReactionResult = await client.query(reactionQuery, [postId, userId, oppositeActionType]);
+    
+        if (oppositeReactionResult.rows.length > 0) {
+          const deleteOppositeQuery = `
+            DELETE FROM REACTION_TB
+            WHERE post_id = $1 AND user_id = $2 AND reaction_type = $3;
+          `;
+          await client.query(deleteOppositeQuery, [postId, userId, oppositeActionType]);
         }
-        await db.collection('user_data').updateOne({ email: token.email }, { $addToSet: { [actionField]: id } });
-        await db.collection('reviews_data').updateOne({ _id: new ObjectId(id) }, { $inc: { [reviewsDataAction]: 1 } });
+
+        // 새로운 반응 추가
+        const reactionId = generateRandomString(20);
+        const insertQuery = `
+          INSERT INTO REACTION_TB (reaction_id, post_id, user_id, reaction_type, create_at)
+          VALUES ($1, $2, $3, $4, NOW());
+        `;
+        await client.query(insertQuery, [reactionId, postId, userId, actionType]);
+        client.release();
       }
       return res.status(200).json({ message: '성공적으로 업데이트 되었습니다.' });
     default:

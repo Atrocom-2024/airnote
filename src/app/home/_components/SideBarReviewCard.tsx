@@ -11,7 +11,7 @@ export default function SideBarReviewCard({ review }: PropsType) {
   // TODO: 낙관적 업데이트
   const reactionClickHandler = async (kind: 'like' | 'dislike') => {
     const domain = process.env.NEXT_PUBLIC_DOMAIN;
-    const uri = `${domain}/api/reviews/${review._id}/reactions?kind=${kind}`;
+    const uri = `${domain}/api/reviews/${review.post_id}/reactions?kind=${kind}`;
 
     try {
       const res = await fetch(uri, { method: 'POST' });
@@ -29,7 +29,7 @@ export default function SideBarReviewCard({ review }: PropsType) {
         <div>
           <CgProfile size="30" color="#AFAFAF" />
         </div>
-        <div className="text-gray text-sm ml-1">{review.author_name}</div>
+        <div className="text-gray text-sm ml-1">{review.author_nickname}</div>
         <div className="text-default font-bold ml-2">{review.address_detail}</div>
       </div>
       <div className="text-gray text-sm">{ parseDate(review.create_at) }</div>
@@ -65,12 +65,12 @@ interface PropsType {
 }
 
 interface ReviewType {
-  _id: string;
-  author_name: string;
+  post_id: string;
+  author_nickname: string;
   address: string;
   address_detail: string;
   content: string;
   likes: number;
   dislikes: number;
-  create_at: string;
+  create_at: Date;
 }
