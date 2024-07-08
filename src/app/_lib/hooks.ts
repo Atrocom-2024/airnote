@@ -105,14 +105,15 @@ interface UserInfoTypes {
 };
 
 interface ReviewType {
-  _id: string;
+  post_id: string;
   author_email: string;
   author_name: string;
+  author_nickname: string;
   address: string;
   address_detail: string;
   content: string;
+  auth_file_url: string;
   likes: number;
   dislikes: number;
-  create_at: string;
-  auth_file: string;
+  create_at: Date;
 };
