@@ -25,6 +25,7 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
       const client = await pool.connect();
       const deleteReviewQuery = `DELETE FROM RECORD_TB WHERE post_id = $1 RETURNING post_id`;
       const deleteQueryResult = await client.query(deleteReviewQuery, [review_id]);
+      client.release();
       return res.status(200).json({
         success: true,
         message: 'review deleted successfully',

@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { Db } from "mongodb";
 
-import { connectDB } from "@/utils/database";
+import { pool } from "@/utils/database";
 import { verifyToken } from "@/utils/jwtUtils";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -23,11 +22,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       if (!username) {
         return res.status(400).send('잘못된 요청 구문');
       }
-      const db: Db = await connectDB();
-      const userInfo = await db.collection('user_data').findOne(
-        { nickname: username }, { projection: { email: 1, nickname: 1, name: 1, phone_number: 1, create_at: 1 } }
-      );
-      return res.json(userInfo);
+      const client = await pool.connect();
+      const userInfoQuery = `
+        SELECT id, email, name, nickname, phone_number, create_at
+        FROM USERS_TB
+        WHERE nickname = $1;
+      `;
+      const userInfoQueryResult = await client.query(userInfoQuery, [username]);
+      client.release();
+      return res.status(200).json(userInfoQueryResult.rows[0]);
     default:
       return res.status(405).send('잘못된 요청 메서드');
   }

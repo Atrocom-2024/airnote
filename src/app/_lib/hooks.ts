@@ -96,12 +96,12 @@ interface MyReviewTypes {
 };
 
 interface UserInfoTypes {
-  _id: string;
+  id: string;
   email: string;
   name: string;
   nickname: string;
   phone_number: string;
-  create_at: string;
+  create_at: Date;
 };
 
 interface ReviewType {

@@ -9,7 +9,6 @@ import { useDeleteReview } from "@/app/_lib/hooks";
 export default function AdminReviewCard({ review }: PropsType) {
   const { mutate, isPending } = useDeleteReview();
   const reviewContent = review.content.split('\n');
-  console.log(review);
 
   return (
     <article className="w-[700px] rounded-md border-[1.5px] border-default flex items-center p-5">

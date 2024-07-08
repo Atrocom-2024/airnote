@@ -4,6 +4,7 @@ import { useState } from "react";
 import { IoSearch } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
 
+import { parseDate } from "@/utils/modules";
 import { useUserSearch } from "@/app/_lib/hooks";
 import PartLoadingUI from "@/app/_components/PartLoadingUI";
 
@@ -47,7 +48,7 @@ export default function SearchUserSection() {
                 <div>이메일: {userInfo.email}</div>
                 <div>이름: {userInfo.name}</div>
                 <div>전화번호: {`0${userInfo.phone_number.split(' ')[1]}`}</div>
-                <div>가입날짜: {userInfo.create_at}</div>
+                <div>가입날짜: {parseDate(userInfo.create_at)}</div>
               </section>
             </article>
           ) : (

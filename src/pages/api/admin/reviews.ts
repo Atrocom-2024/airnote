@@ -44,6 +44,7 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
         GROUP BY r.post_id, u.email, u.name, u.nickname, r.address, r.address_detail, r.content, r.auth_file_url, r.create_at;
       `;
       const reviewsQueryResult = await client.query(reviewsQuery, [searchPattern]);
+      client.release();
       return res.status(200).json(reviewsQueryResult.rows);
     default:
       return res.status(405).send('잘못된 요청 메서드');
