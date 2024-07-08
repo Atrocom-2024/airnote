@@ -33,7 +33,6 @@ export default function SearchResults() {
     }
   }, [isFetching, searchResults, setMapLoc]);
 
-  // TODO: 패널 제목 클릭시 해당 주소 사이드바 열기
   return (
     <Sidebar>
       {isFetching || !searchResults ? <PartLoadingUI /> : (

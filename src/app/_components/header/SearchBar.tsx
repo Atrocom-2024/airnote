@@ -84,7 +84,7 @@ export default function SearchBar() {
 }
 
 interface SearchResult {
-  _id: string;
+  post_id: string;
   address: string;
   latitude: number;
   longitude: number;

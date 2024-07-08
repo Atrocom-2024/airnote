@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { Db } from "mongodb";
 
-import { connectDB, pool } from "@/utils/database";
+import { pool } from "@/utils/database";
 
 export default async function handler(req: CustomApiRequest, res: NextApiResponse) {
   switch (req.method) {
