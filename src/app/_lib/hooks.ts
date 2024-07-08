@@ -66,7 +66,7 @@ export const useDeleteReview = () => {
 };
 
 interface TopReviewType {
-  _id: string;
+  post_id: string;
   address: string;
   address_detail: string;
   latitude: string;
@@ -74,12 +74,11 @@ interface TopReviewType {
   content: string;
   likes: number;
   dislikes: number;
-  create_at: string;
+  create_at: Date;
 };
 
 interface MyInfoTypes {
   user_info: {
-    _id: string;
     email: string;
     nickname: string;
   },
@@ -87,35 +86,34 @@ interface MyInfoTypes {
 };
 
 interface MyReviewTypes {
-  _id: string;
-  author_email: string;
-  author_name: string;
+  post_id: string;
   address: string;
   address_detail: string;
   content: string;
   likes: number;
   dislikes: number;
-  create_at: string;
+  create_at: Date;
 };
 
 interface UserInfoTypes {
-  _id: string;
+  id: string;
   email: string;
   name: string;
   nickname: string;
   phone_number: string;
-  create_at: string;
+  create_at: Date;
 };
 
 interface ReviewType {
-  _id: string;
+  post_id: string;
   author_email: string;
   author_name: string;
+  author_nickname: string;
   address: string;
   address_detail: string;
   content: string;
+  auth_file_url: string;
   likes: number;
   dislikes: number;
-  create_at: string;
-  auth_file: string;
+  create_at: Date;
 };

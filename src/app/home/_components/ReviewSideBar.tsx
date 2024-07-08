@@ -76,7 +76,7 @@ export default function ReviewSideBar() {
           )}
           <section className="mb-20 md:mb-0">
             {reviews && reviews.map((review) => (
-              <SideBarReviewCard review={review} key={review._id} />
+              <SideBarReviewCard review={review} key={review.post_id} />
             ))}
           </section>
         </>
@@ -86,12 +86,12 @@ export default function ReviewSideBar() {
 }
 
 interface ReviewType {
-  _id: string;
-  author_name: string;
+  post_id: string;
+  author_nickname: string;
   address: string;
   address_detail: string;
   content: string;
   likes: number;
   dislikes: number;
-  create_at: string;
+  create_at: Date;
 }

@@ -40,7 +40,7 @@ export default function SearchResultCard({ review }: PropsType) {
 
 interface PropsType {
   review: {
-    _id: string;
+    post_id: string;
     address: string;
     address_detail: string;
     latitude: number;
@@ -48,6 +48,6 @@ interface PropsType {
     content: string;
     likes: number;
     dislikes: number;
-    create_at: string;
+    create_at: Date;
   };
 }

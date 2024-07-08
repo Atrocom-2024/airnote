@@ -38,7 +38,7 @@ export default function SearchReviewSection() {
         <div className="space-y-10">
           {isPending ? <PartLoadingUI /> : (
             reviews && reviews.length ? reviews.map((review) => (
-              <AdminReviewCard review={review} key={review._id} />
+              <AdminReviewCard review={review} key={review.post_id} />
             )) : (
               <section className="text-default font-bold text-xl">기록이 없습니다. 주소로 검색해주세요.</section>
             )

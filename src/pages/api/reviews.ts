@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getToken } from "next-auth/jwt";
-import { Db } from "mongodb";
 
-import { connectDB } from "@/utils/database";
+import { pool } from "@/utils/database";
+import { generateRandomString } from "@/utils/modules";
 
 const secret = process.env.NEXT_AUTH_SECRET;
 
@@ -11,12 +11,26 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
     case 'GET':
       const { lat, lng } = req.query;
       try {
-        const db: Db = await connectDB();
-        const reviews = await db.collection('reviews_data').find(
-          { latitude: parseFloat(lat), longitude: parseFloat(lng) },
-          { projection: { author_email: 0, latitude: 0, longitude: 0, auth_file: 0 } }
-        ).toArray();
-        return res.status(200).json(reviews);
+        const client = await pool.connect();
+        const reviewsQuery = `
+          SELECT
+            r.post_id,
+            u.nickname AS author_nickname,
+            r.address,
+            r.address_detail,
+            r.content,
+            SUM(CASE WHEN rt.reaction_type = 'like' THEN 1 ELSE 0 END) AS likes,
+            SUM(CASE WHEN rt.reaction_type = 'dislike' THEN 1 ELSE 0 END) AS dislikes,
+            r.create_at
+          FROM RECORD_TB r
+          JOIN USERS_TB u ON r.author_id = u.id
+          LEFT JOIN REACTION_TB rt ON r.post_id = rt.post_id
+          WHERE r.latitude = $1 AND r.longitude = $2
+          GROUP BY r.post_id, u.nickname, r.address, r.address_detail, r.content, r.create_at
+        `;
+        const reviewsQueryResult = await client.query(reviewsQuery, [parseFloat(lat), parseFloat(lng)]);
+        client.release();
+        return res.status(200).json(reviewsQueryResult.rows);
       } catch (err) {
         console.error(err);
         return res.status(500).send('내부 서버 오류');
@@ -25,7 +39,7 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
       const token = await getToken({ req, secret });
   
       // Unauthorized
-      if (!token) {
+      if (!token || !token.email) {
         return res.status(401).send('접근 권한 없음');
       }
 
@@ -42,30 +56,34 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
         const address_json = await address_res.json();
 
         // 사용자 정보 얻기
-        const db: Db = await connectDB();
-        const userInfo = await db.collection('user_data').findOne(
-          { email: token.email }, { projection: { nickname: 1 } }
-        );
+        const client = await pool.connect();
+        const userCheckQuery = 'SELECT id FROM USERS_TB WHERE email = $1';
+        const userCheckResult = await client.query(userCheckQuery, [token.email]);
+        const authorId = userCheckResult.rows[0].id;
+        const postId = generateRandomString();
 
-        if (userInfo) {
-          // insert 할 데이터 형식
-          const insert_data = {
-            author_email: token.email,
-            author_name: userInfo.nickname,
-            address: body.address,
-            address_detail: body.address_detail,
-            latitude: parseFloat(address_json.documents[0].y),
-            longitude: parseFloat(address_json.documents[0].x),
-            content: body.content,
-            likes: 0,
-            dislikes: 0,
-            create_at: new Date().toLocaleString('ko-KR'),
-            auth_file: body.encoded_auth_file,
-          }
-  
-          const insertReview = await db.collection('reviews_data').insertOne(insert_data);
-          return res.status(201).json(insert_data);
+        if (!authorId) {
+          return res.status(401).send('접근 권한 없음');
         }
+
+        const recordInsertQuery = `
+          INSERT INTO RECORD_TB (post_id, author_id, address, address_detail, latitude, longitude, content, auth_file_url)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+          RETURNING post_id
+        `;
+        const recordInsertValues = [
+          postId,
+          authorId,
+          body.address,
+          body.address_detail,
+          parseFloat(address_json.documents[0].y),
+          parseFloat(address_json.documents[0].x),
+          body.content,
+          body.auth_file_url
+        ];
+        const recordInsertResult = await client.query(recordInsertQuery, recordInsertValues);
+        client.release();
+        return res.status(201).json(recordInsertResult.rows[0]);
       } catch (err) {
         console.error(err);
         return res.status(500).send('내부 서버 오류');
@@ -86,6 +104,5 @@ interface BodyTypes {
   address: string;
   address_detail: string;
   content: string;
-  auth_file: FileList | null;
-  encoded_auth_file: string;
+  auth_file_url: string;
 }

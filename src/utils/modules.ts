@@ -13,9 +13,9 @@ export function decrypt(code: string, key: string) {
 }
 
 // 날짜 연, 월, 일 2자리로 고정하는 함수
-export function parseDate(date: string) {
+export function parseDate(date: Date) {
   // 날짜 월, 일 2자리로 고정
-  const dateSplit = date.split('. ');
+  const dateSplit = new Date(date).toLocaleString().split('. ');
   dateSplit[2] = dateSplit[2].padStart(2, '0');
   dateSplit[1] = dateSplit[1].padStart(2, '0');
   return dateSplit.join('. ').substring(0, 13);
@@ -47,6 +47,19 @@ export function getLocation(): Promise<Coordinates> {
       reject(new Error("Geolocation is not supported by this browser."));
     }
   });
+}
+
+// 길이 20의 랜덤 문자열 생성 함수
+export function generateRandomString(length = 20) {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  const charsLength = chars.length;
+  
+  for (let i = 0; i < length; i++) {
+    result += chars.charAt(Math.floor(Math.random() * charsLength));
+  }
+  
+  return result;
 }
 
 interface Coordinates {

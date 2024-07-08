@@ -29,10 +29,10 @@ export default function MyMain({ email }: PropsType) {
             </section>
           </article>
         </section>
-        <section>
+        <section className="mb-20">
           <Title>내가 쓴 공간 기록</Title>
           {myInfo.reviews.length ? myInfo.reviews.map((myReview) => (
-            <MyReviewCard myReview={myReview} key={myReview._id} />
+            <MyReviewCard myReview={myReview} key={myReview.post_id} />
           )) : (
             <article className="mt-36 text-lg text-center text-default font-bold">
               <div>아직 작성한 공간 기록이 없어요.</div>
