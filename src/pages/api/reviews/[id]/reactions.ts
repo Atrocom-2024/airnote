@@ -63,6 +63,7 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
           VALUES ($1, $2, $3, $4, NOW());
         `;
         await client.query(insertQuery, [reactionId, postId, userId, actionType]);
+        client.release();
       }
       return res.status(200).json({ message: '성공적으로 업데이트 되었습니다.' });
     default:

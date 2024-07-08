@@ -46,7 +46,7 @@ export default function SearchResults() {
           </section>
           <section>
             {searchResults.length ? (searchResults.map((review) => (
-              <SearchResultCard review={review} key={review._id} />
+              <SearchResultCard review={review} key={review.post_id} />
             ))) : (
               <div className="text-default font-bold text-center mx-auto mt-52">
                 <div className="mb-3">검색 결과가 없습니다.</div>
@@ -61,7 +61,7 @@ export default function SearchResults() {
 }
 
 interface SearchResultType {
-  _id: string;
+  post_id: string;
   address: string;
   address_detail: string;
   latitude: number;
@@ -69,5 +69,5 @@ interface SearchResultType {
   content: string;
   likes: number;
   dislikes: number;
-  create_at: string;
+  create_at: Date;
 }
