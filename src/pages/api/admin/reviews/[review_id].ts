@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { Db, ObjectId } from "mongodb";
 
-import { connectDB } from "@/utils/database";
+import { pool } from "@/utils/database";
 import { verifyToken } from "@/utils/jwtUtils";
 
 export default async function handler(req: CustomApiRequest, res: NextApiResponse) {
@@ -23,9 +22,14 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
       if (!review_id) {
         return res.status(400).send('잘못된 요청 구문');
       }
-      const db: Db = await connectDB();
-      const deleteReview = await db.collection('reviews_data').deleteOne({ _id: new ObjectId(review_id) });
-      return res.status(200).json(deleteReview);
+      const client = await pool.connect();
+      const deleteReviewQuery = `DELETE FROM RECORD_TB WHERE post_id = $1 RETURNING post_id`;
+      const deleteQueryResult = await client.query(deleteReviewQuery, [review_id]);
+      return res.status(200).json({
+        success: true,
+        message: 'review deleted successfully',
+        updateNickname: deleteQueryResult.rows[0].post_id
+      });
     default:
       return res.status(405).send('잘못된 요청 메서드');
   }

@@ -1,21 +1,22 @@
 'use client'
 
-import PartLoadingUI from "@/app/_components/PartLoadingUI";
-import { useDeleteReview } from "@/app/_lib/hooks";
-import { parseDate } from "@/utils/modules";
 import Image from "next/image";
 import { AiOutlineLoading } from "react-icons/ai";
+
+import { parseDate } from "@/utils/modules";
+import { useDeleteReview } from "@/app/_lib/hooks";
 
 export default function AdminReviewCard({ review }: PropsType) {
   const { mutate, isPending } = useDeleteReview();
   const reviewContent = review.content.split('\n');
+  console.log(review);
 
   return (
     <article className="w-[700px] rounded-md border-[1.5px] border-default flex items-center p-5">
       <section className="mr-3 w-[30%]">
         <Image
           className="w-[200px] h-[250px] border border-gray rounded-md object-cover"
-          src={review.auth_file_url}
+          src={review.auth_file_url ? review.auth_file_url : '/no-file-img.jpg'}
           width={400}
           height={0}
           alt="인증파일"

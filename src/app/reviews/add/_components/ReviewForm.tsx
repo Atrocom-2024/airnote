@@ -17,6 +17,7 @@ export default function ReviewForm({ address }: PropsType) {
     register,
     handleSubmit,
     setValue,
+    watch,
     formState: { isSubmitting }
   } = useForm<FormInputs>({
     defaultValues: {
@@ -77,7 +78,6 @@ export default function ReviewForm({ address }: PropsType) {
         });
         const json = await res.json();
         setValue('auth_file_url', json.auth_file_url);
-        return;
       } catch (err) {
         console.error(err);
       }
@@ -92,7 +92,7 @@ export default function ReviewForm({ address }: PropsType) {
           address: data.address,
           address_detail: data.address_detail,
           content: data.content,
-          auth_file_url: data.auth_file_url
+          auth_file_url: watch('auth_file_url')
         })
       });
       if (res.ok) {
