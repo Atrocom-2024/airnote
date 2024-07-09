@@ -1,6 +1,6 @@
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
-import { generateAccessToken, verifyToken } from "./utils/jwtUtils";
+import { verifyToken } from "./utils/jwtUtils";
 
 const secret = process.env.NEXT_AUTH_SECRET;
 
