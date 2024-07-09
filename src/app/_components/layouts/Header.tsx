@@ -16,7 +16,7 @@ export default async function Header() {
       <section className="flex items-center">
         <article className="mr-5 sm:mr-10">
           <Link href="/home">
-            <Image className="w-[35px] md:w-[50px]" src="/logo.svg" width={50} height={50} alt="로고" priority={true} />
+            <Image className="w-[40px] md:w-[50px]" src="/logo.svg" width={50} height={50} alt="로고" priority={true} />
           </Link>
         </article>
         <SearchBar />
@@ -25,7 +25,7 @@ export default async function Header() {
         <article className="flex items-center">
           {session ? (
             <Link href="/my">
-              <CgProfile className="size-[30px] md:size-[35px]" size="40" color="#4A68F5" />
+              <CgProfile className="size-[35px] md:size-[40px]" size="40" color="#4A68F5" />
             </Link>
           ) : (
             <div className="hidden md:block">
