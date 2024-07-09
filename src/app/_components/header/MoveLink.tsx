@@ -8,15 +8,14 @@ export default function MoveLink({ className, href, children, target }: PropsTyp
 
   return (
     <Link
+      className="group relative"
       href={href}
       target={target ? target : "_self"}
     >
-      <div className="px-1 py-1">{ children }</div>
-      {path === href ? (
-        <div id="link-bar" className="w-full h-[3px] bg-default rounded-full" />
-      ): (path === '/search' && href === '/home' ? (
-        <div id="link-bar" className="w-full h-[3px] bg-default rounded-full" />
-      ): null)}
+      <span className={`py-1 ${path === href ? 'font-bold' : (
+        path === '/search' && href === '/home' ? 'font-bold' : null
+      )}`}>{ children }</span>
+      <span id="link-bar" className="w-full h-[2px] absolute left-1/2 -translate-x-1/2 bottom-[-5px] bg-gray rounded-full hidden group-hover:block" />
     </Link>
   );
 }

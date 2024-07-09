@@ -5,7 +5,7 @@ import { IoClose } from "react-icons/io5";
 
 export default function LoginModal({ closeModalHandler, loginHandler }: PropsType) {
   return (
-    <section className="w-[100vw] h-[100vh] absolute top-0 left-0 bg-black/30 z-30">
+    <section className="w-[100vw] h-[100vh] fixed top-0 left-0 bg-black/30 z-[40]">
       <article className="absolute w-[100vw] h-[100vh] z-40" onClick={closeModalHandler}></article>
       <article className="w-[300px] h-[250px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-md shadow-2xl p-5 z-50 md:w-[500px] md:h-[400px]">
         <section className="flex justify-between items-center">

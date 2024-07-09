@@ -4,18 +4,15 @@ import { getServerSession } from "next-auth";
 import { CgProfile } from "react-icons/cg";
 
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
-import NavigationBar from "../header/NavigationBar";
 import LoginBtn from "../header/LoginBtn";
-import LogoutBtn from "../header/LogoutBtn";
-import ReviewAddBtn from "../header/ReviewAddBtn";
-import MoveLink from "../header/MoveLink";
 import SearchBar from "../header/SearchBar";
+import HeaderDropdown from "../header/HeaderDropdown";
 
 export default async function Header() {
   const session = await getServerSession(authOptions);
 
   return (
-    <header className="w-[100vw] h-[8vh] justify-between flex items-center border-b-[1.5px] border-default px-5 sm:px-10">
+    <header className="w-[100vw] h-[8vh] bg-white justify-between flex items-center z-[30] border-b-[1.5px] border-default px-5 sm:px-10 md:justify-evenly">
       <section className="flex items-center">
         <article className="mr-5 sm:mr-10">
           <Link href="/home">
@@ -24,27 +21,18 @@ export default async function Header() {
         </article>
         <SearchBar />
       </section>
-      <section className="flex text-sm text-default">
-        <article className="hidden space-x-10 items-center mr-10 lg:flex">
-          <MoveLink href="/home">홈</MoveLink>
-          {session ? (
-            <MoveLink href="/reviews/add">기록작성</MoveLink>
-          ) : (
-            <ReviewAddBtn />
-          )}
-          <MoveLink href="https://cafe.naver.com/airnote" target="_blank">커뮤니티</MoveLink>
-          <MoveLink href="https://open.kakao.com/o/sAgQYPhg" target="_blank">고객지원</MoveLink>
-          {session && <LogoutBtn />}
-        </article>
+      <section className="flex text-sm">
         <article className="flex items-center">
           {session ? (
             <Link href="/my">
-              <CgProfile size="40" color="#4A68F5" />
+              <CgProfile className="size-[30px] md:size-[35px]" size="40" color="#4A68F5" />
             </Link>
           ) : (
-            <LoginBtn />
+            <div className="hidden md:block">
+              <LoginBtn />
+            </div>
           )}
-          <NavigationBar />
+          <HeaderDropdown isLogin={session ? true : false} />
         </article>
       </section>
     </header>

@@ -23,10 +23,10 @@ export default function LoginBtn() {
   return (
     <>
       <button
-        className="bg-default text-white px-5 py-2 rounded-md text-xs md:text-sm"
+        className="w-full bg-default text-white px-5 py-2 rounded-md text-xs md:text-sm"
         type="button"
         onClick={openModalHandler}
-      >로그인</button>
+      >로그인 / 회원가입</button>
       {isLoginModal && (
         <LoginModal closeModalHandler={closeModalHandler} loginHandler={loginHandler} />
       )}
