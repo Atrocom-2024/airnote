@@ -9,7 +9,7 @@ export default function LogoutBtn() {
 
   return (
     <button
-      className="border-[1.5px] border-default px-5 py-2 rounded-md"
+      className="border-[1.5px] border-gray px-5 py-2 rounded-md"
       type="button"
       onClick={logoutHandler}
     >로그아웃</button>

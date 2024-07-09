@@ -59,15 +59,15 @@ export default function SearchBar() {
   }, [debouncedQuery, searchSuggestionHandler]);
 
   return (
-    <article className="relative border-[1.5px] border-default rounded-full">
+    <article className="relative rounded-xl">
+      <IoSearch className="absolute top-1/2 left-3 -translate-y-1/2 size-[20px] md:size-[25px]" color="#AFAFAF" />
       <input
-        className="w-[170px] h-[4.5vh] px-5 rounded-full outline-none text-xs sm:w-[350px] md:text-base"
+        className="w-[170px] h-[4.5vh] pl-10 md:pl-12 bg-white-gray rounded-xl outline-none text-xs sm:w-[350px] md:text-base"
         value={query}
         onChange={qeuryChangeHandler}
         onKeyDown={searchKeyPressHandler}
         placeholder="주소를 입력해주세요."
       />
-      <IoSearch className="absolute top-1/2 right-3 -translate-y-1/2 size-[20px] md:size-[30px]" color="#4A68F5" />
       {searchSuggestions.length > 0 && (
         <ul className="absolute top-full left-0 mt-2 w-full bg-white border-[1.5px] border-gray/50 rounded-md shadow-lg max-h-60 overflow-auto z-[30]">
           {searchSuggestions.map((result, idx) => (

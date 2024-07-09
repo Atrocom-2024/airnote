@@ -7,8 +7,10 @@ export default function ReviewAddBtn() {
   
   return (
     <button
+      className="group relative"
       type="button"
       onClick={reviewsBtnHandler}
-    >기록작성</button>
+    >기록작성<div id="link-bar" className="w-full h-[2px] absolute left-1/2 -translate-x-1/2 bottom-[-6px] bg-gray rounded-full hidden group-hover:block" />
+</button>
   );
 }
