@@ -14,13 +14,13 @@ export default function HeaderDropdown({ isLogin }: PropsType) {
 
   const menuClickHandler = () => {
     setIsDropdown((prev) => !prev);
-  }
+  };
 
   const outsideClickHandler = (event: MouseEvent) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
       setIsDropdown(false);
     }
-  }
+  };
 
   useEffect(() => {
     if (isDropdown) {
