@@ -53,7 +53,7 @@ export default function HeaderDropdown({ isLogin }: PropsType) {
           )}
           <ul className="space-y-5 px-5 pb-5 mt-5">
             <li>
-              <MoveLink href="/home">홈</MoveLink>
+              <MoveLink href="/home">공간기록</MoveLink>
             </li>
             <li>
               {isLogin ? (
@@ -63,7 +63,7 @@ export default function HeaderDropdown({ isLogin }: PropsType) {
               )}
             </li>
             <li>
-              <MoveLink href="https://cafe.naver.com/airnote" target="_blank">커뮤니티</MoveLink>
+              <MoveLink href="/knowledge">공간지식</MoveLink>
             </li>
             <li>
               <MoveLink href="https://open.kakao.com/o/sAgQYPhg" target="_blank">고객지원</MoveLink>
