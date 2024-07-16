@@ -45,6 +45,7 @@ export default function ReviewForm({ address }: PropsType) {
       if (e.target.files) {
         const limitsize = 1024 ** 2 * 3; // 3MB
         if (e.target.files[0].size > limitsize) {
+          setValue('auth_file', null);
           return alert('파일은 최대 3MB까지만 업로드 할 수 있습니다.');
         }
         const fileType = e.target.files[0].type.split('/')[1];
@@ -123,7 +124,7 @@ export default function ReviewForm({ address }: PropsType) {
               register={{...register('address')}}
             />
             <button
-              className="bg-default text-white rounded-md"
+              className="bg-default text-white rounded-xl"
               type="button"
               onClick={openPostHandler}
             >주소찾기</button>
@@ -174,7 +175,7 @@ export default function ReviewForm({ address }: PropsType) {
           </div>
         </section>
       </article>
-      <button className="bg-default text-white rounded-md py-3 mt-5 mb-20">기록작성</button>
+      <button className="bg-default text-white rounded-xl px-6 py-3 mx-auto mt-5 mb-20">기록작성</button>
     </form>
   );
 }
