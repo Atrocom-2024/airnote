@@ -2,6 +2,7 @@
 
 import { useMemo, useRef, useState } from "react";
 import ReactQuill from "react-quill";
+import { UseFormRegisterReturn } from "react-hook-form";
 
 import QuillDynamicWrapper from "@/app/_components/QuillDynamicWrapper";
 
@@ -24,7 +25,7 @@ const formats = [
   'h1',
 ];
 
-export default function KnowledgeAddFormQuill() {
+export default function KnowledgeAddFormQuill({ value, onChange }: PropsType) {
   const [ values, setValues ] = useState('');
   const quillRef = useRef<ReactQuill>(null);
 
@@ -57,9 +58,14 @@ export default function KnowledgeAddFormQuill() {
       forwardedRef={quillRef}
       modules={modules}
       formats={formats}
-      value={values}
-      onChange={editorChangeHandler}
       theme="snow"
+      value={value}
+      onChange={onChange}
     />
   );
+}
+
+interface PropsType {
+  value: string,
+  onChange: (content: string) => void;
 }
