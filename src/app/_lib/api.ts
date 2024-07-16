@@ -97,6 +97,16 @@ export const getTopKnowledges = async () => {
   return res.json();
 }
 
+// 공간 지식 상세 데이터를 가져오는 함수
+export const getKnowledge = async (knowledgeId: string) => {
+  const domain = process.env.NEXT_PUBLIC_DOMAIN;
+  const res = await fetch(`${domain}/api/knowledges/${knowledgeId}`, { cache: 'no-store' });
+  if (!res.ok) {
+    throw new Error('Failed to get knowledge info');
+  }
+  return res.json();
+}
+
 // 마이페이지 내 정보 요청
 export async function getMyInfo(email: string) {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;

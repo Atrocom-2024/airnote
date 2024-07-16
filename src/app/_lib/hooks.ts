@@ -7,7 +7,8 @@ import {
   getUserInfoAdmin,
   getReviewsAdmin,
   deleteReviewAdmin,
-  getTopKnowledges
+  getTopKnowledges,
+  getKnowledge
 } from "./api";
 
 // 상위 4개 공간 기록 데이터를 가져오는 훅
@@ -23,6 +24,14 @@ export const useTopKnowledges = () => {
   return useQuery<topKnowledgeType[]>({
     queryKey: ['topKnowledges'],
     queryFn: () => getTopKnowledges()
+  });
+};
+
+// 공간 지식 상세 데이터를 가져오는 훅
+export const useKnowledge = (knowledgeId: string) => {
+  return useQuery<topKnowledgeType[]>({
+    queryKey: ['knowledge'],
+    queryFn: () => getKnowledge(knowledgeId)
   });
 };
 

@@ -1,12 +1,12 @@
 'use client';
 
+import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { CgProfile } from "react-icons/cg";
+import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
 
 import { parseDate } from "@/utils/modules";
-import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
-import Link from "next/link";
 
 export default function TopKnowledgeCard({ knowledgeInfo }: PropsType) {
   const [previewText, setPreviewText] = useState<string>('');

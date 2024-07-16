@@ -1,8 +1,8 @@
 'use client';
 
-import LoadingUI from "@/app/_components/LoadingUI";
 import { useTopKnowledges } from "@/app/_lib/hooks";
 import TopKnowledgeCard from "./TopKnowledgeCard";
+import LoadingUI from "@/app/_components/LoadingUI";
 
 export default function TopKnowledgeSection() {
   const {data: topKnowledges, isPending} = useTopKnowledges();
