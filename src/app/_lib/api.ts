@@ -87,6 +87,16 @@ export const getSearchResults = async (keyword: string) => {
   return res.json();
 };
 
+// 실시간 인기 공간 지식을 가져오는 함수
+export const getTopKnowledges = async () => {
+  const domain = process.env.NEXT_PUBLIC_DOMAIN;
+  const res = await fetch(`${domain}/api/knowledges/top`, { cache: 'no-store' });
+  if (!res.ok) {
+    throw new Error('Failed to get top knowledges');
+  }
+  return res.json();
+}
+
 // 마이페이지 내 정보 요청
 export async function getMyInfo(email: string) {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;

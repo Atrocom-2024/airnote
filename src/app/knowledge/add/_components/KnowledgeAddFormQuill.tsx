@@ -1,8 +1,7 @@
 'use client';
 
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef } from "react";
 import ReactQuill from "react-quill";
-import { UseFormRegisterReturn } from "react-hook-form";
 
 import QuillDynamicWrapper from "@/app/_components/QuillDynamicWrapper";
 
@@ -26,7 +25,6 @@ const formats = [
 ];
 
 export default function KnowledgeAddFormQuill({ value, onChange }: PropsType) {
-  const [ values, setValues ] = useState('');
   const quillRef = useRef<ReactQuill>(null);
 
   const modules = useMemo(() => {
@@ -47,10 +45,6 @@ export default function KnowledgeAddFormQuill({ value, onChange }: PropsType) {
       },
     };
   }, []);
-
-  const editorChangeHandler = (e: any) => {
-    setValues(e);
-  }
 
   return (
     <QuillDynamicWrapper

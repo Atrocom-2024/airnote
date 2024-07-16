@@ -55,7 +55,7 @@ export default function KnowledgeAddForm() {
         const form = new FormData();
         form.append('thumbnail_file', data.thumbnail_file[0]);
 
-        const res = await fetch('/api/knowledge/thumbnail-file', {
+        const res = await fetch('/api/knowledges/thumbnail-file', {
           method: 'POST',
           body: form
         });
@@ -68,7 +68,7 @@ export default function KnowledgeAddForm() {
 
     // 지식 작성 요청
     try {
-      const res = await fetch('/api/knowledge', {
+      const res = await fetch('/api/knowledges', {
         method: 'POST',
         headers: { 'Content-type': 'application/json' },
         body: JSON.stringify({
