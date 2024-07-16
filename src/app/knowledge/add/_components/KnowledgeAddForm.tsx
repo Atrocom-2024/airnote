@@ -10,6 +10,7 @@ export default function KnowledgeAddForm() {
   const {
     register,
     setValue,
+    watch,
     control,
     handleSubmit,
     formState: { isSubmitting }
@@ -18,7 +19,7 @@ export default function KnowledgeAddForm() {
       title: '',
       content: '',
       thumbnail_file: null,
-      thumbnail_file_url: ''
+      thumbnail_url: ''
     }
   });
 
@@ -41,6 +42,50 @@ export default function KnowledgeAddForm() {
 
   const formSubmitHandler = throttle(async (data: FormInputs) => {
     console.log(data);
+    // 폼 작성요소 검사
+    if (!data.title) {
+      return alert('제목을 입력해주세요.');
+    } else if (!data.content) {
+      return alert('본문을 입력해주세요.');
+    }
+
+    // 인증서류 S3 업로드 요청
+    if (data.thumbnail_file) {
+      try {
+        const form = new FormData();
+        form.append('thumbnail_file', data.thumbnail_file[0]);
+
+        const res = await fetch('/api/knowledge/thumbnail-file', {
+          method: 'POST',
+          body: form
+        });
+        const json = await res.json();
+        setValue('thumbnail_url', json.thumbnail_url);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // 지식 작성 요청
+    try {
+      const res = await fetch('/api/knowledge', {
+        method: 'POST',
+        headers: { 'Content-type': 'application/json' },
+        body: JSON.stringify({
+          knowledge_title: data.title,
+          knowledge_content: data.content,
+          thumbnail_url: watch('thumbnail_url')
+        })
+      });
+      if (res.ok) {
+        return alert('지식 작성 완료')
+      } else {
+        return alert('지식 작성에 실패했습니다.');
+      }
+    } catch (err) {
+      console.error(err);
+      return alert('지식 작성에 실패했습니다.');
+    }
   }, 2000);
 
   if (isSubmitting) {
@@ -87,5 +132,5 @@ interface FormInputs {
   title: string;
   content: string;
   thumbnail_file: FileList | null;
-  thumbnail_file_url: string;
+  thumbnail_url: string;
 }
