@@ -19,7 +19,7 @@ export default function MyMain({ email }: PropsType) {
     <main className="w-full px-5 mx-auto md:w-[600px] md:px-0">
         <section className="mb-16 md:mb-24">
           <Title>내 정보</Title>
-          <article className="w-full flex justify-center items-center bg-white shadow-lg rounded-md py-10 mt-8 md:justify-start md:px-24">
+          <article className="w-full flex justify-center items-center bg-white rounded-lg py-10 mt-8 md:justify-start md:px-24">
             <section>
               <CgProfile size="60" color="#4A68F5" />
             </section>

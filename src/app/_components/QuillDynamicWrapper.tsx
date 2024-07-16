@@ -18,7 +18,7 @@ const QuillDynamicWrapper = dynamic(
     );
     return Quill;
   },
-  { loading: () => <LoadingUI className="mt-10" />, ssr: false }
+  { loading: () => <LoadingUI />, ssr: false }
 );
 
 interface ForwardedQuillComponent extends ReactQuillProps {

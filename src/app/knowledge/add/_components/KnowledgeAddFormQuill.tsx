@@ -3,7 +3,7 @@
 import { useMemo, useRef, useState } from "react";
 import ReactQuill from "react-quill";
 
-import QuillDynamicWrapper from "@/app/_components/QuilldynamicWrapper";
+import QuillDynamicWrapper from "@/app/_components/QuillDynamicWrapper";
 
 const formats = [
   'font',

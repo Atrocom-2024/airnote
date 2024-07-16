@@ -17,6 +17,14 @@ export default function KnowledgeAddForm() {
         <div>본문</div>
         <KnowledgeAddFormQuill />
       </section>
+      <section>
+        <div>대표사진</div>
+        <input
+          className="block w-full h-[40px] border border-gray rounded-md outline-none px-3 mt-3"
+          type="file"
+          placeholder="제목을 입력해주세요."
+        />
+      </section>
     </form>
   );
 }
