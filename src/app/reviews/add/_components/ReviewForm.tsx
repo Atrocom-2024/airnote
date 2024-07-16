@@ -123,7 +123,7 @@ export default function ReviewForm({ address }: PropsType) {
               register={{...register('address')}}
             />
             <button
-              className="bg-default text-white rounded-md"
+              className="bg-default text-white rounded-xl"
               type="button"
               onClick={openPostHandler}
             >주소찾기</button>
@@ -174,7 +174,7 @@ export default function ReviewForm({ address }: PropsType) {
           </div>
         </section>
       </article>
-      <button className="bg-default text-white rounded-md py-3 mt-5 mb-20">기록작성</button>
+      <button className="bg-default text-white rounded-xl px-6 py-3 mx-auto mt-5 mb-20">기록작성</button>
     </form>
   );
 }

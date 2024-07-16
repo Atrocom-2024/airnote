@@ -120,6 +120,7 @@ em {
     border-bottom: 1px solid #C1C1C1 !important;
     border-bottom-left-radius: 0.375rem !important;
     border-bottom-right-radius: 0.375rem !important;
+    height: 300px !important;
 }
 
 @keyframes link-bar-on {

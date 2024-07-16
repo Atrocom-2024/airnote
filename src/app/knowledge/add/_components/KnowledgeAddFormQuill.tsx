@@ -53,7 +53,7 @@ export default function KnowledgeAddFormQuill() {
 
   return (
     <QuillDynamicWrapper
-      className="mt-3 h-[300px]"
+      className="mt-3"
       forwardedRef={quillRef}
       modules={modules}
       formats={formats}
