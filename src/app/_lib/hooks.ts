@@ -6,7 +6,8 @@ import {
   postLogout,
   getUserInfoAdmin,
   getReviewsAdmin,
-  deleteReviewAdmin
+  deleteReviewAdmin,
+  getTopKnowledges
 } from "./api";
 
 // 상위 4개 공간 기록 데이터를 가져오는 훅
@@ -14,6 +15,14 @@ export const useTopReviews = () => {
   return useQuery<TopReviewType[]>({
     queryKey: ['topReviews'],
     queryFn: () => getTopReviews()
+  });
+};
+
+// 상위 3개 공간 지식 데이터를 가져오는 훅
+export const useTopKnowledges = () => {
+  return useQuery<topKnowledgeType[]>({
+    queryKey: ['topKnowledges'],
+    queryFn: () => getTopKnowledges()
   });
 };
 
@@ -117,3 +126,12 @@ interface ReviewType {
   dislikes: number;
   create_at: Date;
 };
+
+interface topKnowledgeType {
+  knowledge_id: string;
+  author_nickname: string;
+  knowledge_title: string;
+  knowledge_content: string;
+  thumbnail_url: string;
+  create_at: Date;
+}
