@@ -141,6 +141,8 @@ interface topKnowledgeType {
   author_nickname: string;
   knowledge_title: string;
   knowledge_content: string;
+  likes: number;
+  dislikes: number;
   thumbnail_url: string;
   create_at: Date;
 }

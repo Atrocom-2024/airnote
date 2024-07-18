@@ -50,13 +50,13 @@ export default function TopKnowledgeCard({ knowledgeInfo }: PropsType) {
             <div>
               <AiOutlineLike className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
             </div>
-            <div className="font-bold">0</div>
+            <div className="font-bold">{knowledgeInfo.likes}</div>
           </div>
           <div className="flex items-center">
             <div>
               <AiOutlineDislike className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
             </div>
-            <div className="font-bold">0</div>
+            <div className="font-bold">{knowledgeInfo.dislikes}</div>
           </div>
         </article>
       </section>
@@ -86,6 +86,8 @@ interface topKnowledgeType {
   author_nickname: string;
   knowledge_title: string;
   knowledge_content: string;
+  likes: number;
+  dislikes: number;
   thumbnail_url: string;
   create_at: Date;
 }

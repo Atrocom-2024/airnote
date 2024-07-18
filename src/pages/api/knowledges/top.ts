@@ -13,13 +13,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             u.nickname as author_nickname,
             k.knowledge_title,
             k.knowledge_content,
+            SUM(CASE WHEN krt.knowledge_reaction_type = 'like' THEN 1 ELSE 0 END)::INTEGER AS likes,
+            SUM(CASE WHEN krt.knowledge_reaction_type = 'dislike' THEN 1 ELSE 0 END)::INTEGER AS dislikes,
             k.thumbnail_url,
             k.create_at
           FROM KNOWLEDGE_TB k
           JOIN USERS_TB u ON k.author_id = u.id
+          LEFT JOIN KNOWLEDGE_REACTION_TB krt ON k.knowledge_id = krt.knowledge_id
+          GROUP BY k.knowledge_id, u.nickname, k.knowledge_title, k.knowledge_content, k.thumbnail_url, k.create_at
+          ORDER BY likes DESC
           LIMIT 3;
         `
         const topKnowledgesQueryResult = await client.query(topKnowledgesQuery);
+        console.log(topKnowledgesQueryResult.rows)
         client.release();
         return res.status(200).json(topKnowledgesQueryResult.rows);
       } catch (err) {
