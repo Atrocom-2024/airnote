@@ -65,7 +65,7 @@ export default function KnowledgeDetailMain({ knowledgeId }: PropsType) {
       </section>
       <section className="mt-10">
         <article className="text-3xl font-bold mb-5">{knowledge.knowledge_title}</article>
-        <article dangerouslySetInnerHTML={{ __html: knowledge.knowledge_content }} />
+        <article className="knowledge-detail-container" dangerouslySetInnerHTML={{ __html: knowledge.knowledge_content }} />
       </section>
       <section className="mt-10 pb-20 text-sm">
         <article className="flex justify-center items-center">

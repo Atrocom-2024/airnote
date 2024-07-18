@@ -6,8 +6,8 @@ import TopKnowledgeSection from "./_components/TopKnowledgeSection";
 
 export default async function Knowledge() {
   return (
-    <Layout>
-      <main className="w-full mx-auto mt-10 md:w-[1000px]">
+    <Layout className="bg-dark-white">
+      <main className="w-full mx-auto pt-10 md:w-[1000px]">
         <section className="flex justify-between items-center">
           <Title>공간 지식</Title>
           <Link
