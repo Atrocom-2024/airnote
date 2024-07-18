@@ -21,7 +21,7 @@ export const useTopReviews = () => {
 
 // 상위 3개 공간 지식 데이터를 가져오는 훅
 export const useTopKnowledges = () => {
-  return useQuery<topKnowledgeType[]>({
+  return useQuery<knowledgeType[]>({
     queryKey: ['topKnowledges'],
     queryFn: () => getTopKnowledges()
   });
@@ -29,7 +29,7 @@ export const useTopKnowledges = () => {
 
 // 공간 지식 상세 데이터를 가져오는 훅
 export const useKnowledge = (knowledgeId: string) => {
-  return useQuery<topKnowledgeType[]>({
+  return useQuery<knowledgeType>({
     queryKey: ['knowledge'],
     queryFn: () => getKnowledge(knowledgeId)
   });
@@ -136,7 +136,7 @@ interface ReviewType {
   create_at: Date;
 };
 
-interface topKnowledgeType {
+interface knowledgeType {
   knowledge_id: string;
   author_nickname: string;
   knowledge_title: string;

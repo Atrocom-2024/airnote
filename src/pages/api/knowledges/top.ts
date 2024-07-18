@@ -25,7 +25,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           LIMIT 3;
         `
         const topKnowledgesQueryResult = await client.query(topKnowledgesQuery);
-        console.log(topKnowledgesQueryResult.rows)
         client.release();
         return res.status(200).json(topKnowledgesQueryResult.rows);
       } catch (err) {

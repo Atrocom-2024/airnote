@@ -14,16 +14,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             u.nickname as author_nickname,
             k.knowledge_title,
             k.knowledge_content,
+            SUM(CASE WHEN krt.knowledge_reaction_type = 'like' THEN 1 ELSE 0 END)::INTEGER AS likes,
+            SUM(CASE WHEN krt.knowledge_reaction_type = 'dislike' THEN 1 ELSE 0 END)::INTEGER AS dislikes,
             k.thumbnail_url,
             k.create_at
           FROM KNOWLEDGE_TB k
           JOIN USERS_TB u ON k.author_id = u.id
-          WHERE knowledge_id = $1
-          LIMIT 3;
+          LEFT JOIN KNOWLEDGE_REACTION_TB krt ON k.knowledge_id = krt.knowledge_id
+          WHERE k.knowledge_id = $1
+          GROUP BY k.knowledge_id, u.nickname, k.knowledge_title, k.knowledge_content, k.thumbnail_url, k.create_at
         `
         const knowledgeQueryResult = await client.query(knowledgeQuery, [knowledgeId]);
         client.release();
-        return res.status(200).json(knowledgeQueryResult.rows);
+        return res.status(200).json(knowledgeQueryResult.rows[0]);
       } catch (err) {
         console.error(err);
         return res.status(500).send('내부 서버 오류');
