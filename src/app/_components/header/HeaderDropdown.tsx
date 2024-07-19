@@ -63,7 +63,7 @@ export default function HeaderDropdown({ isLogin }: PropsType) {
               )}
             </li>
             <li>
-              <MoveLink href="/knowledge">공간지식</MoveLink>
+              <MoveLink href="/knowledges">공간지식</MoveLink>
             </li>
             <li>
               <MoveLink href="https://open.kakao.com/o/sAgQYPhg" target="_blank">고객지원</MoveLink>

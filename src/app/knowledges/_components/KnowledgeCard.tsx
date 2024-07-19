@@ -19,7 +19,7 @@ export default function KnowledgeCard({ knowledgeInfo }: PropsType) {
   return (
     <Link
       className="w-full bg-white mx-auto rounded-xl text-xs text-middle-gray transition-all hover:scale-[1.02]"
-      href={`/knowledge/${knowledgeInfo.knowledge_id}`}
+      href={`/knowledges/${knowledgeInfo.knowledge_id}`}
     >
       <section className="p-3 space-y-2">
         <article className="flex justify-between items-center">

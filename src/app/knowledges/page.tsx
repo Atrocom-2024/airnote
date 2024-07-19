@@ -13,7 +13,7 @@ export default async function Knowledge() {
           <Title>공간 지식</Title>
           <Link
             className="bg-default text-white px-4 py-3 rounded-md"
-            href="/knowledge/add"
+            href="/knowledges/add"
           >지식작성</Link>
         </section>
         <TopKnowledgeSection />
