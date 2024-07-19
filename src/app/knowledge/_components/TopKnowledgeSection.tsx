@@ -5,7 +5,7 @@ import TopKnowledgeCard from "./TopKnowledgeCard";
 import LoadingUI from "@/app/_components/LoadingUI";
 
 export default function TopKnowledgeSection() {
-  const {data: topKnowledges, isPending} = useTopKnowledges();
+  const { data: topKnowledges, isPending } = useTopKnowledges();
 
   if (isPending) {
     return <LoadingUI />;

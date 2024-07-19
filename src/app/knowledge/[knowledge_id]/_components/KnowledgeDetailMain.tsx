@@ -11,8 +11,9 @@ import { parseDate } from "@/utils/modules";
 import { useKnowledge } from "@/app/_lib/hooks";
 import LoadingUI from "@/app/_components/LoadingUI";
 
+// TODO: 좋아요 기능 구현
 export default function KnowledgeDetailMain({ knowledgeId }: PropsType) {
-  const {data: knowledge, isPending} = useKnowledge(knowledgeId);
+  const { data: knowledge, isPending } = useKnowledge(knowledgeId);
 
   if (!knowledge || isPending) {
     return <LoadingUI />;
@@ -29,7 +30,7 @@ export default function KnowledgeDetailMain({ knowledgeId }: PropsType) {
           alt="썸네일"
         />
       </section> */}
-      <section className="flex justify-between items-center text-middle-gray text-sm border-b-[1.5px] border-middle-gray pb-2">
+      <section className="flex justify-between items-center text-middle-gray text-sm border-b-[1.5px] border-gray pb-2">
         <article className="flex justify-center items-center">
           <div>
             <CgProfile className="size-[30px] md:size-[35px]" size="40" color="#C1C1C1" />

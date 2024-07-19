@@ -8,33 +8,32 @@ const secret = process.env.NEXT_AUTH_SECRET;
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
-    // case 'GET':
-    //   const { lat, lng } = req.query;
-    //   try {
-    //     const client = await pool.connect();
-    //     const reviewsQuery = `
-    //       SELECT
-    //         r.post_id,
-    //         u.nickname AS author_nickname,
-    //         r.address,
-    //         r.address_detail,
-    //         r.content,
-    //         SUM(CASE WHEN rt.reaction_type = 'like' THEN 1 ELSE 0 END) AS likes,
-    //         SUM(CASE WHEN rt.reaction_type = 'dislike' THEN 1 ELSE 0 END) AS dislikes,
-    //         r.create_at
-    //       FROM RECORD_TB r
-    //       JOIN USERS_TB u ON r.author_id = u.id
-    //       LEFT JOIN REACTION_TB rt ON r.post_id = rt.post_id
-    //       WHERE r.latitude = $1 AND r.longitude = $2
-    //       GROUP BY r.post_id, u.nickname, r.address, r.address_detail, r.content, r.create_at
-    //     `;
-    //     const reviewsQueryResult = await client.query(reviewsQuery, [parseFloat(lat), parseFloat(lng)]);
-    //     client.release();
-    //     return res.status(200).json(reviewsQueryResult.rows);
-    //   } catch (err) {
-    //     console.error(err);
-    //     return res.status(500).send('내부 서버 오류');
-    //   }
+    case 'GET':
+      try {
+        const client = await pool.connect();
+        const knowledgesQuery = `
+          SELECT
+            k.knowledge_id,
+            u.nickname as author_nickname,
+            k.knowledge_title,
+            k.knowledge_content,
+            SUM(CASE WHEN krt.knowledge_reaction_type = 'like' THEN 1 ELSE 0 END)::INTEGER AS likes,
+            SUM(CASE WHEN krt.knowledge_reaction_type = 'dislike' THEN 1 ELSE 0 END)::INTEGER AS dislikes,
+            k.thumbnail_url,
+            k.create_at
+          FROM KNOWLEDGE_TB k
+          JOIN USERS_TB u ON k.author_id = u.id
+          LEFT JOIN KNOWLEDGE_REACTION_TB krt ON k.knowledge_id = krt.knowledge_id
+          GROUP BY k.knowledge_id, u.nickname, k.knowledge_title, k.knowledge_content, k.thumbnail_url, k.create_at
+          ORDER BY k.create_at DESC;
+        `
+        const knowledgesQueryResult = await client.query(knowledgesQuery);
+        client.release();
+        return res.status(200).json(knowledgesQueryResult.rows);
+      } catch (err) {
+        console.error(err);
+        return res.status(500).send('내부 서버 오류');
+      }
     case 'POST':
       const token = await getToken({ req, secret });
   

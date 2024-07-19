@@ -3,7 +3,7 @@ import KnowledgeDetailMain from "./_components/KnowledgeDetailMain";
 
 export default function KnowledgeDetail({ params }: PageProps) {
   return (
-    <Layout>
+    <Layout className="pb-20">
       <KnowledgeDetailMain knowledgeId={params.knowledge_id} />
     </Layout>
   );

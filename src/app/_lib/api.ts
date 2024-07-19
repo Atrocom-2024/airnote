@@ -97,6 +97,16 @@ export const getTopKnowledges = async () => {
   return res.json();
 }
 
+// 실시간 인기 공간 지식을 가져오는 함수
+export const getKnowledges = async () => {
+  const domain = process.env.NEXT_PUBLIC_DOMAIN;
+  const res = await fetch(`${domain}/api/knowledges`, { cache: 'no-store' });
+  if (!res.ok) {
+    throw new Error('Failed to get knowledges');
+  }
+  return res.json();
+}
+
 // 공간 지식 상세 데이터를 가져오는 함수
 export const getKnowledge = async (knowledgeId: string) => {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
