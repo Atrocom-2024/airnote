@@ -6,8 +6,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   switch (req.method) {
     case 'GET':
       try {
+        const knowledgeId = req.query.knowledge_id
         const client = await pool.connect();
-        const topKnowledgesQuery = `
+        const knowledgeQuery = `
           SELECT
             k.knowledge_id,
             u.nickname as author_nickname,
@@ -20,13 +21,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           FROM KNOWLEDGE_TB k
           JOIN USERS_TB u ON k.author_id = u.id
           LEFT JOIN KNOWLEDGE_REACTION_TB krt ON k.knowledge_id = krt.knowledge_id
+          WHERE k.knowledge_id = $1
           GROUP BY k.knowledge_id, u.nickname, k.knowledge_title, k.knowledge_content, k.thumbnail_url, k.create_at
-          ORDER BY likes DESC
-          LIMIT 3;
         `
-        const topKnowledgesQueryResult = await client.query(topKnowledgesQuery);
+        const knowledgeQueryResult = await client.query(knowledgeQuery, [knowledgeId]);
         client.release();
-        return res.status(200).json(topKnowledgesQueryResult.rows);
+        return res.status(200).json(knowledgeQueryResult.rows[0]);
       } catch (err) {
         console.error(err);
         return res.status(500).send('내부 서버 오류');

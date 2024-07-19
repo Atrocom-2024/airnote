@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 import {
   getTopReviews,
@@ -7,7 +7,10 @@ import {
   getUserInfoAdmin,
   getReviewsAdmin,
   deleteReviewAdmin,
-  getTopKnowledges
+  getTopKnowledges,
+  getKnowledge,
+  getKnowledges,
+  postKnowledgeReaction
 } from "./api";
 
 // 상위 4개 공간 기록 데이터를 가져오는 훅
@@ -20,11 +23,39 @@ export const useTopReviews = () => {
 
 // 상위 3개 공간 지식 데이터를 가져오는 훅
 export const useTopKnowledges = () => {
-  return useQuery<topKnowledgeType[]>({
+  return useQuery<KnowledgeType[]>({
     queryKey: ['topKnowledges'],
     queryFn: () => getTopKnowledges()
   });
 };
+
+// 상위 3개 공간 지식 데이터를 가져오는 훅
+export const useKnowledges = () => {
+  return useQuery<KnowledgeType[]>({
+    queryKey: ['knowledges'],
+    queryFn: () => getKnowledges()
+  });
+};
+
+// 공간 지식 상세 데이터를 가져오는 훅
+export const useKnowledge = (knowledgeId: string) => {
+  return useQuery<KnowledgeType>({
+    queryKey: ['knowledge'],
+    queryFn: () => getKnowledge(knowledgeId)
+  });
+};
+
+// 공간 지식 좋아요 요청 훅
+export const useKnowledgeReaction = (knowledgeId: string, reactionType: 'like' | 'dislike') => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: () => postKnowledgeReaction(knowledgeId, reactionType),
+    onSuccess: () =>  {
+      queryClient.invalidateQueries({ queryKey: ['knowledge'] })
+    }
+  });
+}
 
 // 마이페이지 내 정보 요청
 export const useMyInfo = (email: string) => {
@@ -127,11 +158,13 @@ interface ReviewType {
   create_at: Date;
 };
 
-interface topKnowledgeType {
+interface KnowledgeType {
   knowledge_id: string;
   author_nickname: string;
   knowledge_title: string;
   knowledge_content: string;
+  likes: number;
+  dislikes: number;
   thumbnail_url: string;
   create_at: Date;
 }

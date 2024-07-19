@@ -22,6 +22,21 @@ export async function middleware(req: NextRequest) {
     }
   }
 
+  if (pathname === '/knowledges/add') {
+    if (!token) {
+      return NextResponse.redirect(new URL('/knowledges', req.url));
+    }
+    const domain = process.env.NEXT_PUBLIC_DOMAIN;
+    const res = await fetch(`${domain}/api/user-roles?email=${token.email}`);
+    if (!res.ok) {
+      return NextResponse.redirect(new URL('/knowledges', req.url));
+    }
+    const json = await res.json();
+    if (json.role !== 'expert' && json.role !== 'admin') {
+      return NextResponse.redirect(new URL('/knowledges', req.url));
+    }
+  }
+
   // 관리자 로그인 상태 리다이렉트 설정
   if (pathname === '/admin') {
     const accessToken = req.cookies.get('accessToken');

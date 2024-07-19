@@ -1,12 +1,12 @@
 'use client';
 
+import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { CgProfile } from "react-icons/cg";
+import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
 
 import { parseDate } from "@/utils/modules";
-import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
-import Link from "next/link";
 
 export default function TopKnowledgeCard({ knowledgeInfo }: PropsType) {
   const [previewText, setPreviewText] = useState<string>('');
@@ -19,8 +19,8 @@ export default function TopKnowledgeCard({ knowledgeInfo }: PropsType) {
 
   return (
     <Link
-      className="max-w-[300px] mx-auto rounded-xl shadow-md text-xs text-middle-gray transition-all hover:scale-[1.02]"
-      href={`/knowledge/${knowledgeInfo.knowledge_id}`}
+      className="bg-white max-w-[300px] mx-auto rounded-xl text-xs text-middle-gray transition-all hover:scale-[1.02]"
+      href={`/knowledges/${knowledgeInfo.knowledge_id}`}
     >
       <section>
         <Image
@@ -50,13 +50,13 @@ export default function TopKnowledgeCard({ knowledgeInfo }: PropsType) {
             <div>
               <AiOutlineLike className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
             </div>
-            <div className="font-bold">0</div>
+            <div className="font-bold">{knowledgeInfo.likes}</div>
           </div>
           <div className="flex items-center">
             <div>
               <AiOutlineDislike className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
             </div>
-            <div className="font-bold">0</div>
+            <div className="font-bold">{knowledgeInfo.dislikes}</div>
           </div>
         </article>
       </section>
@@ -86,6 +86,8 @@ interface topKnowledgeType {
   author_nickname: string;
   knowledge_title: string;
   knowledge_content: string;
+  likes: number;
+  dislikes: number;
   thumbnail_url: string;
   create_at: Date;
 }
