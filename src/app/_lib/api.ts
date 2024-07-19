@@ -117,6 +117,17 @@ export const getKnowledge = async (knowledgeId: string) => {
   return res.json();
 }
 
+// 공간 지식 좋아요/싫어요 요청 함수
+export const postKnowledgeReaction = async (knowledgeId: string, kind: 'like' | 'dislike') => {
+  const domain = process.env.NEXT_PUBLIC_DOMAIN;
+  const uri = `${domain}/api/knowledges/${knowledgeId}/reactions?kind=${kind}`;
+  const res = await fetch(uri, { method: 'POST' });
+  if (!res.ok) {
+    throw new Error('Failed to get knowledge info');
+  }
+  return res.json();
+}
+
 // 마이페이지 내 정보 요청
 export async function getMyInfo(email: string) {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;

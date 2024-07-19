@@ -6,7 +6,7 @@ import KnowledgeCard from "./KnowledgeCard";
 
 export default function KnowledgeSection() {
   const { data: knowledges, isPending } = useKnowledges();
-  console.log(knowledges);
+  
   if (isPending || !knowledges) {
     return <LoadingUI />;
   }
