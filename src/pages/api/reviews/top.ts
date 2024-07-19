@@ -5,6 +5,7 @@ import { pool } from "@/utils/database";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
     case 'GET':
+      const { limit } = req.query;
       try {
         const client = await pool.connect();
         const topReviewsQuery = `
@@ -22,9 +23,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           LEFT JOIN REACTION_TB rt ON r.post_id = rt.post_id
           GROUP BY r.post_id, r.address, r.address_detail, r.content, r.latitude, r.longitude, r.create_at
           ORDER BY likes DESC
-          LIMIT 4;
+          LIMIT $1;
         `
-        const topReviewsQueryResult = await client.query(topReviewsQuery);
+        const topReviewsQueryResult = await client.query(topReviewsQuery, [limit]);
         client.release();
         return res.status(200).json(topReviewsQueryResult.rows);
       } catch (err) {

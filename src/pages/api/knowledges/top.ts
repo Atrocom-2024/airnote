@@ -5,6 +5,7 @@ import { pool } from "@/utils/database";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
     case 'GET':
+      const { limit } = req.query;
       try {
         const client = await pool.connect();
         const topKnowledgesQuery = `
@@ -22,9 +23,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           LEFT JOIN KNOWLEDGE_REACTION_TB krt ON k.knowledge_id = krt.knowledge_id
           GROUP BY k.knowledge_id, u.nickname, k.knowledge_title, k.knowledge_content, k.thumbnail_url, k.create_at
           ORDER BY likes DESC
-          LIMIT 3;
+          LIMIT $1;
         `
-        const topKnowledgesQueryResult = await client.query(topKnowledgesQuery);
+        const topKnowledgesQueryResult = await client.query(topKnowledgesQuery, [limit]);
         client.release();
         return res.status(200).json(topKnowledgesQueryResult.rows);
       } catch (err) {

@@ -13,23 +13,23 @@ import {
   postKnowledgeReaction
 } from "./api";
 
-// 상위 4개 공간 기록 데이터를 가져오는 훅
-export const useTopReviews = () => {
+// 실시간 인기 공간 기록을 가져오는 훅
+export const useTopReviews = (limit: number) => {
   return useQuery<TopReviewType[]>({
     queryKey: ['topReviews'],
-    queryFn: () => getTopReviews()
+    queryFn: () => getTopReviews(limit)
   });
 };
 
-// 상위 3개 공간 지식 데이터를 가져오는 훅
-export const useTopKnowledges = () => {
+// 실시간 인기 공간 지식을 가져오는 함수
+export const useTopKnowledges = (limit: number) => {
   return useQuery<KnowledgeType[]>({
     queryKey: ['topKnowledges'],
-    queryFn: () => getTopKnowledges()
+    queryFn: () => getTopKnowledges(limit)
   });
 };
 
-// 상위 3개 공간 지식 데이터를 가져오는 훅
+// 공간 지식 목록들을 가져오는 훅
 export const useKnowledges = () => {
   return useQuery<KnowledgeType[]>({
     queryKey: ['knowledges'],

@@ -43,10 +43,10 @@ export const getBuildingInfo = async (address: string) => {
   return res.json();
 }
 
-// 상위 4개 공간 기록 데이터를 가져오는 함수
-export const getTopReviews = async () => {
+// 실시간 인기 공간 기록을 가져오는 함수
+export const getTopReviews = async (limit: number) => {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
-  const res = await fetch(`${domain}/api/reviews/top`, { cache: 'no-store' });
+  const res = await fetch(`${domain}/api/reviews/top?limit=${limit}`, { cache: 'no-store' });
   if (!res.ok) {
     throw new Error('Network response was not ok');
   }
@@ -88,16 +88,16 @@ export const getSearchResults = async (keyword: string) => {
 };
 
 // 실시간 인기 공간 지식을 가져오는 함수
-export const getTopKnowledges = async () => {
+export const getTopKnowledges = async (limit: number) => {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
-  const res = await fetch(`${domain}/api/knowledges/top`, { cache: 'no-store' });
+  const res = await fetch(`${domain}/api/knowledges/top?limit=${limit}`, { cache: 'no-store' });
   if (!res.ok) {
     throw new Error('Failed to get top knowledges');
   }
   return res.json();
 }
 
-// 실시간 인기 공간 지식을 가져오는 함수
+// 공간 지식 전체 목록 가져오는 함수
 export const getKnowledges = async () => {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
   const res = await fetch(`${domain}/api/knowledges`, { cache: 'no-store' });
