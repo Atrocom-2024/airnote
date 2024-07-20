@@ -1,4 +1,5 @@
 import Image from "next/image";
+
 import Layout from "../_components/layouts/Layout";
 import HomeTopKnowledgeSection from "./_components/HomeTopKnowledgeSection";
 import HomeTopRecordSection from "./_components/HomeTopRecordSection";
