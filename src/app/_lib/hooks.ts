@@ -107,6 +107,7 @@ export const useDeleteReview = () => {
 
 interface TopReviewType {
   post_id: string;
+  author_nickname: string;
   address: string;
   address_detail: string;
   latitude: string;

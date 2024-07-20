@@ -67,25 +67,26 @@ em {
     font-style: italic;
 }
 
+/* 모바일 환경에 맞춘 기본 스타일 */
 .knowledge-detail-container h1 {
-    font-size: xx-large;
-    font-weight: bold;
-    margin-top: 50px;
-    margin-bottom: 40px;
-}
-
-.knowledge-detail-container h2 {
-    font-size: x-large;
+    font-size: large;
     font-weight: bold;
     margin-top: 30px;
     margin-bottom: 20px;
 }
 
-.knowledge-detail-container h3 {
-    font-size: larger;
+.knowledge-detail-container h2 {
+    font-size: medium;
     font-weight: bold;
-    margin-top: 10px;
-    margin-bottom: 5px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+.knowledge-detail-container h3 {
+    font-size: small;
+    font-weight: bold;
+    margin-top: 5px;
+    margin-bottom: 3px;
 }
 
 .knowledge-detail-container p {
@@ -95,9 +96,36 @@ em {
 .knowledge-detail-container li {
     list-style: disc;
     line-height: normal;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-left: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 15px;
+}
+
+/* 화면 너비가 600px 이상일 때 적용되는 스타일 */
+@media only screen and (min-width: 600px) {
+    .knowledge-detail-container h1 {
+        font-size: xx-large;
+        margin-top: 50px;
+        margin-bottom: 40px;
+    }
+
+    .knowledge-detail-container h2 {
+        font-size: x-large;
+        margin-top: 30px;
+        margin-bottom: 20px;
+    }
+
+    .knowledge-detail-container h3 {
+        font-size: larger;
+        margin-top: 10px;
+        margin-bottom: 5px;
+    }
+
+    .knowledge-detail-container li {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-left: 20px;
+    }
 }
 
 #sidebar::-webkit-scrollbar {

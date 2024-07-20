@@ -19,12 +19,12 @@ export default function TopKnowledgeCard({ knowledgeInfo }: PropsType) {
 
   return (
     <Link
-      className="bg-white max-w-[300px] mx-auto rounded-xl text-xs text-middle-gray transition-all hover:scale-[1.02]"
+      className="bg-white mx-auto rounded-xl text-xs text-middle-gray transition-all hover:scale-[1.02]"
       href={`/knowledges/${knowledgeInfo.knowledge_id}`}
     >
       <section>
         <Image
-          className="w-[300px] h-[300px] object-cover rounded-t-xl"
+          className="w-full h-[300px] object-cover rounded-t-xl"
           src={knowledgeInfo.thumbnail_url}
           width={300}
           height={300}
