@@ -23,7 +23,7 @@ export default function SideBarReviewCard({ review }: PropsType) {
   }
 
   return (
-  <article className="border-b-[1.5px] border-default p-3">
+  <article className="border-b border-default p-3">
     <section className="flex justify-between items-center">
       <div className="flex items-center">
         <div>

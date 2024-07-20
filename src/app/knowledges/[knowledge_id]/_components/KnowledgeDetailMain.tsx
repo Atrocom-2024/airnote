@@ -102,7 +102,7 @@ export default function KnowledgeDetailMain({ knowledgeId }: PropsType) {
           >비추천</button>
         </article>
         <article className="text-end mt-5">
-          <Link className="inline-block" href="/home">
+          <Link className="inline-block" href="/record">
             <div className="flex items-center">
               <div className="text-default mr-1">공간기록 보러가기</div>
               <div>

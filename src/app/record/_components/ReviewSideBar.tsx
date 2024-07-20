@@ -47,7 +47,7 @@ export default function ReviewSideBar() {
             <div className="text-xl text-default font-bold ml-2">{address}</div>
           </section>
           {lat && lng && (
-            <section className=" border-y-[1.5px] border-default">
+            <section className=" border-y border-default">
               <Roadview
                 position={{ ...position, radius: 50 }}
                 style={{
