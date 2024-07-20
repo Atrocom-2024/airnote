@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { CgProfile } from "react-icons/cg";
 import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
 
@@ -5,7 +6,10 @@ import { parseDate } from "@/utils/modules";
 
 export default function HomeTopRecordCard({ topReview }: PropsType) {
   return (
-    <article className="w-full border-b border-gray px-5 py-3">
+    <Link
+      className="w-full border-b border-gray px-5 py-3 block"
+      href={`/record?sidebar=true&lat=${topReview.latitude}&lng=${topReview.longitude}&address=${topReview.address}`}
+    >
       <section className="flex justify-between items-center text-middle-gray">
         <div className="flex items-center">
           <div className="flex items-center">
@@ -32,7 +36,7 @@ export default function HomeTopRecordCard({ topReview }: PropsType) {
         </div>
       </section>
       <section className="mt-3 text-sm">{topReview.content}</section>
-    </article>
+    </Link>
   );
 }
 
