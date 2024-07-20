@@ -14,17 +14,13 @@ export default function HeaderDropdown({ isLogin }: PropsType) {
 
   const menuClickHandler = () => {
     setIsDropdown((prev) => !prev);
-  }
-
-  const menuCloseHandler = () => {
-    setIsDropdown(false);
-  }
+  };
 
   const outsideClickHandler = (event: MouseEvent) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
       setIsDropdown(false);
     }
-  }
+  };
 
   useEffect(() => {
     if (isDropdown) {
@@ -57,17 +53,17 @@ export default function HeaderDropdown({ isLogin }: PropsType) {
           )}
           <ul className="space-y-5 px-5 pb-5 mt-5">
             <li>
-              <MoveLink href="/home">홈</MoveLink>
+              <MoveLink href="/record">공간기록</MoveLink>
             </li>
             <li>
               {isLogin ? (
-                <MoveLink href="/reviews/add">기록작성</MoveLink>
+                <MoveLink href="/record/add">기록작성</MoveLink>
               ) : (
                 <ReviewAddBtn />
               )}
             </li>
             <li>
-              <MoveLink href="https://cafe.naver.com/airnote" target="_blank">커뮤니티</MoveLink>
+              <MoveLink href="/knowledges">공간지식</MoveLink>
             </li>
             <li>
               <MoveLink href="https://open.kakao.com/o/sAgQYPhg" target="_blank">고객지원</MoveLink>

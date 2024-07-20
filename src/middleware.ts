@@ -1,6 +1,6 @@
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
-import { generateAccessToken, verifyToken } from "./utils/jwtUtils";
+import { verifyToken } from "./utils/jwtUtils";
 
 const secret = process.env.NEXT_AUTH_SECRET;
 
@@ -19,6 +19,21 @@ export async function middleware(req: NextRequest) {
   if (pathname.startsWith('/my') || pathname.startsWith('/reviews')) {
     if (!token) {
       return NextResponse.redirect(new URL('/home', req.url));
+    }
+  }
+
+  if (pathname === '/knowledges/add') {
+    if (!token) {
+      return NextResponse.redirect(new URL('/knowledges', req.url));
+    }
+    const domain = process.env.NEXT_PUBLIC_DOMAIN;
+    const res = await fetch(`${domain}/api/user-roles?email=${token.email}`);
+    if (!res.ok) {
+      return NextResponse.redirect(new URL('/knowledges', req.url));
+    }
+    const json = await res.json();
+    if (json.role !== 'expert' && json.role !== 'admin') {
+      return NextResponse.redirect(new URL('/knowledges', req.url));
     }
   }
 

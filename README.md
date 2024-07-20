@@ -2,9 +2,12 @@
 
 ### Stacks
 - TypeScript
-- TailwindCss
 - Next.js
+- TailwindCSS
+- React Hook Form
 - React Query
 - Zustand
 - JWT
-- Next Auth
+- Next-Auth
+- PostgreSQL
+- Naver Cloud

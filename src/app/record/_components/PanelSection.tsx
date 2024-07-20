@@ -10,7 +10,7 @@ import PartLoadingUI from "@/app/_components/PartLoadingUI";
 
 export default function PanelSection() {
   const locNameList: LocationListTypes = ['서울', '경기', '충남', '충북', '전북', '전남', '강원', '경북', '경남', '제주'];
-  const { data: topReviews, isPending } = useTopReviews();
+  const { data: topReviews, isPending } = useTopReviews(4);
 
   return (
     <section

@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 import {
   getTopReviews,
@@ -6,16 +6,56 @@ import {
   postLogout,
   getUserInfoAdmin,
   getReviewsAdmin,
-  deleteReviewAdmin
+  deleteReviewAdmin,
+  getTopKnowledges,
+  getKnowledge,
+  getKnowledges,
+  postKnowledgeReaction
 } from "./api";
 
-// 상위 4개 공간 기록 데이터를 가져오는 훅
-export const useTopReviews = () => {
+// 실시간 인기 공간 기록을 가져오는 훅
+export const useTopReviews = (limit: number) => {
   return useQuery<TopReviewType[]>({
     queryKey: ['topReviews'],
-    queryFn: () => getTopReviews()
+    queryFn: () => getTopReviews(limit)
   });
 };
+
+// 실시간 인기 공간 지식을 가져오는 함수
+export const useTopKnowledges = (limit: number) => {
+  return useQuery<KnowledgeType[]>({
+    queryKey: ['topKnowledges'],
+    queryFn: () => getTopKnowledges(limit)
+  });
+};
+
+// 공간 지식 목록들을 가져오는 훅
+export const useKnowledges = () => {
+  return useQuery<KnowledgeType[]>({
+    queryKey: ['knowledges'],
+    queryFn: () => getKnowledges()
+  });
+};
+
+// 공간 지식 상세 데이터를 가져오는 훅
+export const useKnowledge = (knowledgeId: string) => {
+  return useQuery<KnowledgeType>({
+    queryKey: ['knowledge'],
+    queryFn: () => getKnowledge(knowledgeId)
+  });
+};
+
+// 공간 지식 좋아요 요청 훅
+export const useKnowledgeReaction = (knowledgeId: string, reactionType: 'like' | 'dislike') => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: () => postKnowledgeReaction(knowledgeId, reactionType),
+    onSuccess: () =>  {
+      queryClient.invalidateQueries({ queryKey: ['knowledge'] })
+    }
+  });
+}
 
 // 마이페이지 내 정보 요청
 export const useMyInfo = (email: string) => {
@@ -67,6 +107,7 @@ export const useDeleteReview = () => {
 
 interface TopReviewType {
   post_id: string;
+  author_nickname: string;
   address: string;
   address_detail: string;
   latitude: string;
@@ -117,3 +158,14 @@ interface ReviewType {
   dislikes: number;
   create_at: Date;
 };
+
+interface KnowledgeType {
+  knowledge_id: string;
+  author_nickname: string;
+  knowledge_title: string;
+  knowledge_content: string;
+  likes: number;
+  dislikes: number;
+  thumbnail_url: string;
+  create_at: Date;
+}

@@ -17,7 +17,7 @@ export default function SearchBar() {
 
   const qeuryChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
-  }
+  };
 
   const debouncedQueryHandler = debounce((keyword: string) => {
     setDebouncedQuery(keyword)
@@ -33,7 +33,7 @@ export default function SearchBar() {
     setDebouncedQuery('');
     setMapLoc({ lat: result.latitude, lng: result.longitude });
     router.push(`/home?sidebar=true&lat=${result.latitude}&lng=${result.longitude}&address=${encodeURIComponent(result.address)}`)
-  }
+  };
 
   const searchKeyPressHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -41,7 +41,7 @@ export default function SearchBar() {
       setDebouncedQuery('');
       router.push(`/search?sidebar=true&q=${query}`);
     }
-  }
+  };
 
   useEffect(() => {
     debouncedQueryHandler(query);
