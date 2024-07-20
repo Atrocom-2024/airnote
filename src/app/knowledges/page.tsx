@@ -12,7 +12,7 @@ export default async function Knowledge() {
         <section className="flex justify-between items-center">
           <Title>공간 지식</Title>
           <Link
-            className="bg-default text-white px-4 py-3 rounded-md"
+            className="bg-default text-white text-sm px-4 py-3 rounded-lg md:text-base"
             href="/knowledges/add"
           >지식작성</Link>
         </section>
