@@ -61,7 +61,7 @@ export default function KnowledgeDetailMain({ knowledgeId }: PropsType) {
           <section>{parseDate(knowledge.create_at)}</section>
         </article>
       </section>
-      <section className="flex justify-center items-center mt-10">
+      <section className="flex justify-center items-center my-5 md:my-10">
         <Image
           className="w-[400px] h-[400px] object-cover rounded-lg"
           src={knowledge.thumbnail_url}
@@ -70,8 +70,8 @@ export default function KnowledgeDetailMain({ knowledgeId }: PropsType) {
           alt="썸네일"
         />
       </section>
-      <section className="mt-10">
-        <article className="text-3xl font-bold mb-5">{knowledge.knowledge_title}</article>
+      <section>
+        <article className="text-2xl font-bold mb-5 md:text-3xl">{knowledge.knowledge_title}</article>
         <article className="knowledge-detail-container" dangerouslySetInnerHTML={{ __html: knowledge.knowledge_content }} />
       </section>
       <section className="mt-10 pb-20 text-sm">
@@ -101,7 +101,7 @@ export default function KnowledgeDetailMain({ knowledgeId }: PropsType) {
             onClick={() => reactionClickHandler('dislike')}
           >비추천</button>
         </article>
-        <article className="text-end">
+        <article className="text-end mt-5">
           <Link className="inline-block" href="/home">
             <div className="flex items-center">
               <div className="text-default mr-1">공간기록 보러가기</div>

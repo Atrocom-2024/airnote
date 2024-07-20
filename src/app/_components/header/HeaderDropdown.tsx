@@ -53,11 +53,11 @@ export default function HeaderDropdown({ isLogin }: PropsType) {
           )}
           <ul className="space-y-5 px-5 pb-5 mt-5">
             <li>
-              <MoveLink href="/home">공간기록</MoveLink>
+              <MoveLink href="/record">공간기록</MoveLink>
             </li>
             <li>
               {isLogin ? (
-                <MoveLink href="/reviews/add">기록작성</MoveLink>
+                <MoveLink href="/record/add">기록작성</MoveLink>
               ) : (
                 <ReviewAddBtn />
               )}

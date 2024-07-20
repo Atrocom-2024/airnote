@@ -8,7 +8,7 @@ import PanelSection from "./PanelSection";
 import ReviewSideBar from "./ReviewSideBar";
 import TermsModal from "./TermsModal";
 
-export default function HomeMain() {
+export default function RecordMain() {
   const [isMap, setIsMap] = useState(false);
   const [isTerms, setIsTerms] = useState(false);
   const searchParams = useSearchParams();

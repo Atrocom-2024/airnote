@@ -30,7 +30,7 @@ export default function CustomOverlay({ address, buildingName, setIsOverlay }: P
       {session ? (
         <Link
           className="bg-white text-black text-xs rounded-lg px-3 py-2"
-          href={`/reviews/add?address=${encodeURIComponent(address)}`}
+          href={`/record/add?address=${encodeURIComponent(address)}`}
         >기록작성</Link>
       ) : (
         <button

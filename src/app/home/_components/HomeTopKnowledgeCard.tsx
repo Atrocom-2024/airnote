@@ -1,0 +1,52 @@
+import { CgProfile } from "react-icons/cg";
+import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
+
+import { parseDate } from "@/utils/modules";
+
+export default function HomeTopKnowledgeCard({ topKnowledge }: PropsType) {
+  return (
+    <article className="w-full border-b border-gray px-5 py-3">
+      <section className="flex justify-between items-center text-middle-gray">
+        <div className="flex items-center">
+          <div className="flex items-center">
+            <div>
+              <CgProfile size="30" color="#AFAFAF" />
+            </div>
+            <div className="text-sm ml-1">{topKnowledge.author_nickname}</div>
+          </div>
+          <div className="text-sm ml-3">{ parseDate(topKnowledge.create_at) }</div>
+        </div>
+        <div className="flex items-center">
+          <div className="flex items-center mr-3">
+            <div>
+              <AiOutlineLike className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
+            </div>
+            <div className="text-xs ml-1 sm:text-sm">{ topKnowledge.likes }</div>
+          </div>
+          <div className="flex items-center">
+            <div>
+              <AiOutlineDislike className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
+            </div>
+            <div className="text-xs ml-1 sm:text-sm">{ topKnowledge.dislikes }</div>
+          </div>
+        </div>
+      </section>
+      <section className="mt-2 font-semibold">{topKnowledge.knowledge_title}</section>
+    </article>
+  );
+}
+
+interface PropsType {
+  topKnowledge: KnowledgeType;
+}
+
+interface KnowledgeType {
+  knowledge_id: string;
+  author_nickname: string;
+  knowledge_title: string;
+  knowledge_content: string;
+  likes: number;
+  dislikes: number;
+  thumbnail_url: string;
+  create_at: Date;
+}

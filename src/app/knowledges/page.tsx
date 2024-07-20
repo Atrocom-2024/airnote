@@ -8,7 +8,7 @@ import KnowledgeSection from "./_components/KnowledgesSection";
 export default async function Knowledge() {
   return (
     <Layout className="bg-dark-white pb-36">
-      <main className="w-full mx-auto pt-10 md:w-[1000px]">
+      <main className="w-full mx-auto pt-10 px-10 lg:px-0 lg:w-[1000px]">
         <section className="flex justify-between items-center">
           <Title>공간 지식</Title>
           <Link
