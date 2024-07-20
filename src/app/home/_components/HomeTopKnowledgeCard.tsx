@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { CgProfile } from "react-icons/cg";
 import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
 
@@ -5,7 +6,7 @@ import { parseDate } from "@/utils/modules";
 
 export default function HomeTopKnowledgeCard({ topKnowledge }: PropsType) {
   return (
-    <article className="w-full border-b border-gray px-5 py-3">
+    <Link className="w-full border-b border-gray px-5 py-3 block" href={`/knowledges/${topKnowledge.knowledge_id}`}>
       <section className="flex justify-between items-center text-middle-gray">
         <div className="flex items-center">
           <div className="flex items-center">
@@ -32,7 +33,7 @@ export default function HomeTopKnowledgeCard({ topKnowledge }: PropsType) {
         </div>
       </section>
       <section className="mt-2 font-semibold">{topKnowledge.knowledge_title}</section>
-    </article>
+    </Link>
   );
 }
 
