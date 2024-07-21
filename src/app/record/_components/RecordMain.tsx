@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 import MapSection from "../../_components/map/MapSection";
 import PanelSection from "./PanelSection";
-import ReviewSideBar from "./ReviewSideBar";
+import RecordSideBar from "./RecordSideBar";
 import TermsModal from "./TermsModal";
 
 export default function RecordMain() {
@@ -39,11 +39,9 @@ export default function RecordMain() {
       >{isMap ? '목록으로 보기' : '지도로 보기'}</button>
       <MapSection />
       {sidebar ? (
-        <ReviewSideBar />
+        <RecordSideBar />
       ) : (!isMap && (
-        <PanelSection
-
-        />
+        <PanelSection />
       ))}
       {isTerms && <TermsModal termsConfirmHandler={termsConfirmHandler} />}
     </>

@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 import {
-  getTopReviews,
+  getTopRecords,
   getMyInfo,
   postLogout,
   getUserInfoAdmin,
@@ -15,10 +15,10 @@ import {
 } from "./api";
 
 // 실시간 인기 공간 기록을 가져오는 훅
-export const useTopReviews = (limit: number) => {
-  return useQuery<TopReviewType[]>({
-    queryKey: ['topReviews'],
-    queryFn: () => getTopReviews(limit)
+export const useTopRecords = (limit: number) => {
+  return useQuery<TopRecordType[]>({
+    queryKey: ['topRecords'],
+    queryFn: () => getTopRecords(limit)
   });
 };
 
@@ -118,7 +118,7 @@ export const useDeleteReview = () => {
   });
 };
 
-interface TopReviewType {
+interface TopRecordType {
   post_id: string;
   author_nickname: string;
   address: string;
