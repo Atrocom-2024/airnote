@@ -9,7 +9,7 @@ export default function PanelReviewCard({ topReview }: PropsType) {
   const topReviewContent = topReview.content.split('\n');
 
   return (
-    <article className="border-b-[1.5px] border-default p-3">
+    <article className="border-b border-default p-3">
       <div className="flex justify-between items-center">
         <Link
           className="text-default font-bold"

@@ -15,6 +15,7 @@ export default function MapSection() {
   const searchParams = useSearchParams();
   const paramLat = searchParams?.get('lat');
   const paramLng = searchParams?.get('lng');
+  const isSidebar = searchParams?.get('sidebar');
   const router = useRouter();
   const mapRef = useRef<any>(null);
   const [ overlayInfo, setOverlayInfo ] = useState<OverlayInfoType>({
@@ -32,12 +33,22 @@ export default function MapSection() {
 
   const mapIdleHandler = debounce(async (target: kakao.maps.Map) => {
     const bounds = target.getBounds();
+    const center = target.getCenter();
     const params = {
       swLat: bounds.getSouthWest().getLat(),
       swLng: bounds.getSouthWest().getLng(),
       neLat: bounds.getNorthEast().getLat(),
       neLng: bounds.getNorthEast().getLng()
     };
+
+    // URL 업데이트
+    if (!isSidebar) {
+        const newSearchParams = new URLSearchParams(searchParams?.toString());
+        newSearchParams.set('lat', center.getLat().toString());
+        newSearchParams.set('lng', center.getLng().toString());
+        router.push(`?${newSearchParams.toString()}`);
+    }
+
     try {
       const res = await getMarkerInfo(params);
       setMarkerInfo(res);
@@ -53,7 +64,7 @@ export default function MapSection() {
   }, [setMapLoc]);
   
   const markerClickHandler = (lat: number, lng: number, address: string) => {
-    router.push(`/home?sidebar=true&lat=${lat}&lng=${lng}&address=${encodeURIComponent(address)}`);
+    router.push(`/record?sidebar=true&lat=${lat}&lng=${lng}&address=${encodeURIComponent(address)}`);
   };
 
   const buildingClickHandler = async (_: any, mouseEvent: any) => {

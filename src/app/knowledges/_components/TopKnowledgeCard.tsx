@@ -25,7 +25,7 @@ export default function TopKnowledgeCard({ knowledgeInfo }: PropsType) {
       <section>
         <Image
           className="w-full h-[300px] object-cover rounded-t-xl"
-          src={knowledgeInfo.thumbnail_url}
+          src={knowledgeInfo.thumbnail_url ? knowledgeInfo.thumbnail_url : '/airnote-thumbnail.jpg'}
           width={300}
           height={300}
           alt="썸네일"
