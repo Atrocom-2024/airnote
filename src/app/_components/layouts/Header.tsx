@@ -12,14 +12,14 @@ export default async function Header() {
   const session = await getServerSession(authOptions);
 
   return (
-    <header className="w-[100vw] h-[8vh] bg-white justify-between flex items-center z-[30] border-b border-default px-5 sm:px-10 md:justify-evenly">
+    <header className="w-[100vw] h-[8vh] bg-white justify-between flex items-center z-[30] border-b border-default px-5 sm:px-10 md:justify-around">
       <section className="flex items-center">
         <article className="mr-5 sm:mr-10">
           <Link href="/home">
             <Image className="w-[40px] md:w-[50px]" src="/logo.svg" width={50} height={50} alt="로고" priority={true} />
           </Link>
         </article>
-        <SearchBar />
+        {/* <SearchBar /> */}
       </section>
       <section className="flex text-sm">
         <article className="flex items-center">

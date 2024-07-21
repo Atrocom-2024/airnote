@@ -16,7 +16,7 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
         return res.status(401).send('접근 권한 없음');
       }
 
-      const { id, kind } = req.query;
+      const { record_id, kind } = req.query;
       const client = await pool.connect();
       const userInfoQuery = `SELECT id FROM USERS_TB WHERE email = $1;`;
       const userInfoQueryResult = await client.query(userInfoQuery, [token.email]);
@@ -25,7 +25,7 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
         return res.status(401).send('접근 권한 없음');
       }
 
-      const postId = id;
+      const recordId = record_id;
       const userId = userInfoQueryResult.rows[0].id;
       const actionType = kind === 'like' ? 'like' : 'dislike';
       const oppositeActionType = kind === 'like' ? 'dislike' : 'like';
@@ -35,7 +35,7 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
         SELECT * FROM REACTION_TB
         WHERE post_id = $1 AND user_id = $2 AND reaction_type = $3;
       `;
-      const reactionResult = await client.query(reactionQuery, [postId, userId, actionType]);
+      const reactionResult = await client.query(reactionQuery, [recordId, userId, actionType]);
       
       if (reactionResult.rows.length > 0) {
         // 이미 좋아요/싫어요를 클릭했다면 취소
@@ -43,17 +43,17 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
           DELETE FROM REACTION_TB
           WHERE post_id = $1 AND user_id = $2 AND reaction_type = $3;
         `;
-        await client.query(deleteQuery, [postId, userId, actionType]);
+        await client.query(deleteQuery, [recordId, userId, actionType]);
       } else {
         // 반대 반응이 있는지 확인하고 제거
-        const oppositeReactionResult = await client.query(reactionQuery, [postId, userId, oppositeActionType]);
+        const oppositeReactionResult = await client.query(reactionQuery, [recordId, userId, oppositeActionType]);
     
         if (oppositeReactionResult.rows.length > 0) {
           const deleteOppositeQuery = `
             DELETE FROM REACTION_TB
             WHERE post_id = $1 AND user_id = $2 AND reaction_type = $3;
           `;
-          await client.query(deleteOppositeQuery, [postId, userId, oppositeActionType]);
+          await client.query(deleteOppositeQuery, [recordId, userId, oppositeActionType]);
         }
 
         // 새로운 반응 추가
@@ -62,7 +62,7 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
           INSERT INTO REACTION_TB (reaction_id, post_id, user_id, reaction_type, create_at)
           VALUES ($1, $2, $3, $4, NOW());
         `;
-        await client.query(insertQuery, [reactionId, postId, userId, actionType]);
+        await client.query(insertQuery, [reactionId, recordId, userId, actionType]);
         client.release();
       }
       return res.status(200).json({ message: '성공적으로 업데이트 되었습니다.' });
@@ -73,7 +73,7 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
 
 interface CustomApiRequest extends NextApiRequest {
   query: {
-    id: string;
+    record_id: string;
     kind: 'like' | 'dislike';
   }
 }
