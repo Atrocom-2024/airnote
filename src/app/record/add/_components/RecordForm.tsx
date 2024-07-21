@@ -7,10 +7,10 @@ import DaumPostcodeEmbed from "react-daum-postcode"
 
 import LoadingUI from "@/app/_components/LoadingUI";
 import SubTitle from "@/app/_components/SubTitle";
-import ReviewFormInput from "./ReviewFormInput";
+import RecordFormInput from "./RecordFormInput";
 import { throttle } from "lodash";
 
-export default function ReviewForm({ address }: PropsType) {
+export default function RecordForm({ address }: PropsType) {
   const router = useRouter();
   const [openPostcode, setOpenPostcode] = useState<boolean>(false);
   const {
@@ -73,7 +73,7 @@ export default function ReviewForm({ address }: PropsType) {
         const form = new FormData();
         form.append('auth_file', data.auth_file[0]);
 
-        const res = await fetch('/api/reviews/auth-file', {
+        const res = await fetch('/api/records/auth-file', {
           method: 'POST',
           body: form
         });
@@ -86,7 +86,7 @@ export default function ReviewForm({ address }: PropsType) {
     
     // 기록 작성 요청
     try {
-      const res = await fetch('/api/reviews', {
+      const res = await fetch('/api/records', {
         method: 'POST',
         headers: { 'Content-type': 'application/json' },
         body: JSON.stringify({
@@ -117,7 +117,7 @@ export default function ReviewForm({ address }: PropsType) {
         <SubTitle>주소</SubTitle>
         <section className="mt-5">
           <div className="grid grid-cols-4 gap-2 mb-3 md:grid-cols-5">
-            <ReviewFormInput
+            <RecordFormInput
               className="text-dark-gray col-span-3 md:col-span-4"
               placeholder="주소를 입력해주세요."
               disabled={true}
@@ -137,7 +137,7 @@ export default function ReviewForm({ address }: PropsType) {
             )}
           </div>
           <div>
-            <ReviewFormInput
+            <RecordFormInput
               placeholder="상세주소를 입력해주세요. ex) 1층 101호 독도는 우리땅 부동산"
               register={{...register('address_detail')}}
             />
@@ -164,7 +164,7 @@ export default function ReviewForm({ address }: PropsType) {
             <li>허위 및 조작 리뷰는 삭제 될 수 있습니다.</li>
           </ul>
           <div className="mt-3">
-            <ReviewFormInput
+            <RecordFormInput
               className="border-[1.5px] rounded-md"
               type="file"
               accept=".png, .jpg"

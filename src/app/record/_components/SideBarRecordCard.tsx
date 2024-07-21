@@ -7,7 +7,7 @@ import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
 import { parseDate } from "@/utils/modules";
 import { useRecordReaction } from "@/app/_lib/hooks";
 
-export default function SideBarReviewCard({ review }: PropsType) {
+export default function SideBarRecordCard({ review }: PropsType) {
   const { data: session } = useSession();
   const { mutate: postRecordLike } = useRecordReaction(review.post_id, 'like');
   const { mutate: postRecordDislike } = useRecordReaction(review.post_id, 'dislike');

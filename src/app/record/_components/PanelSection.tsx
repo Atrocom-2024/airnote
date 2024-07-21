@@ -3,14 +3,14 @@
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { LuArrowUpRightSquare } from "react-icons/lu";
 
-import { useTopReviews } from "@/app/_lib/hooks";
-import PanelReviewCard from "./PanelReviewCard";
+import { useTopRecords } from "@/app/_lib/hooks";
+import PanelRecordCard from "./PanelRecordCard";
 import MapMoveBtn from "./MapMoveBtn";
 import PartLoadingUI from "@/app/_components/PartLoadingUI";
 
 export default function PanelSection() {
   const locNameList: LocationListTypes = ['서울', '경기', '충남', '충북', '전북', '전남', '강원', '경북', '경남', '제주'];
-  const { data: topReviews, isPending } = useTopReviews(4);
+  const { data: topRecords, isPending } = useTopRecords(4);
 
   return (
     <section
@@ -27,8 +27,8 @@ export default function PanelSection() {
               <div className="text-xl text-default font-bold ml-3">실시간 인기 공간 기록</div>
             </section>
             <section className="mb-20 md:mb-0">
-              {topReviews && topReviews.length ? topReviews.map((topReview) => (
-                <PanelReviewCard topReview={topReview} key={topReview.post_id} />
+              {topRecords && topRecords.length ? topRecords.map((topRecord) => (
+                <PanelRecordCard topRecord={topRecord} key={topRecord.post_id} />
               )) : (
                 <article className="text-lg text-center text-default font-bold mt-56">
                   <div>공간 기록이 아직 존재하지 않습니다.</div>

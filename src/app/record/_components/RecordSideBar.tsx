@@ -6,14 +6,13 @@ import { useQuery } from "@tanstack/react-query";
 import { CustomOverlayRoadview, Roadview } from "react-kakao-maps-sdk";
 import { FaAngleLeft } from "react-icons/fa6";
 
-import { getReviews } from "@/app/_lib/api";
+import { getRecords } from "@/app/_lib/api";
 import Sidebar from "@/app/_components/layouts/Sidebar";
-import SideBarReviewCard from "./SideBarReviewCard";
+import SideBarRecordCard from "./SideBarRecordCard";
 import PartLoadingUI from "../../_components/PartLoadingUI";
 import RoadviewCustomOverlay from "./RoadviewCustomOverlay";
 
-// TODO: 좋아요/싫어요 기능 구현
-export default function ReviewSideBar() {
+export default function RecordSideBar() {
   const roadviewRef = useRef(null);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -21,9 +20,9 @@ export default function ReviewSideBar() {
   const lat = searchParams?.get('lat');
   const lng = searchParams?.get('lng');
   const position = { lat: Number(lat), lng: Number(lng) };
-  const { data: records, error, isLoading } = useQuery<ReviewType[]>({
+  const { data: records, error, isLoading } = useQuery<RecordType[]>({
     queryKey: ['records', { lat, lng }],
-    queryFn: () => getReviews(lat!, lng!),
+    queryFn: () => getRecords(lat!, lng!),
     // lat과 lng가 있을 때만 쿼리를 활성화합니다.
     enabled: !!lat && !!lng
   });
@@ -76,7 +75,7 @@ export default function ReviewSideBar() {
           )}
           <section className="mb-20 md:mb-0">
             {records && records.map((records) => (
-              <SideBarReviewCard review={records} key={records.post_id} />
+              <SideBarRecordCard review={records} key={records.post_id} />
             ))}
           </section>
         </>
@@ -85,7 +84,7 @@ export default function ReviewSideBar() {
   );
 }
 
-interface ReviewType {
+interface RecordType {
   post_id: string;
   author_nickname: string;
   address: string;

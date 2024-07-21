@@ -2,7 +2,7 @@
 
 import { UseFormRegisterReturn } from "react-hook-form";
 
-export default function ReviewFormInput({ className, type, placeholder, disabled, register, accept, onChange }: InputProps) {
+export default function RecordFormInput({ className, type, placeholder, disabled, register, accept, onChange }: InputProps) {
   return (
     <input
       className={`w-full border-b-[1.5px] border-gray p-3 outline-none ${className}`}

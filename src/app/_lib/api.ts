@@ -6,7 +6,7 @@ import { encrypt } from "@/utils/modules";
 // 마커 위치 정보들을 가져오는 함수
 export const getMarkerInfo = async (params: GetMarkerParam) => {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
-  const res = await fetch(`${domain}/api/reviews/markers?sw_lat=${params.swLat}&sw_lng=${params.swLng}&ne_lat=${params.neLat}&ne_lng=${params.neLng}`);
+  const res = await fetch(`${domain}/api/records/markers?sw_lat=${params.swLat}&sw_lng=${params.swLng}&ne_lat=${params.neLat}&ne_lng=${params.neLng}`);
   if (!res.ok) {
     throw new Error('Failed to get markerinfo');
   }
@@ -44,9 +44,9 @@ export const getBuildingInfo = async (address: string) => {
 }
 
 // 실시간 인기 공간 기록을 가져오는 함수
-export const getTopReviews = async (limit: number) => {
+export const getTopRecords = async (limit: number) => {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
-  const res = await fetch(`${domain}/api/reviews/top?limit=${limit}`, { cache: 'no-store' });
+  const res = await fetch(`${domain}/api/records/top?limit=${limit}`, { cache: 'no-store' });
   if (!res.ok) {
     throw new Error('Network response was not ok');
   }
@@ -54,9 +54,9 @@ export const getTopReviews = async (limit: number) => {
 }
 
 // 위치에 따른 리뷰 데이터를 가져오는 함수
-export const getReviews = async (lat: string, lng: string) => {
+export const getRecords = async (lat: string, lng: string) => {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
-  const res = await fetch(`${domain}/api/reviews?lat=${lat}&lng=${lng}`);
+  const res = await fetch(`${domain}/api/records?lat=${lat}&lng=${lng}`);
   if (!res.ok) {
     throw new Error('Network response was not ok');
   }
@@ -120,7 +120,7 @@ export const getKnowledge = async (knowledgeId: string) => {
 // 공간 기록 좋아요/싫어요 요청 함수
 export const postRecordReaction = async (postId: string, kind: 'like' | 'dislike') => {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
-  const uri = `${domain}/api/reviews/${postId}/reactions?kind=${kind}`;
+  const uri = `${domain}/api/records/${postId}/reactions?kind=${kind}`;
   const res = await fetch(uri, { method: 'POST' });
   if (!res.ok) {
     throw new Error('Failed to get knowledge info');
