@@ -18,20 +18,19 @@ export default function KnowledgeDetailMain({ knowledgeId }: PropsType) {
   const { mutate: knowledgeLike } = useKnowledgeReaction(knowledgeId, 'like');
   const { mutate: knowledgeDislike } = useKnowledgeReaction(knowledgeId, 'dislike');
 
-  if (!knowledge || isPending) {
-    return <LoadingUI />;
-  }
-
   const reactionClickHandler = (reactionType: 'like' | 'dislike') => {
     if (!session) {
       return alert('로그인 후 이용 가능합니다.');
     }
-
     if (reactionType === 'like') {
       knowledgeLike();
     } else {
       knowledgeDislike();
     }
+  }
+  
+  if (!knowledge || isPending) {
+    return <LoadingUI />;
   }
   
   return (
@@ -64,7 +63,7 @@ export default function KnowledgeDetailMain({ knowledgeId }: PropsType) {
       <section className="flex justify-center items-center my-5 md:my-10">
         <Image
           className="w-[400px] h-[400px] object-cover rounded-lg"
-          src={knowledge.thumbnail_url}
+          src={knowledge.thumbnail_url ? knowledge.thumbnail_url : '/airnote-thumbnail.jpg'}
           width={400}
           height={0}
           alt="썸네일"

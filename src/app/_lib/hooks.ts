@@ -10,7 +10,8 @@ import {
   getTopKnowledges,
   getKnowledge,
   getKnowledges,
-  postKnowledgeReaction
+  postKnowledgeReaction,
+  postRecordReaction
 } from "./api";
 
 // 실시간 인기 공간 기록을 가져오는 훅
@@ -44,6 +45,18 @@ export const useKnowledge = (knowledgeId: string) => {
     queryFn: () => getKnowledge(knowledgeId)
   });
 };
+
+// 공간 기록 좋아요 요청 훅
+export const useRecordReaction = (recordId: string, reactionType: 'like' | 'dislike') => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: () => postRecordReaction(recordId, reactionType),
+    onSuccess: () =>  {
+      queryClient.invalidateQueries({ queryKey: ['records'] })
+    }
+  });
+}
 
 // 공간 지식 좋아요 요청 훅
 export const useKnowledgeReaction = (knowledgeId: string, reactionType: 'like' | 'dislike') => {

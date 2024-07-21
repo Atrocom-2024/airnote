@@ -21,8 +21,8 @@ export default function ReviewSideBar() {
   const lat = searchParams?.get('lat');
   const lng = searchParams?.get('lng');
   const position = { lat: Number(lat), lng: Number(lng) };
-  const { data: reviews, error, isLoading } = useQuery<ReviewType[]>({
-    queryKey: ['reviews', { lat, lng }],
+  const { data: records, error, isLoading } = useQuery<ReviewType[]>({
+    queryKey: ['records', { lat, lng }],
     queryFn: () => getReviews(lat!, lng!),
     // lat과 lng가 있을 때만 쿼리를 활성화합니다.
     enabled: !!lat && !!lng
@@ -75,8 +75,8 @@ export default function ReviewSideBar() {
             </section>
           )}
           <section className="mb-20 md:mb-0">
-            {reviews && reviews.map((review) => (
-              <SideBarReviewCard review={review} key={review.post_id} />
+            {records && records.map((records) => (
+              <SideBarReviewCard review={records} key={records.post_id} />
             ))}
           </section>
         </>

@@ -1,24 +1,26 @@
 'use client'
 
+import { useSession } from "next-auth/react";
 import { CgProfile } from "react-icons/cg";
 import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
 
 import { parseDate } from "@/utils/modules";
+import { useRecordReaction } from "@/app/_lib/hooks";
 
 export default function SideBarReviewCard({ review }: PropsType) {
+  const { data: session } = useSession();
+  const { mutate: postRecordLike } = useRecordReaction(review.post_id, 'like');
+  const { mutate: postRecordDislike } = useRecordReaction(review.post_id, 'dislike');
   const reviewContent = review.content.split('\n');
 
-  // TODO: 낙관적 업데이트
-  const reactionClickHandler = async (kind: 'like' | 'dislike') => {
-    const domain = process.env.NEXT_PUBLIC_DOMAIN;
-    const uri = `${domain}/api/reviews/${review.post_id}/reactions?kind=${kind}`;
-
-    try {
-      const res = await fetch(uri, { method: 'POST' });
-
-    } catch (err) {
-      // TODO: 낙관적 업데이트 취소
-      return alert('좋아요 실패');
+  const reactionClickHandler = (reactionType: 'like' | 'dislike') => {
+    if (!session) {
+      return alert('로그인 후 이용 가능합니다.');
+    }
+    if (reactionType === 'like') {
+      postRecordLike();
+    } else {
+      postRecordDislike();
     }
   }
 
