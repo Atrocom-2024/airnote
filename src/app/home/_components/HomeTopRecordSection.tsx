@@ -2,14 +2,14 @@
 
 import Link from "next/link";
 
-import { useTopReviews } from "@/app/_lib/hooks";
+import { useTopRecords } from "@/app/_lib/hooks";
 import LoadingUI from "@/app/_components/LoadingUI";
 import HomeTopRecordCard from "./HomeTopRecordCard";
 
 export default function HomeTopRecordSection() {
-  const { data: topReviews, isPending } = useTopReviews(6);
+  const { data: topRecords, isPending } = useTopRecords(6);
 
-  if (isPending || !topReviews) {
+  if (isPending || !topRecords) {
     return <LoadingUI />;
   }
 
@@ -22,8 +22,8 @@ export default function HomeTopRecordSection() {
         </Link>
       </article>
       <article className="mt-5">
-        {topReviews.map((topReview) => (
-          <HomeTopRecordCard topReview={topReview} key={topReview.post_id} />
+        {topRecords.map((topRecord) => (
+          <HomeTopRecordCard topRecord={topRecord} key={topRecord.post_id} />
         ))}
       </article>
     </section>
