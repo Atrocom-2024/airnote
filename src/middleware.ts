@@ -16,7 +16,14 @@ export async function middleware(req: NextRequest) {
   }
 
   // 일반 유저 로그인 상태 리다이렉트 설정
-  if (pathname.startsWith('/my') || pathname.startsWith('/reviews')) {
+  if (pathname.startsWith('/my')) {
+    if (!token) {
+      return NextResponse.redirect(new URL('/home', req.url));
+    }
+  }
+
+  // 비로그인 상태에서 공간 기록 페이지 접근시 리다이렉트 설정
+  if (pathname === '/record/add') {
     if (!token) {
       return NextResponse.redirect(new URL('/home', req.url));
     }
@@ -63,5 +70,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  mather: ['/', '/reviews', '/my', '/admin']
+  mather: ['/', '/record', '/my', '/admin']
 }
