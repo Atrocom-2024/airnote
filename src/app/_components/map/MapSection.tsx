@@ -104,7 +104,8 @@ export default function MapSection() {
   return (
     <Map
       center={mapLoc}
-      level={9}
+      level={6}
+      maxLevel={7}
       style={{ width: "100%", height: "84vh" }}
       isPanto={true}
       onClick={buildingClickHandler}
