@@ -3,7 +3,6 @@ import NextAuth from "next-auth/next";
 import Kakao from "next-auth/providers/kakao";
 
 import { pool } from "@/utils/database";
-import { generateRandomString } from "@/utils/modules";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -39,23 +38,6 @@ export const authOptions: NextAuthOptions = {
         } else {
           return '/home';
         }
-        // if (!checkResult.rows.length && profile) {
-        //   const id = generateRandomString();
-        //   const insertQuery = `
-        //     INSERT INTO USERS_TB (id, email, name, nickname, phone_number, provider)
-        //     VALUES ($1, $2, $3, $4, $5, $6)
-        //     RETURNING id
-        //   `
-        //   const values = [
-        //     id,
-        //     profile.kakao_account.email,
-        //     profile.kakao_account.name,
-        //     profile.kakao_account.profile.nickname,
-        //     profile.kakao_account.phone_number,
-        //     'kakao'
-        //   ];
-        //   const result = await client.query(insertQuery, values);
-        //   const newUserId = result.rows[0]; // 회원가입 성공시 id 반환
       } finally {
         client.release();
       }

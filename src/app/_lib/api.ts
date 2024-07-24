@@ -139,6 +139,16 @@ export const postKnowledgeReaction = async (knowledgeId: string, kind: 'like' | 
   return res.json();
 }
 
+// 회원가입 요청 함수
+export const postSignup = async ({ email, name, nickname, phone_number }: SignupType) => {
+  const domain = process.env.NEXT_PUBLIC_DOMAIN;
+  const uri = `${domain}/api/auth/signup?email=${encodeURIComponent(email)}&name=${encodeURIComponent(name)}&nickname=${encodeURIComponent(nickname)}&phone_number=${encodeURIComponent(phone_number)}`;
+  const res = await fetch(uri, { method: 'POST' });
+  if (!res.ok) {
+    throw new Error('Failed to get knowledge info');
+  }
+  return res.json();
+}
 
 // 마이페이지 내 정보 요청
 export async function getMyInfo(email: string) {
@@ -241,6 +251,13 @@ interface GetMarkerParam {
   swLng: number;
   neLat: number;
   neLng: number;
+}
+
+interface SignupType {
+  email: string;
+  name: string;
+  nickname: string;
+  phone_number: string;
 }
 
 interface FormInputs {

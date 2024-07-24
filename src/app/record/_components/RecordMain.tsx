@@ -1,34 +1,20 @@
 'use client'
 
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import MapSection from "../../_components/map/MapSection";
 import PanelSection from "./PanelSection";
 import RecordSideBar from "./RecordSideBar";
-import TermsModal from "./TermsModal";
 
 export default function RecordMain() {
   const [isMap, setIsMap] = useState(false);
-  const [isTerms, setIsTerms] = useState(false);
   const searchParams = useSearchParams();
   const sidebar = Boolean(searchParams?.get('sidebar'));
-
-  const termsConfirmHandler = () => {
-    setIsTerms(false);
-    sessionStorage.setItem('terms-agree', 'agree');
-  };
   
   const isMapHandler = () => {
     setIsMap((prev) => !prev)
   }
-
-  useEffect(() => {
-    const sessionTermsAgree = sessionStorage.getItem('terms-agree');
-    if (sessionTermsAgree !== 'agree') {
-      return setIsTerms(true);
-    }
-  }, []);
 
   return (
     <>
@@ -43,7 +29,6 @@ export default function RecordMain() {
       ) : (!isMap && (
         <PanelSection />
       ))}
-      {isTerms && <TermsModal termsConfirmHandler={termsConfirmHandler} />}
     </>
   );
 }
