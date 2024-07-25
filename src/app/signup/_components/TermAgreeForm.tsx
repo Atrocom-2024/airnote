@@ -39,7 +39,7 @@ export default function TermAgreeForm({ userInfo }: PropsType) {
 
   return (
     <form
-      className="w-[300px] h-[250px] bg-white flex flex-col justify-between border border-default rounded-md p-5 z-50 md:w-[600px] md:h-[500px] md:p-10"
+      className="w-[300px] h-[400px] bg-white flex flex-col justify-between border border-default rounded-md p-5 z-50 md:w-[600px] md:h-[500px] md:p-10"
       onSubmit={handleSubmit(signupHandler, submitErrorHandler)}
     >
       <section>
@@ -63,13 +63,13 @@ export default function TermAgreeForm({ userInfo }: PropsType) {
               <div className="font-bold">서비스 이용약관 동의</div>
             </div>
             <Link
-              className="text-xs text-middle-gray ml-3 md:text-base"
+              className="text-[0.7rem] text-middle-gray ml-3 md:text-base"
               href="/terms"
             >자세히 보기</Link>
           </div>
           <div>
             <input
-              className="w-4 h-4"
+              className="md:w-4 md:h-4"
               type="checkbox"
               {...register('isTermAgree', { required: '서비스 이용약관에 동의해야 합니다.' })}
             />
@@ -82,13 +82,13 @@ export default function TermAgreeForm({ userInfo }: PropsType) {
               <div className="font-bold">개인정보 수집 및 이용 동의</div>
             </div>
             <Link
-              className="text-xs text-middle-gray ml-3 md:text-base"
+              className="text-[0.7rem] text-middle-gray ml-3 md:text-base"
               href="/terms"
             >자세히 보기</Link>
           </div>
           <div>
             <input
-              className="w-4 h-4"
+              className="md:w-4 md:h-4"
               type="checkbox"
               {...register('isPrivacyAgree', { required: '개인정보 수집 및 이용에 동의해야 합니다.' })}
             />
