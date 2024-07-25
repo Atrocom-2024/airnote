@@ -15,6 +15,13 @@ export async function middleware(req: NextRequest) {
     }
   }
 
+  // 회원인 유저는 회원가입 페이지 접근 불가
+  if (pathname === '/signup') {
+    if (token) {
+      return NextResponse.redirect(new URL('/home', req.url));
+    }
+  }
+
   // 일반 유저 로그인 상태 리다이렉트 설정
   if (pathname.startsWith('/my')) {
     if (!token) {
@@ -70,5 +77,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  mather: ['/', '/record', '/my', '/admin']
+  mather: ['/', '/signup', '/record', '/my', '/admin']
 }

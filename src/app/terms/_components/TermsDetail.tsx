@@ -1,6 +1,6 @@
 export default function TermsDetail() {
   return (
-    <section className="w-full max-h-[60vh] text-xs overflow-y-auto border-[1.5px] border-default rounded-md p-2 space-y-1">
+    <section className="w-full max-h-[50vh] text-xs overflow-y-auto border-[1.5px] border-default rounded-md p-2 space-y-1">
       <h2>제1장 총칙</h2>
       <h3>제1조 (목적)</h3>
       <p>이 약관은 ________(이하 “회사”라 합니다)가 모바일 기기를 통해 제공하는 서비스 및 이에 부수하는 네트워크 웹사이트 기타 서비스(이하 “서비스”라 합니다)의 이용에 대한 회사와 서비스 이용자의 권리ㆍ의무 및 책임사항 기타 필요한 사항을 규정함을 목적으로 합니다.</p>
