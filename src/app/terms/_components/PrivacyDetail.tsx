@@ -1,6 +1,6 @@
 export default function PrivacyDetail() {
   return (
-    <section className="w-full max-h-[60vh] text-xs overflow-y-auto border-[1.5px] border-default rounded-md p-2 space-y-1">
+    <section className="w-full max-h-[50vh] text-xs overflow-y-auto border-[1.5px] border-default rounded-md p-2 space-y-1">
       <h2>개인정보 처리방침의 정의</h2>
       <p>{'"개인정보 처리방침"'}은 이용자가 서비스를 안전하게 이용할 수 있도록 회사가 준수해야 하는 지침을 의미하며, 공기수첩은 대한민국의 관련 법령 및 개인정보 보호 규정 가이드라인을 준수하여 개인정보 처리방침을 제공합니다.</p>
 
