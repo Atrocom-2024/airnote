@@ -73,13 +73,18 @@ export default function MapSection() {
     const lat = latlng.getLat();
     const lng = latlng.getLng();
     const addressInfo = await getAddress(lat, lng);
+
+    if (!addressInfo.documents[0]) {
+      return;
+    }
+
     const buildingInfo = await getBuildingInfo(addressInfo.documents[0].address.address_name);
     const buildingRoadAddress = buildingInfo.documents[0].road_address;
     const buildingName = buildingRoadAddress ? buildingRoadAddress.building_name : null;
     const result = {
       lat: buildingInfo.documents[0].address.y,
       lng: buildingInfo.documents[0].address.x,
-      address: buildingRoadAddress ? buildingRoadAddress.address_name : buildingInfo.documents[0].address.address_name,
+      address: buildingRoadAddress.address_name ? buildingRoadAddress.address_name : buildingInfo.documents[0].address.address_name,
       buildingName: buildingName
     };
     setOverlayInfo(result);
