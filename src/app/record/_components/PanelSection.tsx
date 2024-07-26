@@ -1,25 +1,25 @@
 'use client'
 
 import { FaArrowTrendUp } from "react-icons/fa6";
-import { LuArrowUpRightSquare } from "react-icons/lu";
 
 import { useTopRecords } from "@/app/_lib/hooks";
 import PanelRecordCard from "./PanelRecordCard";
-import MapMoveBtn from "./MapMoveBtn";
 import PartLoadingUI from "@/app/_components/PartLoadingUI";
+import MapMoveSection from "./MapMoveSection";
 
-export default function PanelSection() {
-  const locNameList: LocationListTypes = ['서울', '경기', '충남', '충북', '전북', '전남', '강원', '경북', '경남', '제주'];
+export default function PanelSection({ setIsMap }: PropsType) {
   const { data: topRecords, isPending } = useTopRecords(4);
 
   return (
-    <section
+    <article
       id="panel"
       className="absolute top-0 left-0 w-[100vw] h-[84vh] bg-white overflow-y-auto z-[28] md:top-[3vh] md:left-5 md:rounded-lg md:w-[400px] md:h-[75vh] md:shadow-lg"
     >
+
       {isPending ? <PartLoadingUI /> : (
         <>
-          <article className="min-h-[600px]">
+          <MapMoveSection setIsMap={setIsMap} />
+          <section className="min-h-[600px]">
             <section className="flex items-center p-3">
               <div>
                 <FaArrowTrendUp size="25" color="#4A68F5" />
@@ -36,24 +36,13 @@ export default function PanelSection() {
                 </article>
               )}
             </section>
-          </article>
-          <article className="hidden md:block md:py-3">
-            <section className="flex items-center p-3">
-              <div>
-                <LuArrowUpRightSquare size="25" color="#4A68F5" />
-              </div>
-              <div className="text-xl text-default font-bold ml-3">지도 위치 이동</div>
-            </section>
-            <section className="grid grid-cols-5 gap-4 px-5 py-3">
-              {locNameList.map((locName) => (
-                <MapMoveBtn locName={locName} key={locName} />
-              ))}
-            </section>
-          </article>
+          </section>
         </>
       )}
-    </section>
+    </article>
   );
 }
 
-type LocationListTypes = ['서울', '경기', '충남', '충북', '전북', '전남', '강원', '경북', '경남', '제주'];
+interface PropsType {
+  setIsMap: React.Dispatch<React.SetStateAction<boolean>>
+}
