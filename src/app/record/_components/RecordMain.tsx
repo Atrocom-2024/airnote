@@ -38,9 +38,16 @@ export default function RecordMain() {
       <MapSection />
       {sidebar ? (
         <RecordSideBar />
-      ) : (!isMap && (
-        <PanelSection setIsMap={setIsMap} />
-      ))}
+      ) : (
+        <>
+          <div className="hidden md:block">
+            <PanelSection setIsMap={setIsMap} />
+          </div>
+          <div className="block md:hidden">
+            {!isMap && <PanelSection setIsMap={setIsMap} />}
+          </div>
+        </>
+      )}
     </>
   );
 }
