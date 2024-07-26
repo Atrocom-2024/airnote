@@ -68,6 +68,9 @@ export default function HeaderDropdown({ isLogin }: PropsType) {
             <li>
               <MoveLink href="https://open.kakao.com/o/sAgQYPhg" target="_blank">고객지원</MoveLink>
             </li>
+            <li>
+              <MoveLink href="/terms">이용약관</MoveLink>
+            </li>
           </ul>
         </section>
       )}
