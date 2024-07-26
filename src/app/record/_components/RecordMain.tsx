@@ -21,7 +21,7 @@ export default function RecordMain() {
   return (
     <>
       <button
-        className="absolute bottom-5 left-1/2 -translate-x-1/2 bg-default text-white text-sm px-4 py-2 rounded-full z-[29] md:hidden"
+        className="fixed bottom-[10vh] left-1/2 -translate-x-1/2 bg-default text-white text-sm px-4 py-2 rounded-full z-[29] md:hidden"
         type="button"
         onClick={isMapHandler}
       >{isMap ? (
@@ -38,9 +38,16 @@ export default function RecordMain() {
       <MapSection />
       {sidebar ? (
         <RecordSideBar />
-      ) : (!isMap && (
-        <PanelSection setIsMap={setIsMap} />
-      ))}
+      ) : (
+        <>
+          <div className="hidden md:block">
+            <PanelSection setIsMap={setIsMap} />
+          </div>
+          <div className="block md:hidden">
+            {!isMap && <PanelSection setIsMap={setIsMap} />}
+          </div>
+        </>
+      )}
     </>
   );
 }

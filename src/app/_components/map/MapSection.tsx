@@ -43,10 +43,11 @@ export default function MapSection() {
 
     // URL 업데이트
     if (!isSidebar) {
-        const newSearchParams = new URLSearchParams(searchParams?.toString());
-        newSearchParams.set('lat', center.getLat().toString());
-        newSearchParams.set('lng', center.getLng().toString());
-        router.push(`?${newSearchParams.toString()}`);
+      const newSearchParams = new URLSearchParams(searchParams?.toString());
+      newSearchParams.set('lat', center.getLat().toString());
+      newSearchParams.set('lng', center.getLng().toString());
+      setMapLoc({ lat: center.getLat(), lng: center.getLng() });
+      router.push(`?${newSearchParams.toString()}`);
     }
 
     try {
