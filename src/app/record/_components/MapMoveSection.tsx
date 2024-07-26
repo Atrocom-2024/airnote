@@ -28,6 +28,11 @@ export default function MapMoveSection({ setIsMap }: PropsType) {
   }
 
   const moveButtonClickHandler = async () => {
+    if (city === '시/도 선택') {
+      return alert('시/도를 선택해주세요.');
+    } else if (regionName === '시/군/구 선택') {
+      return alert('시/군/구를 선택해주세요.');
+    }
     const addressInfo = await getBuildingInfo(`${city} ${regionName}`);
     setMapLoc({ lat: addressInfo.documents[0].y, lng: addressInfo.documents[0].x });
     setIsMap(true);
