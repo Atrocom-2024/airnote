@@ -15,16 +15,23 @@ export default function HomeTopKnowledgeSection() {
 
   return (
     <section>
-      <article className="w-full h-[60px] rounded-lg border border-default text-lg text-default font-semibold px-5 py-4 transition-all hover:bg-default hover:text-white">
-        <Link className="w-full h-full flex justify-between items-center" href="/knowledges">
+      <Link
+        className="w-full h-[60px] block rounded-lg border border-default text-lg text-default font-semibold px-5 py-4 transition-all hover:bg-default hover:text-white"
+        href="/knowledges"
+      >
+        <div className="w-full h-full flex justify-between items-center">
           <div>공간지식</div>
           <div className="text-sm font-medium">더보기</div>
-        </Link>
-      </article>
+        </div>
+      </Link>
       <article className="mt-5">
-        {topKnowledges.map((topKnowledge) => (
-          <HomeTopKnowledgeCard topKnowledge={topKnowledge} key={topKnowledge.knowledge_id} />
-        ))}
+        {topKnowledges.map((topKnowledge, idx) => {
+          if (topKnowledges.length - 1 === idx) {
+            return <HomeTopKnowledgeCard topKnowledge={topKnowledge} isLast={true} key={topKnowledge.knowledge_id} />;
+          } else {
+            return <HomeTopKnowledgeCard topKnowledge={topKnowledge} isLast={false} key={topKnowledge.knowledge_id} />;
+          }
+        })}
       </article>
     </section>
   );

@@ -4,10 +4,10 @@ import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
 
 import { parseDate } from "@/utils/modules";
 
-export default function HomeTopRecordCard({ topRecord }: PropsType) {
+export default function HomeTopRecordCard({ topRecord, isLast }: PropsType) {
   return (
     <Link
-      className="w-full border-b border-gray px-5 py-3 block"
+      className={`"w-full ${isLast ? '' : 'border-b border-gray'} px-5 py-3 block`}
       href={`/record?sidebar=true&lat=${topRecord.latitude}&lng=${topRecord.longitude}&address=${topRecord.address}`}
     >
       <section className="flex justify-between items-center text-middle-gray">
@@ -42,6 +42,7 @@ export default function HomeTopRecordCard({ topRecord }: PropsType) {
 
 interface PropsType {
   topRecord: TopRecordType;
+  isLast: boolean;
 }
 
 interface TopRecordType {

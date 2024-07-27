@@ -4,9 +4,12 @@ import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
 
 import { parseDate } from "@/utils/modules";
 
-export default function HomeTopKnowledgeCard({ topKnowledge }: PropsType) {
+export default function HomeTopKnowledgeCard({ topKnowledge, isLast }: PropsType) {
   return (
-    <Link className="w-full border-b border-gray px-5 py-3 block" href={`/knowledges/${topKnowledge.knowledge_id}`}>
+    <Link
+      className={`w-full ${isLast ? '' : 'border-b border-gray'} px-5 py-3 block`}
+      href={`/knowledges/${topKnowledge.knowledge_id}`}
+    >
       <section className="flex justify-between items-center text-middle-gray">
         <div className="flex items-center">
           <div className="flex items-center">
@@ -39,6 +42,7 @@ export default function HomeTopKnowledgeCard({ topKnowledge }: PropsType) {
 
 interface PropsType {
   topKnowledge: KnowledgeType;
+  isLast: boolean;
 }
 
 interface KnowledgeType {
