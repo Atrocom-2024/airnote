@@ -9,7 +9,7 @@ export default async function Home() {
         <Image className="w-[50px] md:w-[80px]" src="/landing-logo.svg" width={100} height={0} alt="로고" />
       </section>
       <section className="h-[70vh] px-4 scrollbar-hide overflow-y-scroll md:scrollbar-default" id="landing-container">
-        <section className="h-full flex justify-center items-center" data-aos="fade-right">
+        <section className="h-full flex justify-center items-center">
           <article className="text-white md:mr-20">
             <div className="text-xl font-bold mb-2 md:text-2xl lg:text-3xl">남녀노소 누구든지</div>
             <div className="text-xl font-bold mb-5 md:text-2xl lg:text-3xl">공간에 대한 기록을 남길 수 있어요</div>

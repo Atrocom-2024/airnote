@@ -184,6 +184,38 @@ em {
     height: 300px !important;
 }
 
+.arrowLeftContainer {
+    animation: arrowLeft 1s infinite ease-in-out;
+}
+
+.arrowRightContainer {
+    animation: arrowRight 1s infinite ease-in-out;
+}
+
+@keyframes arrowLeft {
+    0% {
+        left: 2.5rem;
+    }
+    50% {
+        left: 2rem;
+    }
+    100% {
+        left: 2.5rem;
+    }
+}
+
+@keyframes arrowRight {
+    0% {
+        right: 2.5rem;
+    }
+    50% {
+        right: 2rem;
+    }
+    100% {
+        right: 2.5rem;
+    }
+}
+
 @keyframes link-bar-on {
     from {
         opacity: 0;
