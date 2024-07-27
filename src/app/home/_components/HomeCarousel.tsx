@@ -1,18 +1,18 @@
 'use client';
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 
 export default function HomeCarousel() {
   const carouselElCount = 3;
   const carouselWidth = `${carouselElCount * 100}vw`;
   const [current, setCurrent] = useState<number>(0);
-  const moveStyle: {[key: number]: string;} = {
+  const moveStyle: {[key: number]: string;} = useMemo(() => ({
     0: 'translate-x-0',
     1: 'translate-x-[-100vw]',
     2: 'translate-x-[-200vw]',
-  };
+  }), []);
 
   const arrowLeftClickHandler = () => {
     setCurrent((prev) => {
