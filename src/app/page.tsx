@@ -62,7 +62,7 @@ export default async function Home() {
         <section className="h-full flex justify-center items-center">
           <article className="text-white md:mr-20">
             <div className="text-xl font-bold mb-5 md:text-2xl lg:text-3xl">공간 기록 작성하기</div>
-            <div className="text-sm mb-10 md:mb-16 md:text-base lg:text-lg">기록작성 페이지에서 좋았던 경험, 안 좋았던 경험 등<br />자신이 경험했던 공간에 대해 자유롭게 기록을 남길 수 있어요<br />남들에게 편하게 할 수 없던 다양한 경험들을 공유해보세요</div>
+            <div className="text-sm mb-10 md:mb-16 md:text-base lg:text-lg">기록작성 페이지에서 좋았던 경험, 안 좋았던 경험 등<br />자신이 경험했던 공간에 대해 자유롭게 기록을 남길 수 있어요<br />남들에게 편하게 할 수 없던 다양한 경험들을 공유해보세요<br />지도에서 기록을 남기고 싶은 건물을 클릭해보세요</div>
             <Image
               className="w-full mx-auto mb-10 shadow-xl rounded-md md:hidden"
               src="/landing-bg-img-3.png"
