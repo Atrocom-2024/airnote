@@ -36,15 +36,9 @@ export default function HomeCarousel() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (current === carouselElCount - 1) {
-        setCurrent(0);
-      } else {
-        setCurrent(current + 1);
-      }
+      setCurrent((prev) => (prev === carouselElCount - 1 ? 0 : prev + 1));
     }, 4000);
-    return () => {
-      clearInterval(interval);
-    };
+    return () => clearInterval(interval);
   }, [current]);
 
   return (
@@ -63,7 +57,6 @@ export default function HomeCarousel() {
               alt="예시 이미지"
               priority={true}
             />
-            {/* <Link className="bg-white text-default text-sm font-bold rounded-md px-6 py-2 md:text-xl" href="/home">시작하기</Link> */}
           </article>
           <article className="hidden md:block">
             <Image
@@ -112,7 +105,6 @@ export default function HomeCarousel() {
               alt="예시 이미지"
               priority={true}
             />
-            {/* <Link className="bg-white text-default text-sm font-bold rounded-md px-6 py-2 md:text-xl" href="/home">시작하기</Link> */}
           </article>
           <article className="hidden md:block">
             <Image
