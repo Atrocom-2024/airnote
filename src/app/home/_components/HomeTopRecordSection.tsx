@@ -15,16 +15,23 @@ export default function HomeTopRecordSection() {
 
   return (
     <section>
-      <article className="w-full h-[60px] rounded-lg border border-default text-default text-lg font-semibold px-5 py-4 transition-all hover:bg-default hover:text-white">
-        <Link className="w-full h-full flex justify-between items-center" href="/record">
+      <Link
+        className="w-full h-[60px] block rounded-lg border border-default text-default text-lg font-semibold px-5 py-4 transition-all hover:bg-default hover:text-white"
+        href="/record"
+      >
+        <div className="w-full h-full flex justify-between items-center">
           <div>공간기록</div>
           <div className="text-sm font-medium">더보기</div>
-        </Link>
-      </article>
+        </div>
+      </Link>
       <article className="mt-5">
-        {topRecords.map((topRecord) => (
-          <HomeTopRecordCard topRecord={topRecord} key={topRecord.post_id} />
-        ))}
+        {topRecords.map((topRecord, idx) => {
+          if (topRecords.length - 1 === idx) {
+            return <HomeTopRecordCard topRecord={topRecord} isLast={true} key={topRecord.post_id} />;
+          } else {
+            return <HomeTopRecordCard topRecord={topRecord} isLast={false} key={topRecord.post_id} />;
+          }
+        })}
       </article>
     </section>
   );
