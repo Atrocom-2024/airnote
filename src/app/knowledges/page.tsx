@@ -10,7 +10,7 @@ export default async function Knowledge() {
     <Layout className="bg-dark-white pb-36">
       <main className="w-full mx-auto pt-10 px-10 lg:px-0 lg:w-[1000px]">
         <section className="flex justify-between items-center">
-          <Title>공간 지식</Title>
+          <Title>공간지식</Title>
           <Link
             className="bg-default text-white text-sm px-4 py-3 rounded-lg md:text-base"
             href="/knowledges/add"
