@@ -23,15 +23,15 @@ export default function PanelSection({ setIsMap }: PropsType) {
               <div>
                 <FaArrowTrendUp size="25" color="#4A68F5" />
               </div>
-              <div className="text-xl text-default font-bold ml-3">실시간 인기 공간 기록</div>
+              <div className="text-xl text-default font-bold ml-3">실시간 인기 공간기록</div>
             </section>
             <section className="mb-20 md:mb-0">
               {topRecords && topRecords.length ? topRecords.map((topRecord) => (
                 <PanelRecordCard topRecord={topRecord} key={topRecord.post_id} />
               )) : (
                 <article className="text-lg text-center text-default font-bold mt-56">
-                  <div>공간 기록이 아직 존재하지 않습니다.</div>
-                  <div>첫 공간 기록을 작성해보세요.</div>
+                  <div>공간기록이 아직 존재하지 않습니다.</div>
+                  <div>첫 공간기록을 작성해보세요.</div>
                 </article>
               )}
             </section>

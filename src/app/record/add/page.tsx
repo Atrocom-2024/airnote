@@ -8,7 +8,7 @@ export default function ReviewAdd({ searchParams }: PageProps) {
   return (
     <Layout className="h-auto px-5 my-20 md:px-0">
       <main className="w-full mx-auto md:w-[600px]">
-        <Title>공간 기록 작성</Title>
+        <Title>공간기록 작성</Title>
         <RecordForm address={address} />
       </main>
     </Layout>
