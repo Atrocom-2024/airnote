@@ -163,6 +163,19 @@ export async function getMyInfo(email: string) {
   return res.json();
 }
 
+// 마이페이지 내 정보 요청
+export async function getProfileInfo(email: string) {
+  const domain = process.env.NEXT_PUBLIC_DOMAIN;
+  const encryptedEmail = encodeURIComponent(encrypt(email, process.env.NEXT_PUBLIC_AES_EMAIL_SECRET_KEY));
+  const res = await fetch(`${domain}/api/profile/info?user=${encryptedEmail}`, { cache: 'no-store' });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+  
+  return res.json();
+}
+
 // 관리자 로그인 요청
 export const postLogin: SubmitHandler<FormInputs> = throttle(async (data) => {
   if (!data.id) {
