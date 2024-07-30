@@ -125,7 +125,7 @@ export default function KnowledgeAddForm() {
           onChange={fileVerifyHandler.onChange}
         />
       </section>
-      <button className="w-full py-3 mx-auto bg-default rounded-xl text-sm text-white">작성완료</button>
+      <button className="px-4 py-3 mx-auto bg-default rounded-xl text-sm text-white">작성완료</button>
     </form>
   );
 }

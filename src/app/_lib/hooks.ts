@@ -2,7 +2,6 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 import {
   getTopRecords,
-  getMyInfo,
   postLogout,
   getUserInfoAdmin,
   getReviewsAdmin,
@@ -17,7 +16,8 @@ import {
   getProfileRecordDetail,
   deleteRecord,
   getProfileKnowledges,
-  getProfileKnowledgeDetail
+  getProfileKnowledgeDetail,
+  deleteKnowledge
 } from "./api";
 
 // 실시간 인기 공간 기록을 가져오는 훅
@@ -77,14 +77,6 @@ export const useKnowledgeReaction = (knowledgeId: string, reactionType: 'like' |
 }
 
 // 마이페이지 내 정보 요청
-export const useMyInfo = (email: string) => {
-  return useQuery<MyInfoTypes>({
-    queryKey: ['myInfo'],
-    queryFn: () => getMyInfo(email)
-  });
-};
-
-// 마이페이지 내 정보 요청
 export const useProfileInfo = (email: string) => {
   return useQuery<ProfileInfoTypes>({
     queryKey: ['profileInfo'],
@@ -133,6 +125,18 @@ export const useProfileKnowledgeDetail = (knowledgeId: string) => {
   return useQuery<MyKnowledgeType>({
     queryKey: ['profileKnowledge'],
     queryFn: () => getProfileKnowledgeDetail(knowledgeId)
+  });
+};
+
+// 공간기록 제거 요청 훅
+export const useDeleteKnowledge = (knowledgeId: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: () => deleteKnowledge(knowledgeId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['profileKnowledges'] });
+    }
   });
 };
 

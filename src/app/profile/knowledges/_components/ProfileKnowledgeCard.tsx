@@ -6,17 +6,17 @@ import { useEffect, useState } from "react";
 import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
 
 import { getPreviewText, parseDate, stripHtml } from "@/utils/modules";
-import { useDeleteRecord } from "@/app/_lib/hooks";
+import { useDeleteKnowledge } from "@/app/_lib/hooks";
 import LoadingUI from "@/app/_components/LoadingUI";
 
 export default function ProfileKnowledgeCard({ knowledgeInfo }: PropsType) {
   const [previewText, setPreviewText] = useState<string>('');
-  const { mutate: deleteRecord, isPending } = useDeleteRecord(knowledgeInfo.knowledge_id);
+  const { mutate: deleteknowledge, isPending } = useDeleteKnowledge(knowledgeInfo.knowledge_id);
 
-  const recordDeleteClickHandler = () => {
-    const confirmDeleteRecord = confirm('정말 기록을 삭제하시겠습니까?');
-    if (confirmDeleteRecord) {
-      deleteRecord();
+  const knowledgeDeleteClickHandler = () => {
+    const confirmDeleteknowledge = confirm('정말 지식을 삭제하시겠습니까?');
+    if (confirmDeleteknowledge) {
+      deleteknowledge();
     }
   }
 
@@ -45,7 +45,7 @@ export default function ProfileKnowledgeCard({ knowledgeInfo }: PropsType) {
       </section>
       <section className="ml-5">
         <section className="flex justify-between items-center">
-          <div className="text-sm font-bold sm:text-lg">{knowledgeInfo.knowledge_title}</div>
+          <div className="text-sm font-bold sm:text-lg">{getPreviewText(knowledgeInfo.knowledge_title, 18)}</div>
           <div>
             <Link
               className="bg-white-gray text-sm px-4 py-2 rounded-lg mr-2"
@@ -54,7 +54,7 @@ export default function ProfileKnowledgeCard({ knowledgeInfo }: PropsType) {
             <button
               className="bg-white-gray text-sm px-4 py-2 rounded-lg"
               type="button"
-              onClick={recordDeleteClickHandler}
+              onClick={knowledgeDeleteClickHandler}
             >지식삭제</button>
           </div>
         </section>

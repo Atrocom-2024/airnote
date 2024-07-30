@@ -55,7 +55,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(201).json({
           success: true,
           message: 'record edit successfully',
-          record_id: userRecordEditQueryResult.rows[0]
+          record_id: userRecordEditQueryResult.rows[0].post_id
         });
       } catch (err) {
         console.error(err);

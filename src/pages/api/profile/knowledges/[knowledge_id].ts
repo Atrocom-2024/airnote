@@ -24,6 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const client = await pool.connect();
         const userKnowledgeDetailQuery = `
           SELECT
+            knowledge_id,
             knowledge_title,
             knowledge_content,
             thumbnail_url,
@@ -54,7 +55,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(201).json({
           success: true,
           message: 'knowledge edit successfully',
-          record_id: userKnowledgeEditResult.rows[0]
+          knowledge_id: userKnowledgeEditResult.rows[0].knowledge_id
         });
       } catch (err) {
         console.error(err);
@@ -65,18 +66,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const client = await pool.connect();
         await client.query('BEGIN');
         // REACTION_TB에서 삭제
-        await client.query('DELETE FROM REACTION_TB WHERE post_id = $1', [knowledge_id]);
+        await client.query('DELETE FROM KNOWLEDGE_REACTION_TB WHERE knowledge_id = $1', [knowledge_id]);
         // RECORD_TB에서 삭제하고 post_id 반환
-        const deleteRecordResult = await client.query(
-          'DELETE FROM RECORD_TB WHERE post_id = $1 RETURNING post_id',
+        const deleteKnowledgeResult = await client.query(
+          'DELETE FROM KNOWLEDGE_TB WHERE knowledge_id = $1 RETURNING knowledge_id',
           [knowledge_id]
         );
         await client.query('COMMIT');
         client.release();
         return res.status(200).json({
           success: true,
-          message: 'record delete successfully',
-          record_id: deleteRecordResult.rows[0]
+          message: 'knowledge delete successfully',
+          record_id: deleteKnowledgeResult.rows[0].knowledge_id
         });
       } catch (err) {
         console.error(err);

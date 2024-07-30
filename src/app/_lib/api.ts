@@ -151,19 +151,6 @@ export const postSignup = async ({ email, name, nickname, phone_number }: Signup
 }
 
 // 마이페이지 내 정보 요청
-export async function getMyInfo(email: string) {
-  const domain = process.env.NEXT_PUBLIC_DOMAIN;
-  const encryptedEmail = encodeURIComponent(encrypt(email, process.env.NEXT_PUBLIC_AES_EMAIL_SECRET_KEY));
-  const res = await fetch(`${domain}/api/my/info?user=${encryptedEmail}`, { cache: 'no-store' });
-
-  if (!res.ok) {
-    throw new Error('Failed to fetch data');
-  }
-  
-  return res.json();
-}
-
-// 마이페이지 내 정보 요청
 export async function getProfileInfo(email: string) {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
   const encryptedEmail = encodeURIComponent(encrypt(email, process.env.NEXT_PUBLIC_AES_EMAIL_SECRET_KEY));
@@ -231,6 +218,21 @@ export async function getProfileKnowledges() {
 export async function getProfileKnowledgeDetail(knowledgeId: string) {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
   const res = await fetch(`${domain}/api/profile/knowledges/${knowledgeId}`, { cache: 'no-store' });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+  
+  return res.json();
+}
+
+// 마이페이지 공간지식 제거 요청
+export async function deleteKnowledge(knowledgeId: string) {
+  const domain = process.env.NEXT_PUBLIC_DOMAIN;
+  const res = await fetch(`${domain}/api/profile/knowledges/${knowledgeId}`, {
+    method: 'DELETE',
+    cache: 'no-store'
+  });
 
   if (!res.ok) {
     throw new Error('Failed to fetch data');

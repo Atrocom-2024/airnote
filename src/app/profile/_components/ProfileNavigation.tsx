@@ -32,7 +32,7 @@ export default function ProfileNavigation() {
         href="/profile/knowledges"
       >
         <div
-          className={`${pathname === '/profile/knowledges' ? 'font-semibold text-default' : ''}`}
+          className={`${pathname?.startsWith('/profile/knowledges') ? 'font-semibold text-default' : ''}`}
         >공간지식 관리</div>
         <FaAngleRight size="25" fill={pathname?.startsWith('/profile/knowledges') ? '#4A68F5' : ' gray'} />
       </Link>

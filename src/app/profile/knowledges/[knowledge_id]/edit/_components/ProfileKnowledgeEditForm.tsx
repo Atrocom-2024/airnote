@@ -69,7 +69,7 @@ export default function ProfileKnowledgeEditForm({ knowledgeInfo }: PropsType) {
 
     // 지식 수정 요청
     try {
-      const res = await fetch(`/api/knowledges${knowledgeInfo.knowledge_id}`, {
+      const res = await fetch(`/api/profile/knowledges/${knowledgeInfo.knowledge_id}`, {
         method: 'PUT',
         headers: { 'Content-type': 'application/json' },
         body: JSON.stringify({
@@ -95,7 +95,7 @@ export default function ProfileKnowledgeEditForm({ knowledgeInfo }: PropsType) {
   }
 
   return (
-    <form className="mt-10 text-light-black space-y-10 grid grid-cols-1" onSubmit={handleSubmit(formSubmitHandler)}>
+    <form className="mt-10 mb-20 text-light-black space-y-10 grid grid-cols-1" onSubmit={handleSubmit(formSubmitHandler)}>
       <section>
         <div>제목</div>
         <input
@@ -125,7 +125,7 @@ export default function ProfileKnowledgeEditForm({ knowledgeInfo }: PropsType) {
           onChange={fileVerifyHandler.onChange}
         />
       </section>
-      <button className="w-full py-3 mx-auto bg-default rounded-xl text-sm text-white">작성완료</button>
+      <button className="w-full py-3 mx-auto bg-default rounded-xl text-sm text-white">지식수정</button>
     </form>
   );
 }
