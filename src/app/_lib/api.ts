@@ -176,7 +176,7 @@ export async function getProfileInfo(email: string) {
   return res.json();
 }
 
-// 마이페이지 공간기록 요청
+// 마이페이지 공간기록 목록 요청
 export async function getProfileRecord() {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
   const res = await fetch(`${domain}/api/profile/record`, { cache: 'no-store' });
@@ -207,6 +207,30 @@ export async function deleteRecord(recordId: string) {
     method: 'DELETE',
     cache: 'no-store'
   });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+  
+  return res.json();
+}
+
+// 마이페이지 공간지식 목록 요청
+export async function getProfileKnowledges() {
+  const domain = process.env.NEXT_PUBLIC_DOMAIN;
+  const res = await fetch(`${domain}/api/profile/knowledges`, { cache: 'no-store' });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+  
+  return res.json();
+}
+
+// 마이페이지 공간지식 목록 요청
+export async function getProfileKnowledgeDetail(knowledgeId: string) {
+  const domain = process.env.NEXT_PUBLIC_DOMAIN;
+  const res = await fetch(`${domain}/api/profile/knowledges/${knowledgeId}`, { cache: 'no-store' });
 
   if (!res.ok) {
     throw new Error('Failed to fetch data');

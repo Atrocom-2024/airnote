@@ -15,7 +15,9 @@ import {
   getProfileInfo,
   getProfileRecord,
   getProfileRecordDetail,
-  deleteRecord
+  deleteRecord,
+  getProfileKnowledges,
+  getProfileKnowledgeDetail
 } from "./api";
 
 // 실시간 인기 공간 기록을 가져오는 훅
@@ -90,7 +92,7 @@ export const useProfileInfo = (email: string) => {
   });
 };
 
-// 마이페이지 공간기록 요청 훅
+// 마이페이지 공간기록 목록 요청 훅
 export const useProfileRecord = () => {
   return useQuery<MyRecordTypes[]>({
     queryKey: ['profileRecord'],
@@ -115,8 +117,24 @@ export const useDeleteRecord = (recordId: string) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['profileRecord'] });
     }
-  })
-}
+  });
+};
+
+// 마이페이지 공간지식 목록 요청 훅
+export const useProfileKnowledges = () => {
+  return useQuery<MyKnowledgeType[]>({
+    queryKey: ['profileKnowledges'],
+    queryFn: () => getProfileKnowledges()
+  });
+};
+
+// 마이페이지 공간지식 상세 요청 훅
+export const useProfileKnowledgeDetail = (knowledgeId: string) => {
+  return useQuery<MyKnowledgeType>({
+    queryKey: ['profileKnowledge'],
+    queryFn: () => getProfileKnowledgeDetail(knowledgeId)
+  });
+};
 
 // 관리자 로그아웃 요청 훅
 export const useAdminLogout = () => {
@@ -204,6 +222,16 @@ interface MyRecordDetail {
   content: string;
   create_at: Date;
 };
+
+interface MyKnowledgeType {
+  knowledge_id: string;
+  knowledge_title: string;
+  knowledge_content: string;
+  likes: number;
+  dislikes: number;
+  thumbnail_url: string;
+  create_at: Date;
+}
 
 interface UserInfoTypes {
   id: string;

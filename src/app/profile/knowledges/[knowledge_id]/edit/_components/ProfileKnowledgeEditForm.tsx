@@ -4,10 +4,10 @@ import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { throttle } from "lodash";
 
-import KnowledgeFormQuill from "@/app/_components/KnowledgeFormQuill";
 import LoadingUI from "@/app/_components/LoadingUI";
+import KnowledgeFormQuill from "@/app/_components/KnowledgeFormQuill";
 
-export default function KnowledgeAddForm() {
+export default function ProfileKnowledgeEditForm({ knowledgeInfo }: PropsType) {
   const router = useRouter();
   const {
     register,
@@ -18,8 +18,8 @@ export default function KnowledgeAddForm() {
     formState: { isSubmitting }
   } = useForm<FormInputs>({
     defaultValues: {
-      title: '',
-      content: '',
+      title: knowledgeInfo.knowledge_title,
+      content: knowledgeInfo.knowledge_content,
       thumbnail_file: null,
       thumbnail_url: ''
     }
@@ -67,10 +67,10 @@ export default function KnowledgeAddForm() {
       }
     }
 
-    // 지식 작성 요청
+    // 지식 수정 요청
     try {
-      const res = await fetch('/api/knowledges', {
-        method: 'POST',
+      const res = await fetch(`/api/knowledges${knowledgeInfo.knowledge_id}`, {
+        method: 'PUT',
         headers: { 'Content-type': 'application/json' },
         body: JSON.stringify({
           knowledge_title: data.title,
@@ -82,11 +82,11 @@ export default function KnowledgeAddForm() {
       if (res.ok) {
         router.push(`/knowledges/${json.knowledge_id}`);
       } else {
-        return alert('지식 작성에 실패했습니다.');
+        return alert('지식 수정에 실패했습니다.');
       }
     } catch (err) {
       console.error(err);
-      return alert('지식 작성에 실패했습니다.');
+      return alert('지식 수정에 실패했습니다.');
     }
   }, 2000);
 
@@ -128,6 +128,20 @@ export default function KnowledgeAddForm() {
       <button className="w-full py-3 mx-auto bg-default rounded-xl text-sm text-white">작성완료</button>
     </form>
   );
+}
+
+interface PropsType {
+  knowledgeInfo: MyKnowledgeType;
+}
+
+interface MyKnowledgeType {
+  knowledge_id: string;
+  knowledge_title: string;
+  knowledge_content: string;
+  likes: number;
+  dislikes: number;
+  thumbnail_url: string;
+  create_at: Date;
 }
 
 interface FormInputs {

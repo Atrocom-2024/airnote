@@ -22,7 +22,7 @@ export default function ProfileRecordCard({ recordInfo }: PropsType) {
 
   return (
     <article className="border-b border-gray py-5">
-      <section className="flex justify-between">
+      <section className="flex justify-between items-center">
         <div className="flex items-center">
           <div className="text-sm text-default font-bold sm:text-lg">{recordInfo.address}</div>
           <div className="text-xs text-default ml-3 sm:text-sm">{recordInfo.address_detail}</div>
@@ -39,7 +39,7 @@ export default function ProfileRecordCard({ recordInfo }: PropsType) {
           >기록삭제</button>
         </div>
       </section>
-      <section className="mt-2 text-xs sm:text-sm">
+      <section className="mt-5 text-xs sm:text-sm">
         {myRecordContent.map((content, idx) => {
           if (!content) {
             return <br key={idx} />;
