@@ -24,7 +24,7 @@ const formats = [
   'h1',
 ];
 
-export default function KnowledgeAddFormQuill({ value, onChange }: PropsType) {
+export default function KnowledgeFormQuill({ value, onChange }: PropsType) {
   const quillRef = useRef<ReactQuill>(null);
 
   const modules = useMemo(() => {

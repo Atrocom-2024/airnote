@@ -24,7 +24,7 @@ export default async function Header() {
       <section className="flex text-sm">
         <article className="flex items-center">
           {session ? (
-            <Link href="/my">
+            <Link href="/profile/info">
               <CgProfile className="size-[35px] md:size-[40px]" size="40" color="#4A68F5" />
             </Link>
           ) : (

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { CgProfile } from "react-icons/cg";
 import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
 
-import { parseDate } from "@/utils/modules";
+import { getPreviewText, parseDate, stripHtml } from "@/utils/modules";
 
 export default function KnowledgeCard({ knowledgeInfo }: PropsType) {
   const [previewText, setPreviewText] = useState<string>('');
@@ -53,19 +53,6 @@ export default function KnowledgeCard({ knowledgeInfo }: PropsType) {
     </Link>
   );
 }
-
-const stripHtml = (html: string) => {
-  const div = document.createElement('div');
-  div.innerHTML = html;
-  return div.textContent || div.innerText || '';
-};
-
-const getPreviewText = (text: string, maxLength: number = 50): string => {
-  if (text.length <= maxLength) {
-    return text;
-  }
-  return text.substring(0, maxLength) + '...';
-};
 
 interface PropsType {
   knowledgeInfo: topKnowledgeType;

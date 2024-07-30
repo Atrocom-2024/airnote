@@ -5,7 +5,7 @@ import { throttle } from "lodash";
 
 import LoadingUI from "@/app/_components/LoadingUI";
 
-export default function NameContainer({ nickname }: { nickname: string; }) {
+export default function NicknameChange({ nickname }: { nickname: string; }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [changeName, setChangeName] = useState(nickname);
   const [isInputChange, setIsInputChange] = useState(true);
@@ -59,31 +59,34 @@ export default function NameContainer({ nickname }: { nickname: string; }) {
   }
 
   return (
-    <div>
+    <section>
+      <div className="flex items-center mb-2">
+        <div className="font-semibold text-middle-gray mr-2">닉네임</div>
+        {isInputChange ? (
+          <button
+          className="font-semibold text-middle-gray text-xs border-b border-gray"
+          onClick={onInputHandler}
+          >닉네임 변경</button>
+        ) : (
+          <div className="flex items-center">
+            <button
+              className="font-semibold text-middle-gray text-xs border-b border-gray mr-1"
+              onClick={nameUpdateHandler}
+            >확인</button>
+            <button
+              className="font-semibold text-middle-gray text-xs border-b border-gray"
+              onClick={offInputHandler}
+            >취소</button>
+          </div>
+        )}
+      </div>
       <input
-        className="w-[120px] px-2 py-1 block rounded-md mb-2 bg-dark-white outline-gray disabled:bg-white disabled:p-0"
+        className="w-[300px] outline-none bg-white text-black border border-middle-gray rounded-md px-3 py-2 disabled:bg-white-gray disabled:text-middle-gray disabled:border-none"
         value={changeName}
         disabled={isInputChange}
         onChange={nameInputChangeHandler}
         ref={inputRef}
       />
-      {isInputChange ? (
-        <button
-          className="border-[1.5px] border-default rounded-md px-3 py-1"
-          onClick={onInputHandler}
-        >닉네임 변경</button>
-      ) : (
-        <>
-          <button
-            className="border-[1.5px] border-default rounded-md px-3 py-1 mr-1"
-            onClick={nameUpdateHandler}
-          >확인</button>
-          <button
-            className="border-[1.5px] border-default rounded-md px-3 py-1"
-            onClick={offInputHandler}
-          >취소</button>
-        </>
-      )}
-    </div>
+    </section>
   );
 }

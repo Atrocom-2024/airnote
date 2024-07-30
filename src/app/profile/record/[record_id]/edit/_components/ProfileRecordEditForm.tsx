@@ -8,9 +8,9 @@ import { throttle } from "lodash";
 
 import LoadingUI from "@/app/_components/LoadingUI";
 import SubTitle from "@/app/_components/SubTitle";
-import RecordFormInput from "./RecordFormInput";
+import RecordFormInput from "@/app/record/add/_components/RecordFormInput";
 
-export default function RecordForm({ address }: PropsType) {
+export default function ProfileRecordEditForm({ recordInfo }: PropsType) {
   const router = useRouter();
   const [openPostcode, setOpenPostcode] = useState<boolean>(false);
   const {
@@ -21,9 +21,9 @@ export default function RecordForm({ address }: PropsType) {
     formState: { isSubmitting }
   } = useForm<FormInputs>({
     defaultValues: {
-      address: address ? address : "",
-      address_detail: "",
-      content: "",
+      address: recordInfo.address,
+      address_detail: recordInfo.address_detail,
+      content: recordInfo.content,
       auth_file: null,
       auth_file_url: ''
     }
@@ -86,8 +86,8 @@ export default function RecordForm({ address }: PropsType) {
     
     // 기록 작성 요청
     try {
-      const res = await fetch('/api/records', {
-        method: 'POST',
+      const res = await fetch(`/api/profile/record/${recordInfo.post_id}`, {
+        method: 'PUT',
         headers: { 'Content-type': 'application/json' },
         body: JSON.stringify({
           address: data.address,
@@ -99,11 +99,11 @@ export default function RecordForm({ address }: PropsType) {
       if (res.ok) {
         return router.push('/profile/record');
       } else {
-        return alert('기록 작성에 실패했습니다.');
+        return alert('기록 수정에 실패했습니다.');
       }
     } catch (err) {
       console.error(err);
-      return alert('기록 작성에 실패했습니다.');
+      return alert('기록 수정에 실패했습니다.');
     }
   }, 2000);
 
@@ -112,7 +112,7 @@ export default function RecordForm({ address }: PropsType) {
   }
 
   return (
-    <form className="mt-10 px-5 grid grid-cols-1 text-sm md:px-16" onSubmit={handleSubmit(formSubmitHandler)}>
+    <form className="mt-10 px-5 grid grid-cols-1 text-sm md:px-0" onSubmit={handleSubmit(formSubmitHandler)}>
       <article className="mb-8 relative">
         <SubTitle>주소</SubTitle>
         <section className="mt-5">
@@ -175,14 +175,22 @@ export default function RecordForm({ address }: PropsType) {
           </div>
         </section>
       </article>
-      <button className="w-full bg-default text-white rounded-xl py-3 mx-auto mt-10 mb-20">기록작성</button>
+      <button className="w-full bg-default text-white rounded-xl py-3 mx-auto mt-10 mb-20">기록수정</button>
     </form>
   );
 }
 
 interface PropsType {
-  address: string | undefined;
+  recordInfo: MyRecordTypes;
 }
+
+interface MyRecordTypes {
+  post_id: string;
+  address: string;
+  address_detail: string;
+  content: string;
+  create_at: Date;
+};
 
 interface FormInputs {
   address: string;

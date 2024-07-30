@@ -62,6 +62,27 @@ export function generateRandomString(length = 20) {
   return result;
 }
 
+// html 텍스트 추출 함수
+export const stripHtml = (html: string) => {
+  const div = document.createElement('div');
+  div.innerHTML = html;
+  return div.textContent || div.innerText || '';
+};
+
+// 본문 미리보기 반환 함수
+export const getPreviewText = (text: string, maxLength: number = 50): string => {
+  if (text.length <= maxLength) {
+    return text;
+  }
+  return text.substring(0, maxLength) + '...';
+};
+
+// 핸드폰 번호 파싱 함수
+export function parsePhoneNumber(phoneNumber: string) {
+  const splitPhoneNumber = phoneNumber.split(' ');
+  return `0${splitPhoneNumber[splitPhoneNumber.length - 1]}`;
+}
+
 interface Coordinates {
   lat: number;
   lng: number;
