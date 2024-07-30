@@ -12,7 +12,8 @@ import {
   getKnowledges,
   postKnowledgeReaction,
   postRecordReaction,
-  getProfileInfo
+  getProfileInfo,
+  getProfileRecord
 } from "./api";
 
 // 실시간 인기 공간 기록을 가져오는 훅
@@ -87,6 +88,14 @@ export const useProfileInfo = (email: string) => {
   });
 };
 
+// 마이페이지 공간기록 요청 훅
+export const useProfileRecord = () => {
+  return useQuery<MyRecordTypes[]>({
+    queryKey: ['profileRecord'],
+    queryFn: () => getProfileRecord()
+  });
+};
+
 // 관리자 로그아웃 요청 훅
 export const useAdminLogout = () => {
   return useMutation({
@@ -145,7 +154,7 @@ interface MyInfoTypes {
     email: string;
     nickname: string;
   },
-  reviews: MyReviewTypes[]
+  reviews: MyRecordTypes[]
 };
 
 interface ProfileInfoTypes {
@@ -156,7 +165,7 @@ interface ProfileInfoTypes {
   create_at: Date;
 };
 
-interface MyReviewTypes {
+interface MyRecordTypes {
   post_id: string;
   address: string;
   address_detail: string;

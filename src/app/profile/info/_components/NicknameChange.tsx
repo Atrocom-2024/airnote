@@ -81,7 +81,7 @@ export default function NicknameChange({ nickname }: { nickname: string; }) {
         )}
       </div>
       <input
-        className="w-[300px] outline-none bg-white text-black border border-middle-gray rounded-md p-2 disabled:bg-white-gray disabled:text-middle-gray disabled:border-none"
+        className="w-[300px] outline-none bg-white text-black border border-middle-gray rounded-md px-3 py-2 disabled:bg-white-gray disabled:text-middle-gray disabled:border-none"
         value={changeName}
         disabled={isInputChange}
         onChange={nameInputChangeHandler}

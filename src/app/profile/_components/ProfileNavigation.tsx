@@ -16,7 +16,7 @@ export default function ProfileNavigation() {
         <div
           className={`${pathname === '/profile/info' ? 'font-semibold text-default' : ''}`}
         >내 정보 관리</div>
-        <FaAngleRight size="25" fill="gray" />
+        <FaAngleRight size="25" fill={pathname === '/profile/info' ? '#4A68F5' : ' gray'} />
       </Link>
       <Link
         className="border-b border-gray flex justify-between items-center px-4 py-5"
@@ -25,7 +25,7 @@ export default function ProfileNavigation() {
         <div
           className={`${pathname === '/profile/record' ? 'font-semibold text-default' : ''}`}
         >공간기록 관리</div>
-        <FaAngleRight size="25" fill="gray" />
+        <FaAngleRight size="25" fill={pathname === '/profile/record' ? '#4A68F5' : ' gray'} />
       </Link>
       <Link
         className="flex justify-between items-center px-4 py-5"
@@ -34,7 +34,7 @@ export default function ProfileNavigation() {
         <div
           className={`${pathname === '/profile/knowledges' ? 'font-semibold text-default' : ''}`}
         >공간지식 관리</div>
-        <FaAngleRight size="25" fill="gray" />
+        <FaAngleRight size="25" fill={pathname === '/profile/knowledges' ? '#4A68F5' : ' gray'} />
       </Link>
     </article>
   );

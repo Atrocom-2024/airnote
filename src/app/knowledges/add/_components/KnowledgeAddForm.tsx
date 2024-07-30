@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { throttle } from "lodash";
 
@@ -7,6 +8,7 @@ import KnowledgeAddFormQuill from "./KnowledgeAddFormQuill";
 import LoadingUI from "@/app/_components/LoadingUI";
 
 export default function KnowledgeAddForm() {
+  const router = useRouter();
   const {
     register,
     setValue,
@@ -41,7 +43,6 @@ export default function KnowledgeAddForm() {
   });
 
   const formSubmitHandler = throttle(async (data: FormInputs) => {
-    console.log(data);
     // 폼 작성요소 검사
     if (!data.title) {
       return alert('제목을 입력해주세요.');
@@ -77,8 +78,9 @@ export default function KnowledgeAddForm() {
           thumbnail_url: watch('thumbnail_url')
         })
       });
+      const json = await res.json();
       if (res.ok) {
-        return alert('지식 작성 완료')
+        router.push(`/knowledges/${json.knowledge_id}`);
       } else {
         return alert('지식 작성에 실패했습니다.');
       }

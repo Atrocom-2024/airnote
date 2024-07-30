@@ -62,6 +62,11 @@ export function generateRandomString(length = 20) {
   return result;
 }
 
+export function parsePhoneNumber(phoneNumber: string) {
+  const splitPhoneNumber = phoneNumber.split(' ');
+  return `0${splitPhoneNumber[splitPhoneNumber.length - 1]}`;
+}
+
 interface Coordinates {
   lat: number;
   lng: number;
