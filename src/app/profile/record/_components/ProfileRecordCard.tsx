@@ -1,6 +1,7 @@
 import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
 
 import { parseDate } from "@/utils/modules";
+import Link from "next/link";
 
 export default function ProfileRecordCard({ recordInfo }: PropsType) {
   const myRecordContent = recordInfo.content.split('\n');
@@ -12,7 +13,10 @@ export default function ProfileRecordCard({ recordInfo }: PropsType) {
           <div className="text-sm text-default font-bold sm:text-lg">{recordInfo.address}</div>
           <div className="text-xs text-default ml-3 sm:text-sm">{recordInfo.address_detail}</div>
         </div>
-        <button className="bg-white-gray text-sm px-4 py-2 rounded-lg">기록수정</button>
+        <Link
+          className="bg-white-gray text-sm px-4 py-2 rounded-lg"
+          href={`/profile/record/${recordInfo.post_id}/edit`}
+        >기록수정</Link>
       </section>
       <section className="mt-2 text-xs sm:text-sm">
         {myRecordContent.map((content, idx) => {
@@ -28,13 +32,13 @@ export default function ProfileRecordCard({ recordInfo }: PropsType) {
             <div>
               <AiOutlineLike className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
             </div>
-            <div className="text-xs sm:text-sm">{ recordInfo.likes }</div>
+            <div className="text-xs ml-1 sm:text-sm">{ recordInfo.likes }</div>
           </div>
           <div className="flex items-center">
             <div>
               <AiOutlineDislike className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
             </div>
-            <div className="text-xs sm:text-sm">{ recordInfo.dislikes }</div>
+            <div className="text-xs ml-1 sm:text-sm">{ recordInfo.dislikes }</div>
           </div>
         </div>
         <div className="text-xs sm:text-sm">{ parseDate(recordInfo.create_at) }</div>

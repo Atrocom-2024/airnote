@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getToken } from "next-auth/jwt";
 
 import { pool } from "@/utils/database";
-import { decrypt } from "@/utils/modules";
 
 const secret = process.env.NEXT_AUTH_SECRET;
 
@@ -18,7 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       try {
         const client = await pool.connect();
-        const userReviewsQuery = `
+        const userRecordQuery = `
           SELECT
             r.post_id,
             r.address,
@@ -33,9 +32,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           WHERE u.email = $1
           GROUP BY r.post_id, r.address, r.address_detail, r.content, r.create_at
         `
-        const userReviewsQueryResult = await client.query(userReviewsQuery, [token.email]);
+        const userRecordQueryResult = await client.query(userRecordQuery, [token.email]);
         client.release();
-        return res.status(200).json(userReviewsQueryResult.rows);
+        return res.status(200).json(userRecordQueryResult.rows);
       } catch (err) {
         console.error(err);
         return res.status(500).send('내부 서버 오류')
