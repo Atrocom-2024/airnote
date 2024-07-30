@@ -14,7 +14,8 @@ import {
   postRecordReaction,
   getProfileInfo,
   getProfileRecord,
-  getProfileRecordDetail
+  getProfileRecordDetail,
+  deleteRecord
 } from "./api";
 
 // 실시간 인기 공간 기록을 가져오는 훅
@@ -104,6 +105,18 @@ export const useProfileRecordDetail = (recordId: string) => {
     queryFn: () => getProfileRecordDetail(recordId)
   });
 };
+
+// 공간기록 제거 요청 훅
+export const useDeleteRecord = (recordId: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: () => deleteRecord(recordId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['profileRecord'] });
+    }
+  })
+}
 
 // 관리자 로그아웃 요청 훅
 export const useAdminLogout = () => {

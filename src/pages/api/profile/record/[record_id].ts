@@ -51,11 +51,34 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         `;
         const userRecordEditQueryValues = [record_id, body.address, body.address_detail, body.content];
         const userRecordEditQueryResult = await client.query(userRecordEditQuery, userRecordEditQueryValues);
+        client.release();
         return res.status(201).json({
           success: true,
           message: 'record edit successfully',
           record_id: userRecordEditQueryResult.rows[0]
-        })
+        });
+      } catch (err) {
+        console.error(err);
+        return res.status(500).send('내부 서버 오류');
+      }
+    case 'DELETE':
+      try {
+        const client = await pool.connect();
+        await client.query('BEGIN');
+        // REACTION_TB에서 삭제
+        await client.query('DELETE FROM REACTION_TB WHERE post_id = $1', [record_id]);
+        // RECORD_TB에서 삭제하고 post_id 반환
+        const deleteRecordResult = await client.query(
+          'DELETE FROM RECORD_TB WHERE post_id = $1 RETURNING post_id',
+          [record_id]
+        );
+        await client.query('COMMIT');
+        client.release();
+        return res.status(200).json({
+          success: true,
+          message: 'record delete successfully',
+          record_id: deleteRecordResult.rows[0]
+        });
       } catch (err) {
         console.error(err);
         return res.status(500).send('내부 서버 오류');

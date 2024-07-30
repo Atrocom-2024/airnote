@@ -1,10 +1,24 @@
+import Link from "next/link";
 import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
 
 import { parseDate } from "@/utils/modules";
-import Link from "next/link";
+import { useDeleteRecord } from "@/app/_lib/hooks";
+import LoadingUI from "@/app/_components/LoadingUI";
 
 export default function ProfileRecordCard({ recordInfo }: PropsType) {
+  const { mutate: deleteRecord, isPending } = useDeleteRecord(recordInfo.post_id);
   const myRecordContent = recordInfo.content.split('\n');
+
+  const recordDeleteClickHandler = () => {
+    const confirmDeleteRecord = confirm('정말 기록을 삭제하시겠습니까?');
+    if (confirmDeleteRecord) {
+      deleteRecord();
+    }
+  }
+
+  if (isPending) {
+    return <LoadingUI />;
+  }
 
   return (
     <article className="border-b border-gray py-5">
@@ -13,10 +27,17 @@ export default function ProfileRecordCard({ recordInfo }: PropsType) {
           <div className="text-sm text-default font-bold sm:text-lg">{recordInfo.address}</div>
           <div className="text-xs text-default ml-3 sm:text-sm">{recordInfo.address_detail}</div>
         </div>
-        <Link
-          className="bg-white-gray text-sm px-4 py-2 rounded-lg"
-          href={`/profile/record/${recordInfo.post_id}/edit`}
-        >기록수정</Link>
+        <div>
+          <Link
+            className="bg-white-gray text-sm px-4 py-2 rounded-lg mr-2"
+            href={`/profile/record/${recordInfo.post_id}/edit`}
+          >기록수정</Link>
+          <button
+            className="bg-white-gray text-sm px-4 py-2 rounded-lg"
+            type="button"
+            onClick={recordDeleteClickHandler}
+          >기록삭제</button>
+        </div>
       </section>
       <section className="mt-2 text-xs sm:text-sm">
         {myRecordContent.map((content, idx) => {
