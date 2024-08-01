@@ -48,13 +48,13 @@ export default function KnowledgeDetailMain({ knowledgeId }: PropsType) {
               <div>
                 <AiOutlineLike className="size-[20px] sm:size-[25px]" color="#AFAFAF" size="20" />
               </div>
-              <div className="font-bold">{knowledge.likes}</div>
+              <div className="ml-1">{knowledge.likes}</div>
             </div>
             <div className="flex items-center">
               <div> 
                 <AiOutlineDislike className="size-[20px] sm:size-[25px]" color="#AFAFAF" size="20" />
               </div>
-              <div className="font-bold">{knowledge.dislikes}</div>
+              <div className="ml-1">{knowledge.dislikes}</div>
             </div>
           </section>
           <section>{parseDate(knowledge.create_at)}</section>
