@@ -22,8 +22,8 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  // 일반 유저 로그인 상태 리다이렉트 설정
-  if (pathname.startsWith('/my')) {
+  // 마이페이지 접근 리다이렉트 설정
+  if (pathname.startsWith('/profile')) {
     if (!token) {
       return NextResponse.redirect(new URL('/home', req.url));
     }

@@ -10,7 +10,7 @@ import { useDeleteKnowledge } from "@/app/_lib/hooks";
 import LoadingUI from "@/app/_components/LoadingUI";
 
 export default function ProfileKnowledgeCard({ knowledgeInfo }: PropsType) {
-  const [previewText, setPreviewText] = useState<string>('');
+  const [ previewText, setPreviewText ] = useState<string>('');
   const { mutate: deleteknowledge, isPending } = useDeleteKnowledge(knowledgeInfo.knowledge_id);
 
   const knowledgeDeleteClickHandler = () => {

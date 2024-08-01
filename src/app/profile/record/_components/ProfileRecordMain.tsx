@@ -17,11 +17,17 @@ export default function ProfileRecordMain() {
       <Title>공간기록 관리</Title>
       <section className="mt-20">
         <article className="text-lg font-semibold mb-5">내가 쓴 공간기록</article>
-        <article>
-          {myRecord.map((recordInfo) => (
-            <ProfileRecordCard recordInfo={recordInfo} key={recordInfo.post_id} />
-          ))}
-        </article>
+        {myRecord.length ? (
+          <article>
+            {myRecord.map((recordInfo) => (
+              <ProfileRecordCard recordInfo={recordInfo} key={recordInfo.post_id} />
+            ))}
+          </article>
+        ) : (
+          <article className="flex justify-center mt-20">
+            <div className="text-default text-lg font-bold">작성된 공간기록이 없습니다.</div>
+          </article>
+        )}
       </section>
     </main>
   );
