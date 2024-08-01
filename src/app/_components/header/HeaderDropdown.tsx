@@ -43,9 +43,20 @@ export default function HeaderDropdown({ isLogin }: PropsType) {
       {isDropdown && (
         <section className="bg-white absolute top-14 right-0 w-[200px] rounded-lg shadow-[0_0_10px_3px_rgba(0,0,0,0.05)] z-[30]">
           {isLogin ? (
-            <div className="px-5 py-5 border-b-[1.5px] border-neutral-200">
-              <LogoutBtn />
-            </div>
+            <ul className="px-5 py-5 space-y-5 border-b-[1.5px] border-neutral-200">
+              <li>
+                <MoveLink href="/profile/info">내 정보 관리</MoveLink>
+              </li>
+              <li>
+                <MoveLink href="/profile/record">공간기록 관리</MoveLink>
+              </li>
+              <li>
+                <MoveLink href="/profile/knowledges">공간지식 관리</MoveLink>
+              </li>
+              <li>
+                <LogoutBtn />
+              </li>
+            </ul>
           ) : (
             <div className="px-5 py-5 border-b-[1.5px] border-neutral-200 md:hidden">
               <LoginBtn />
