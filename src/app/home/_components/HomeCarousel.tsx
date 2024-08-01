@@ -132,7 +132,11 @@ export default function HomeCarousel() {
         <div className="cursor-pointer lg:hidden" onClick={arrowLeftClickHandler}>
           <FaAngleLeft size="20" color="#6A6A6A" />
         </div>
-        <div className="mx-3 font-bold text-dark-gray">{current + 1} / {carouselElCount}</div>
+        <div className="flex space-x-2 mx-4">
+          {new Array(carouselElCount).fill(0).map((_, idx) => (
+            <div className={`w-[8px] h-[8px] rounded-full transition-all ${current === idx ? 'bg-light-black scale-[1.3]' : 'bg-gray'}`} key={idx}></div>
+          ))}
+        </div>
         <div className="cursor-pointer lg:hidden" onClick={arrowRightClickHandler}>
           <FaAngleRight size="20" color="#6A6A6A" />
         </div>
