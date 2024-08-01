@@ -13,7 +13,7 @@ export default function ProfileRecordMain() {
   }
 
   return (
-    <main className="w-[620px] ml-20">
+    <main className="md:w-[620px] md:ml-20">
       <Title>공간기록 관리</Title>
       <section className="mt-20">
         <article className="text-lg font-semibold mb-5">내가 쓴 공간기록</article>

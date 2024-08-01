@@ -13,7 +13,7 @@ export default function ProfileRecordEditMain({ recordId }: PropsType) {
   }
 
   return (
-    <main className="w-[620px] ml-20">
+    <main className="px-5 md:px-0 md:w-[620px] md:ml-20">
       <Title>공간기록 수정</Title>
       <ProfileRecordEditForm recordInfo={myRecordDetail}  />
     </main>

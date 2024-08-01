@@ -112,7 +112,7 @@ export default function ProfileRecordEditForm({ recordInfo }: PropsType) {
   }
 
   return (
-    <form className="mt-10 px-5 grid grid-cols-1 text-sm md:px-0" onSubmit={handleSubmit(formSubmitHandler)}>
+    <form className="mt-10 grid grid-cols-1 text-sm" onSubmit={handleSubmit(formSubmitHandler)}>
       <article className="mb-8 relative">
         <SubTitle>주소</SubTitle>
         <section className="mt-5">

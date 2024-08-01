@@ -22,11 +22,11 @@ export default function ProfileInfoMain() {
   };
 
   return (
-    <main className="ml-20">
+    <main className="md:ml-20">
       <Title>내 정보 관리</Title>
       <section className="mt-20">
         <article className="text-lg font-semibold mb-10">회원 정보</article>
-        <article className="grid grid-cols-2 gap-5">
+        <article className="grid grid-cols-1 gap-5 md:grid-cols-2">
           <section>
             <div className="font-semibold text-middle-gray mr-2 mb-2">이메일</div>
             <input
