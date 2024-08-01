@@ -1,4 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { signOut } from "next-auth/react";
 
 import {
   getTopRecords,
@@ -17,7 +18,8 @@ import {
   deleteRecord,
   getProfileKnowledges,
   getProfileKnowledgeDetail,
-  deleteKnowledge
+  deleteKnowledge,
+  deleteUser
 } from "./api";
 
 // 실시간 인기 공간 기록을 가져오는 훅
@@ -74,13 +76,13 @@ export const useKnowledgeReaction = (knowledgeId: string, reactionType: 'like' |
       queryClient.invalidateQueries({ queryKey: ['knowledge'] })
     }
   });
-}
+};
 
 // 마이페이지 내 정보 요청
-export const useProfileInfo = (email: string) => {
+export const useProfileInfo = () => {
   return useQuery<ProfileInfoTypes>({
     queryKey: ['profileInfo'],
-    queryFn: () => getProfileInfo(email)
+    queryFn: () => getProfileInfo()
   });
 };
 
@@ -139,6 +141,20 @@ export const useDeleteKnowledge = (knowledgeId: string) => {
     }
   });
 };
+
+// 회원탈퇴 요청 훅
+export const useUserDelete = (userId: string | undefined) => {
+  return useMutation({
+    mutationFn: () => deleteUser(userId),
+    onSuccess: () => {
+      alert('회원탈퇴가 완료되었습니다.\n지금까지 저희 서비스를 이용해주셔서 감사합니다.');
+      signOut();
+    },
+    onError: (error) => {
+      console.error('회원탈퇴 중 오류 발생:', error);
+    },
+  })
+}
 
 // 관리자 로그아웃 요청 훅
 export const useAdminLogout = () => {
@@ -202,6 +218,7 @@ interface MyInfoTypes {
 };
 
 interface ProfileInfoTypes {
+  id: string;
   email: string;
   nickname: string;
   phone_number: string;

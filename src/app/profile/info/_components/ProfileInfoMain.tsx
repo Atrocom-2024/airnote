@@ -1,15 +1,23 @@
 'use client';
 
 import { parsePhoneNumber } from "@/utils/modules";
-import { useProfileInfo } from "@/app/_lib/hooks";
+import { useProfileInfo, useUserDelete } from "@/app/_lib/hooks";
 import Title from "@/app/_components/Title";
 import NicknameChange from "./NicknameChange";
 import LoadingUI from "@/app/_components/LoadingUI";
 
-export default function ProfileInfoMain({ email }: PropsType) {
-  const { data: profileInfo, isPending } = useProfileInfo(email);
+export default function ProfileInfoMain() {
+  const { data: profileInfo, isPending: getProfileInfoPending } = useProfileInfo();
+  const { mutate: deleteUser, isPending: deleteUserPending } = useUserDelete(profileInfo?.id)
+
+  const userDeleteClickHandler = () => {
+    const userConfirm = confirm('정말 탈퇴하시겠습니까?\n탈퇴시 기존 작성했던 기록은 삭제되지 않습니다.');
+    if (userConfirm) {
+      deleteUser();
+    }
+  }
   
-  if (!profileInfo || isPending) {
+  if (!profileInfo || getProfileInfoPending || deleteUserPending) {
     return <LoadingUI />;
   };
 
@@ -48,12 +56,12 @@ export default function ProfileInfoMain({ email }: PropsType) {
       </section>
       <section className="flex items-center text-sm mt-20">
         <div className="text-gray">더 이상 공기수첩 이용을 원하지 않으신가요?</div>
-        <button className="text-middle-gray font-semibold ml-2" type="button">회원탈퇴</button>
+        <button
+          className="text-middle-gray font-semibold ml-2"
+          type="button"
+          onClick={userDeleteClickHandler}
+        >회원탈퇴</button>
       </section>
     </main>
   );
-}
-
-interface PropsType {
-  email: string;
 }
