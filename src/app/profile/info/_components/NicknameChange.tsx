@@ -33,7 +33,7 @@ export default function NicknameChange({ nickname }: { nickname: string; }) {
   const nameUpdateHandler = throttle(async () => {
     try {
       setIsLoading(true);
-      const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/my/info`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/profile/info`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nickname: changeName })
