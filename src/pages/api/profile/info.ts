@@ -2,55 +2,30 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getToken } from "next-auth/jwt";
 
 import { pool } from "@/utils/database";
-import { decrypt } from "@/utils/modules";
 
 const secret = process.env.NEXT_AUTH_SECRET;
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const token = await getToken({ req, secret });
+
+  // Forbidden
+  if (!token) {
+    return res.status(403).send('접근 금지');
+  }
+
   switch (req.method) {
     case 'GET':
-      const { user } = req.query;
-
-      // Forbidden
-      if (!user || typeof(user) !== 'string') {
-        return res.status(403).send('접근 금지');
-      }
-
-      const decrypted_user = decrypt(decodeURIComponent(user), process.env.NEXT_PUBLIC_AES_EMAIL_SECRET_KEY);
       try {
         const client = await pool.connect();
-        const userInfoQuery = `SELECT email, nickname FROM USERS_TB WHERE email = $1`;
-        const userInfoQueryResult = await client.query(userInfoQuery, [decrypted_user]);
-        const userReviewsQuery = `
-          SELECT
-            r.post_id,
-            r.address,
-            r.address_detail,
-            r.content,
-            SUM(CASE WHEN rt.reaction_type = 'like' THEN 1 ELSE 0 END) AS likes,
-            SUM(CASE WHEN rt.reaction_type = 'dislike' THEN 1 ELSE 0 END) AS dislikes,
-            r.create_at
-          FROM RECORD_TB r
-          JOIN USERS_TB u ON r.author_id = u.id
-          LEFT JOIN REACTION_TB rt ON r.post_id = rt.post_id
-          WHERE u.email = $1
-          GROUP BY r.post_id, r.address, r.address_detail, r.content, r.create_at
-        `
-        const userReviewsQueryResult = await client.query(userReviewsQuery, [decrypted_user]);
+        const userInfoQuery = `SELECT id, email, nickname, name, phone_number, create_at FROM USERS_TB WHERE email = $1`;
+        const userInfoQueryResult = await client.query(userInfoQuery, [token.email]);
         client.release();
-        return res.status(200).json({ user_info: userInfoQueryResult.rows[0], reviews: userReviewsQueryResult.rows });
+        return res.status(200).json(userInfoQueryResult.rows[0]);
       } catch (err) {
         console.error(err);
         return res.status(500).send('내부 서버 오류')
       }
     case 'PUT':
-      const token = await getToken({ req, secret });
-
-      // Unauthorized
-      if (!token) {
-        return res.status(401).send('접근 권한 없음');
-      }
-
       const body = req.body;
       try {
         const client = await pool.connect();

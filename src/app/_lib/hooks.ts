@@ -1,8 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { signOut } from "next-auth/react";
 
 import {
   getTopRecords,
-  getMyInfo,
   postLogout,
   getUserInfoAdmin,
   getReviewsAdmin,
@@ -11,7 +11,15 @@ import {
   getKnowledge,
   getKnowledges,
   postKnowledgeReaction,
-  postRecordReaction
+  postRecordReaction,
+  getProfileInfo,
+  getProfileRecord,
+  getProfileRecordDetail,
+  deleteRecord,
+  getProfileKnowledges,
+  getProfileKnowledgeDetail,
+  deleteKnowledge,
+  deleteUser
 } from "./api";
 
 // 실시간 인기 공간 기록을 가져오는 훅
@@ -68,15 +76,85 @@ export const useKnowledgeReaction = (knowledgeId: string, reactionType: 'like' |
       queryClient.invalidateQueries({ queryKey: ['knowledge'] })
     }
   });
-}
+};
 
 // 마이페이지 내 정보 요청
-export const useMyInfo = (email: string) => {
-  return useQuery<MyInfoTypes>({
-    queryKey: ['myInfo'],
-    queryFn: () => getMyInfo(email)
+export const useProfileInfo = () => {
+  return useQuery<ProfileInfoTypes>({
+    queryKey: ['profileInfo'],
+    queryFn: () => getProfileInfo()
   });
 };
+
+// 마이페이지 공간기록 목록 요청 훅
+export const useProfileRecord = () => {
+  return useQuery<MyRecordTypes[]>({
+    queryKey: ['profileRecord'],
+    queryFn: () => getProfileRecord()
+  });
+};
+
+// 마이페이지 공간기록 상세 요청 훅
+export const useProfileRecordDetail = (recordId: string) => {
+  return useQuery<MyRecordDetail>({
+    queryKey: ['profileRecordDetail'],
+    queryFn: () => getProfileRecordDetail(recordId)
+  });
+};
+
+// 공간기록 제거 요청 훅
+export const useDeleteRecord = (recordId: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: () => deleteRecord(recordId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['profileRecord'] });
+    }
+  });
+};
+
+// 마이페이지 공간지식 목록 요청 훅
+export const useProfileKnowledges = () => {
+  return useQuery<MyKnowledgeType[]>({
+    queryKey: ['profileKnowledges'],
+    queryFn: () => getProfileKnowledges()
+  });
+};
+
+// 마이페이지 공간지식 상세 요청 훅
+export const useProfileKnowledgeDetail = (knowledgeId: string) => {
+  return useQuery<MyKnowledgeType>({
+    queryKey: ['profileKnowledge'],
+    queryFn: () => getProfileKnowledgeDetail(knowledgeId)
+  });
+};
+
+// 공간기록 제거 요청 훅
+export const useDeleteKnowledge = (knowledgeId: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: () => deleteKnowledge(knowledgeId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['profileKnowledges'] });
+    }
+  });
+};
+
+// 회원탈퇴 요청 훅
+export const useUserDelete = (userId: string | undefined) => {
+  return useMutation({
+    mutationFn: () => deleteUser(userId),
+    onSuccess: () => {
+      alert('회원탈퇴가 완료되었습니다.\n지금까지 저희 서비스를 이용해주셔서 감사합니다.');
+      signOut();
+    },
+    onError: (error) => {
+      console.error('회원탈퇴 중 오류 발생:', error);
+    },
+  })
+}
 
 // 관리자 로그아웃 요청 훅
 export const useAdminLogout = () => {
@@ -136,10 +214,19 @@ interface MyInfoTypes {
     email: string;
     nickname: string;
   },
-  reviews: MyReviewTypes[]
+  reviews: MyRecordTypes[]
 };
 
-interface MyReviewTypes {
+interface ProfileInfoTypes {
+  id: string;
+  email: string;
+  nickname: string;
+  phone_number: string;
+  name: string;
+  create_at: Date;
+};
+
+interface MyRecordTypes {
   post_id: string;
   address: string;
   address_detail: string;
@@ -148,6 +235,24 @@ interface MyReviewTypes {
   dislikes: number;
   create_at: Date;
 };
+
+interface MyRecordDetail {
+  post_id: string;
+  address: string;
+  address_detail: string;
+  content: string;
+  create_at: Date;
+};
+
+interface MyKnowledgeType {
+  knowledge_id: string;
+  knowledge_title: string;
+  knowledge_content: string;
+  likes: number;
+  dislikes: number;
+  thumbnail_url: string;
+  create_at: Date;
+}
 
 interface UserInfoTypes {
   id: string;

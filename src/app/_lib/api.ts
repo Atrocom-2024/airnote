@@ -142,7 +142,7 @@ export const postKnowledgeReaction = async (knowledgeId: string, kind: 'like' | 
 // 회원가입 요청 함수
 export const postSignup = async ({ email, name, nickname, phone_number }: SignupType) => {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
-  const uri = `${domain}/api/auth/signup?email=${encodeURIComponent(email)}&name=${encodeURIComponent(name)}&nickname=${encodeURIComponent(nickname)}&phone_number=${encodeURIComponent(phone_number)}`;
+  const uri = `${domain}/api/users?email=${encodeURIComponent(email)}&name=${encodeURIComponent(name)}&nickname=${encodeURIComponent(nickname)}&phone_number=${encodeURIComponent(phone_number)}`;
   const res = await fetch(uri, { method: 'POST' });
   if (!res.ok) {
     throw new Error('Failed to get knowledge info');
@@ -150,11 +150,102 @@ export const postSignup = async ({ email, name, nickname, phone_number }: Signup
   return res.json();
 }
 
-// 마이페이지 내 정보 요청
-export async function getMyInfo(email: string) {
+// 회원탈퇴 요청 함수
+export const deleteUser = async (userId: string | undefined) => {
+  if (!userId) {
+    return alert('이미 탈퇴한 유저이거나 알 수 없는 이유로 회원탈퇴가 불가능합니다.\n고객센터에 문의부탁드립니다.');
+  }
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
-  const encryptedEmail = encodeURIComponent(encrypt(email, process.env.NEXT_PUBLIC_AES_EMAIL_SECRET_KEY));
-  const res = await fetch(`${domain}/api/my/info?user=${encryptedEmail}`, { cache: 'no-store' });
+  const uri = `${domain}/api/users/${userId}`;
+  const res = await fetch(uri, { method: 'DELETE' });
+  if (!res.ok) {
+    throw new Error('Failed to get knowledge info');
+  }
+  return res.json();
+}
+
+// 마이페이지 내 정보 요청
+export async function getProfileInfo() {
+  const domain = process.env.NEXT_PUBLIC_DOMAIN;
+  const res = await fetch(`${domain}/api/profile/info`, { cache: 'no-store' });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+  
+  return res.json();
+}
+
+// 마이페이지 공간기록 목록 요청
+export async function getProfileRecord() {
+  const domain = process.env.NEXT_PUBLIC_DOMAIN;
+  const res = await fetch(`${domain}/api/profile/record`, { cache: 'no-store' });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+  
+  return res.json();
+}
+
+// 마이페이지 공간기록 상세 요청
+export async function getProfileRecordDetail(recordId: string) {
+  const domain = process.env.NEXT_PUBLIC_DOMAIN;
+  const res = await fetch(`${domain}/api/profile/record/${recordId}`, { cache: 'no-store' });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+  
+  return res.json();
+}
+
+// 마이페이지 공간기록 제거 요청
+export async function deleteRecord(recordId: string) {
+  const domain = process.env.NEXT_PUBLIC_DOMAIN;
+  const res = await fetch(`${domain}/api/profile/record/${recordId}`, {
+    method: 'DELETE',
+    cache: 'no-store'
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+  
+  return res.json();
+}
+
+// 마이페이지 공간지식 목록 요청
+export async function getProfileKnowledges() {
+  const domain = process.env.NEXT_PUBLIC_DOMAIN;
+  const res = await fetch(`${domain}/api/profile/knowledges`, { cache: 'no-store' });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+  
+  return res.json();
+}
+
+// 마이페이지 공간지식 목록 요청
+export async function getProfileKnowledgeDetail(knowledgeId: string) {
+  const domain = process.env.NEXT_PUBLIC_DOMAIN;
+  const res = await fetch(`${domain}/api/profile/knowledges/${knowledgeId}`, { cache: 'no-store' });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+  
+  return res.json();
+}
+
+// 마이페이지 공간지식 제거 요청
+export async function deleteKnowledge(knowledgeId: string) {
+  const domain = process.env.NEXT_PUBLIC_DOMAIN;
+  const res = await fetch(`${domain}/api/profile/knowledges/${knowledgeId}`, {
+    method: 'DELETE',
+    cache: 'no-store'
+  });
 
   if (!res.ok) {
     throw new Error('Failed to fetch data');

@@ -1,6 +1,7 @@
+import { NextApiRequest, NextApiResponse } from "next";
+
 import { pool } from "@/utils/database";
 import { generateRandomString } from "@/utils/modules";
-import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
@@ -19,8 +20,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         RETURNING id;
       `;
       const signupValues = [userId, email, name, nickname, phone_number, 'kakao'];
+      await client.query('BEGIN');
+      await client.query('INSERT INTO USER_ROLES_TB (user_id) VALUES ($1)', [userId]);
       const signupQueryResult = await client.query(signupQuery, signupValues);
-      const signupUserId = signupQueryResult.rows[0];
+      await client.query('COMMIT');
+      const signupUserId = signupQueryResult.rows[0].id;
       client.release();
       return res.status(201).json({
         success: true,
