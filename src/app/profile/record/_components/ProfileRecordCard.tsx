@@ -23,23 +23,23 @@ export default function ProfileRecordCard({ recordInfo }: PropsType) {
   return (
     <article className="border-b border-gray py-5">
       <section className="flex justify-between items-center">
-        <div className="flex items-center">
+        <div className="mr-5 md:mr-0 md:flex md:items-center">
           <div className="text-sm text-default font-bold sm:text-lg">{recordInfo.address}</div>
-          <div className="text-xs text-default ml-3 sm:text-sm">{recordInfo.address_detail}</div>
+          <div className="text-xs text-default md:ml-3 sm:text-sm">{recordInfo.address_detail}</div>
         </div>
         <div>
           <Link
-            className="bg-white-gray text-sm px-4 py-2 rounded-lg mr-2"
+            className="bg-white-gray text-xs px-4 py-2 rounded-lg mr-2 md:text-sm"
             href={`/profile/record/${recordInfo.post_id}/edit`}
           >기록수정</Link>
           <button
-            className="bg-white-gray text-sm px-4 py-2 rounded-lg"
+            className="bg-white-gray text-xs px-4 py-2 rounded-lg md:text-sm"
             type="button"
             onClick={recordDeleteClickHandler}
           >기록삭제</button>
         </div>
       </section>
-      <section className="mt-5 text-xs sm:text-sm">
+      <section className="mt-2 text-xs sm:text-sm md:mt-5">
         {myRecordContent.map((content, idx) => {
           if (!content) {
             return <br key={idx} />;
@@ -47,7 +47,7 @@ export default function ProfileRecordCard({ recordInfo }: PropsType) {
           return <p className="break-words" key={idx}>{content}</p>;
         })}
       </section>
-      <section className="flex justify-end items-center text-middle-gray mt-5">
+      <section className="flex justify-end items-center text-middle-gray mt-2 md:mt-5">
         <div className="flex items-center mr-5">
           <div className="flex items-center mr-2">
             <div>

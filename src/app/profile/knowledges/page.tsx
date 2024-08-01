@@ -6,7 +6,7 @@ export default async function ProfileKnowledges() {
   return (
     <Layout className="flex justify-center">
       <article className="flex mt-20">
-        <div>
+        <div className="hidden md:block">
           <ProfileNavigation />
         </div>
         <ProfileKnowledgesMain />
