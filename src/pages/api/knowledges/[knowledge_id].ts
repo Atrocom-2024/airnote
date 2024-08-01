@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const knowledgeQuery = `
           SELECT
             k.knowledge_id,
-            u.nickname as author_nickname,
+            CASE WHEN u.nickname IS NULL THEN '(탈퇴 사용자)' ELSE u.nickname END as author_nickname,
             k.knowledge_title,
             k.knowledge_content,
             SUM(CASE WHEN krt.knowledge_reaction_type = 'like' THEN 1 ELSE 0 END)::INTEGER AS likes,
@@ -19,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             k.thumbnail_url,
             k.create_at
           FROM KNOWLEDGE_TB k
-          JOIN USERS_TB u ON k.author_id = u.id
+          LEFT JOIN USERS_TB u ON k.author_id = u.id
           LEFT JOIN KNOWLEDGE_REACTION_TB krt ON k.knowledge_id = krt.knowledge_id
           WHERE k.knowledge_id = $1
           GROUP BY k.knowledge_id, u.nickname, k.knowledge_title, k.knowledge_content, k.thumbnail_url, k.create_at

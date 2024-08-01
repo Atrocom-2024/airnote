@@ -17,11 +17,17 @@ export default function ProfileKnowledgesMain() {
       <Title>공간지식 관리</Title>
       <section className="mt-20">
         <article className="text-lg font-semibold mb-5">내가 쓴 공간지식</article>
-        <article>
-          {myKnowledges.map((knowledgeInfo) => (
-            <ProfileKnowledgeCard knowledgeInfo={knowledgeInfo} key={knowledgeInfo.knowledge_id} />
-          ))}
-        </article>
+        {myKnowledges.length ? (
+          <article>
+            {myKnowledges.map((knowledgeInfo) => (
+              <ProfileKnowledgeCard knowledgeInfo={knowledgeInfo} key={knowledgeInfo.knowledge_id} />
+            ))}
+          </article>
+        ) : (
+          <article className="flex justify-center mt-20">
+            <div className="text-default text-lg font-bold">작성된 공간지식이 없습니다.</div>
+          </article>
+        )}
       </section>
     </main>
   );

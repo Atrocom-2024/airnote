@@ -142,7 +142,7 @@ export const postKnowledgeReaction = async (knowledgeId: string, kind: 'like' | 
 // 회원가입 요청 함수
 export const postSignup = async ({ email, name, nickname, phone_number }: SignupType) => {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
-  const uri = `${domain}/api/auth/users?email=${encodeURIComponent(email)}&name=${encodeURIComponent(name)}&nickname=${encodeURIComponent(nickname)}&phone_number=${encodeURIComponent(phone_number)}`;
+  const uri = `${domain}/api/users?email=${encodeURIComponent(email)}&name=${encodeURIComponent(name)}&nickname=${encodeURIComponent(nickname)}&phone_number=${encodeURIComponent(phone_number)}`;
   const res = await fetch(uri, { method: 'POST' });
   if (!res.ok) {
     throw new Error('Failed to get knowledge info');
