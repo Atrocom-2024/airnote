@@ -112,7 +112,7 @@ export default function MapSection() {
       center={mapLoc}
       level={6}
       minLevel={11}
-      style={{ width: "100%", height: "84vh" }}
+      style={{ width: "100%", height: "92vh" }}
       isPanto={true}
       onClick={buildingClickHandler}
       onIdle={mapIdleHandler}

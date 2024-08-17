@@ -1,4 +1,14 @@
+'use client'
+
+import { usePathname } from "next/navigation";
+
 export default function Footer() {
+  const pathname = usePathname();
+
+  if (pathname?.startsWith('/record')) {
+    return null;
+  }
+
   return (
     <footer className="w-[100vw] h-[8vh] bg-white border-t border-default flex flex-col justify-center z-[29] text-[0.5rem] text-dark-gray pl-5 md:text-[0.7rem] md:flex-row md:justify-evenly md:items-center md:pl-0">
       <section className="space-y-1">
