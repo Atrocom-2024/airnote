@@ -3,9 +3,10 @@ import { LuArrowUpRightSquare } from "react-icons/lu";
 
 import { cityNameInfo } from "@/app/_lib/data";
 import { getBuildingInfo } from "@/app/_lib/api";
-import { useMapLocation } from "@/app/_lib/store";
+import { useMapHandle, useMapLocation } from "@/app/_lib/store";
 
-export default function MapMoveSection({ setIsMap }: PropsType) {
+export default function MapMoveSection() {
+  const { openMap } = useMapHandle();
   const { setMapLoc } = useMapLocation();
   const [ city, setCity ] = useState<string>('시/도 선택');
   const [ regionName, setRegionName ] = useState<string>('시/군/구 선택');
@@ -35,7 +36,7 @@ export default function MapMoveSection({ setIsMap }: PropsType) {
     }
     const addressInfo = await getBuildingInfo(`${city} ${regionName}`);
     setMapLoc({ lat: addressInfo.documents[0].y, lng: addressInfo.documents[0].x });
-    setIsMap(true);
+    openMap();
   }
   
   return (
@@ -77,8 +78,4 @@ export default function MapMoveSection({ setIsMap }: PropsType) {
       </article>
     </section>
   );
-}
-
-interface PropsType {
-  setIsMap: React.Dispatch<React.SetStateAction<boolean>>
 }

@@ -2,19 +2,25 @@ import Link from "next/link";
 import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
 
 import { parseDate } from "@/utils/modules";
-import { useMapLocation } from "@/app/_lib/store";
+import { useMapLocation, useSidebar } from "@/app/_lib/store";
 
-export default function PanelRecordCard({ topRecord }: PropsType) {
+export default function PanelRecordCard({ topRecord, isLast }: PropsType) {
   const { setMapLoc } = useMapLocation();
+  const { openSidebar } = useSidebar();
   const topRecordContent = topRecord.content.split('\n');
 
+  const linkClickHandler = () => {
+    setMapLoc({ lat: Number(topRecord.latitude), lng: Number(topRecord.longitude) });
+    openSidebar();
+  }
+
   return (
-    <article className="border-b border-default p-3">
+    <article className={`${isLast ? '' : 'border-b border-default'} p-3`}>
       <div className="flex justify-between items-center">
         <Link
           className="text-default font-bold"
-          href={`/record?sidebar=true&lat=${topRecord.latitude}&lng=${topRecord.longitude}&address=${encodeURIComponent(topRecord.address)}`}
-          onClick={() => setMapLoc({ lat: Number(topRecord.latitude), lng: Number(topRecord.longitude) })}
+          href={`/record?lat=${topRecord.latitude}&lng=${topRecord.longitude}&address=${encodeURIComponent(topRecord.address)}`}
+          onClick={linkClickHandler}
         >{topRecord.address}</Link>
         <div className="text-gray text-sm">{ parseDate(topRecord.create_at) }</div>
       </div>
@@ -56,4 +62,5 @@ interface PropsType {
     dislikes: number;
     create_at: Date;
   };
+  isLast: boolean;
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { CustomOverlayRoadview, Roadview } from "react-kakao-maps-sdk";
@@ -11,10 +11,11 @@ import Sidebar from "@/app/_components/layouts/Sidebar";
 import SideBarRecordCard from "./SideBarRecordCard";
 import PartLoadingUI from "../../_components/PartLoadingUI";
 import RoadviewCustomOverlay from "./RoadviewCustomOverlay";
+import { useSidebar } from "@/app/_lib/store";
 
 export default function RecordSideBar() {
+  const { closeSidebar } = useSidebar();
   const roadviewRef = useRef(null);
-  const router = useRouter();
   const searchParams = useSearchParams();
   const address = searchParams?.get('address');
   const lat = searchParams?.get('lat');
@@ -40,9 +41,12 @@ export default function RecordSideBar() {
       {isLoading ? <PartLoadingUI /> : (
         <>
           <section className="flex items-center p-3">
-            <button type="button" onClick={() => router.back()}>
+            <button type="button" onClick={() => closeSidebar()}>
               <FaAngleLeft size="25" fill="#4A68F5" />
             </button>
+            {/* <button type="button" onClick={() => router.back()}>
+              <FaAngleLeft size="25" fill="#4A68F5" />
+            </button> */}
             <div className="text-xl text-default font-bold ml-2">{address}</div>
           </section>
           {lat && lng && (
@@ -82,6 +86,11 @@ export default function RecordSideBar() {
       )}
     </Sidebar>
   );
+}
+
+interface PropsType {
+  isSidebar: boolean;
+  setIsSidebar: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 interface RecordType {

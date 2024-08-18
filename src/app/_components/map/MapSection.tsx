@@ -7,7 +7,7 @@ import { debounce } from "lodash";
 
 import { getLocation } from "@/utils/modules";
 import { getAddress, getBuildingInfo, getMarkerInfo } from "@/app/_lib/api";
-import { useMapLocation } from "@/app/_lib/store";
+import { useMapHandle, useMapLocation, useSidebar } from "@/app/_lib/store";
 import PartLoadingUI from "../PartLoadingUI";
 import CustomOverlay from "./CustomOverlay";
 
@@ -15,7 +15,6 @@ export default function MapSection() {
   const searchParams = useSearchParams();
   const paramLat = searchParams?.get('lat');
   const paramLng = searchParams?.get('lng');
-  const isSidebar = searchParams?.get('sidebar');
   const router = useRouter();
   const mapRef = useRef<any>(null);
   const [ overlayInfo, setOverlayInfo ] = useState<OverlayInfoType>({
@@ -27,6 +26,8 @@ export default function MapSection() {
   const [ isOverlay, setIsOverlay ] = useState(false);
   const [ markerInfo, setMarkerInfo ] = useState<MarkerInfoType[]>([]);
   const { mapLoc, setMapLoc } = useMapLocation();
+  const { closeMap } = useMapHandle();
+  const { openSidebar } = useSidebar();
   const [ loading ] = useKakaoLoader({
     appkey: process.env.KAKAO_JS_KEY,
   });
@@ -41,14 +42,15 @@ export default function MapSection() {
       neLng: bounds.getNorthEast().getLng()
     };
 
-    // URL 업데이트
-    if (!isSidebar) {
-      const newSearchParams = new URLSearchParams(searchParams?.toString());
-      newSearchParams.set('lat', center.getLat().toString());
-      newSearchParams.set('lng', center.getLng().toString());
-      setMapLoc({ lat: center.getLat(), lng: center.getLng() });
-      router.push(`?${newSearchParams.toString()}`);
-    }
+    setMapLoc({ lat: center.getLat(), lng: center.getLng() });
+    // // URL 업데이트
+    // if (!isSidebar) {
+    //   const newSearchParams = new URLSearchParams(searchParams?.toString());
+    //   newSearchParams.set('lat', center.getLat().toString());
+    //   newSearchParams.set('lng', center.getLng().toString());
+    //   setMapLoc({ lat: center.getLat(), lng: center.getLng() });
+    //   router.push(`?${newSearchParams.toString()}`);
+    // }
 
     try {
       const res = await getMarkerInfo(params);
@@ -65,7 +67,9 @@ export default function MapSection() {
   }, [setMapLoc]);
   
   const markerClickHandler = (lat: number, lng: number, address: string) => {
-    router.push(`/record?sidebar=true&lat=${lat}&lng=${lng}&address=${encodeURIComponent(address)}`);
+    closeMap();
+    openSidebar();
+    router.push(`/record?lat=${lat}&lng=${lng}&address=${encodeURIComponent(address)}`);
   };
 
   const buildingClickHandler = async (_: any, mouseEvent: any) => {
