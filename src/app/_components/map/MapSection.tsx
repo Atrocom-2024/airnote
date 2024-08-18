@@ -7,7 +7,7 @@ import { debounce } from "lodash";
 
 import { getLocation } from "@/utils/modules";
 import { getAddress, getBuildingInfo, getMarkerInfo } from "@/app/_lib/api";
-import { useMapLocation } from "@/app/_lib/store";
+import { useMapLocation, useSidebar } from "@/app/_lib/store";
 import PartLoadingUI from "../PartLoadingUI";
 import CustomOverlay from "./CustomOverlay";
 
@@ -15,9 +15,9 @@ export default function MapSection() {
   const searchParams = useSearchParams();
   const paramLat = searchParams?.get('lat');
   const paramLng = searchParams?.get('lng');
-  const isSidebar = searchParams?.get('sidebar');
   const router = useRouter();
   const mapRef = useRef<any>(null);
+  const { openSidebar } = useSidebar();
   const [ overlayInfo, setOverlayInfo ] = useState<OverlayInfoType>({
     lat: 0,
     lng: 0,
@@ -66,7 +66,8 @@ export default function MapSection() {
   }, [setMapLoc]);
   
   const markerClickHandler = (lat: number, lng: number, address: string) => {
-    router.push(`/record?sidebar=true&lat=${lat}&lng=${lng}&address=${encodeURIComponent(address)}`);
+    openSidebar();
+    router.push(`/record?lat=${lat}&lng=${lng}&address=${encodeURIComponent(address)}`);
   };
 
   const buildingClickHandler = async (_: any, mouseEvent: any) => {
