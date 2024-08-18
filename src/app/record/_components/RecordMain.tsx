@@ -1,6 +1,5 @@
 'use client'
 
-import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { FaListUl } from "react-icons/fa";
 import { IoMapOutline } from "react-icons/io5";
@@ -8,14 +7,14 @@ import { IoMapOutline } from "react-icons/io5";
 import MapSection from "../../_components/map/MapSection";
 import PanelSection from "./PanelSection";
 import RecordSideBar from "./RecordSideBar";
+import { useSidebar } from "@/app/_lib/store";
 
 export default function RecordMain() {
   const [isMap, setIsMap] = useState(false);
-  const searchParams = useSearchParams();
-  const sidebar = Boolean(searchParams?.get('sidebar'));
+  const { isSidebar } = useSidebar();
   
   const isMapHandler = () => {
-    setIsMap((prev) => !prev)
+    setIsMap((prev) => !prev);
   }
 
   return (
@@ -36,7 +35,7 @@ export default function RecordMain() {
           </div>
         )}</button>
       <MapSection />
-      {sidebar ? (
+      {isSidebar ? (
         <RecordSideBar />
       ) : (
         <>

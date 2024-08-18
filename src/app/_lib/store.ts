@@ -9,6 +9,17 @@ export const useMapLocation = create<MapLocState & MapLocAction>((set) => ({
   setMapLoc: (locInfo: MapInfo) => {set({ mapLoc: locInfo })}
 }));
 
+// 사이드바 유무
+export const useSidebar = create<IsSidebar>((set) => ({
+  isSidebar: false,
+  openSidebar: () => {
+    set(() => ({ isSidebar: true }))
+  },
+  closeSidebar: () => {
+    set(() => ({ isSidebar: false }))
+  }
+}))
+
 export const useAdmin = create<IsAdminStore>((set) => ({
   isAdmin: false,
   adminLogin: () => {
@@ -23,6 +34,12 @@ export const useAdmin = create<IsAdminStore>((set) => ({
 interface MapInfo {
   lat: number;
   lng: number;
+}
+
+interface IsSidebar {
+  isSidebar: boolean;
+  openSidebar: () => void;
+  closeSidebar: () => void;
 }
 
 interface MapLocState {

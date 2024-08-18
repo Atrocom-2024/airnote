@@ -16,5 +16,5 @@ export default async function ProfileRecordEdit({ params }: PageProps) {
 }
 
 interface PageProps {
-  params: { knowledge_id: string }
+  params: { knowledge_id: string };
 }

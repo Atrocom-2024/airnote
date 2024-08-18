@@ -41,14 +41,15 @@ export default function MapSection() {
       neLng: bounds.getNorthEast().getLng()
     };
 
-    // URL 업데이트
-    if (!isSidebar) {
-      const newSearchParams = new URLSearchParams(searchParams?.toString());
-      newSearchParams.set('lat', center.getLat().toString());
-      newSearchParams.set('lng', center.getLng().toString());
-      setMapLoc({ lat: center.getLat(), lng: center.getLng() });
-      router.push(`?${newSearchParams.toString()}`);
-    }
+    setMapLoc({ lat: center.getLat(), lng: center.getLng() });
+    // // URL 업데이트
+    // if (!isSidebar) {
+    //   const newSearchParams = new URLSearchParams(searchParams?.toString());
+    //   newSearchParams.set('lat', center.getLat().toString());
+    //   newSearchParams.set('lng', center.getLng().toString());
+    //   setMapLoc({ lat: center.getLat(), lng: center.getLng() });
+    //   router.push(`?${newSearchParams.toString()}`);
+    // }
 
     try {
       const res = await getMarkerInfo(params);
