@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { IoMenu } from "react-icons/io5";
 
 import MoveLink from "./MoveLink";
-import ReviewAddBtn from "./ReviewAddBtn";
 import LoginBtn from "./LoginBtn";
 import LogoutBtn from "./LogoutBtn";
 
@@ -65,13 +64,6 @@ export default function HeaderDropdown({ isLogin }: PropsType) {
           <ul className="space-y-5 px-5 pb-5 mt-5">
             <li>
               <MoveLink href="/record">공간기록</MoveLink>
-            </li>
-            <li>
-              {isLogin ? (
-                <MoveLink href="/record/add">기록작성</MoveLink>
-              ) : (
-                <ReviewAddBtn />
-              )}
             </li>
             <li>
               <MoveLink href="/knowledges">공간지식</MoveLink>

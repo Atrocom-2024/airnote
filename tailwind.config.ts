@@ -26,6 +26,9 @@ const config: Config = {
         "white-gray": "#F5F5F5",
         "red": "#FF4242",
         "kakao": "#FFE812"
+      },
+      boxShadow: {
+        'sm': '0 4px 6px -1px rgb(0 0 0 / 0.03)'
       }
     },
   },

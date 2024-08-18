@@ -21,7 +21,7 @@ export default function RecordMain() {
   return (
     <>
       <button
-        className="fixed bottom-[9vh] left-1/2 -translate-x-1/2 bg-default text-white text-sm px-4 py-2 rounded-full z-[29] md:hidden"
+        className="fixed bottom-[6vh] left-1/2 -translate-x-1/2 bg-default text-white text-sm px-4 py-2 rounded-full z-[29] md:hidden"
         type="button"
         onClick={isMapHandler}
       >{isMap ? (
