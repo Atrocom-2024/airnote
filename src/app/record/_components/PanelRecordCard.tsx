@@ -4,7 +4,7 @@ import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
 import { parseDate } from "@/utils/modules";
 import { useMapLocation, useSidebar } from "@/app/_lib/store";
 
-export default function PanelRecordCard({ topRecord }: PropsType) {
+export default function PanelRecordCard({ topRecord, isLast }: PropsType) {
   const { setMapLoc } = useMapLocation();
   const { openSidebar } = useSidebar();
   const topRecordContent = topRecord.content.split('\n');
@@ -15,7 +15,7 @@ export default function PanelRecordCard({ topRecord }: PropsType) {
   }
 
   return (
-    <article className="border-b border-default p-3">
+    <article className={`${isLast ? '' : 'border-b border-default'} p-3`}>
       <div className="flex justify-between items-center">
         <Link
           className="text-default font-bold"
@@ -62,4 +62,5 @@ interface PropsType {
     dislikes: number;
     create_at: Date;
   };
+  isLast: boolean;
 }

@@ -26,9 +26,13 @@ export default function PanelSection() {
               <div className="text-xl text-default font-bold ml-3">실시간 인기 공간기록</div>
             </section>
             <section className="mb-20 md:mb-0">
-              {topRecords && topRecords.length ? topRecords.map((topRecord) => (
-                <PanelRecordCard topRecord={topRecord} key={topRecord.post_id} />
-              )) : (
+              {topRecords && topRecords.length ? topRecords.map((topRecord, idx) => {
+                if (topRecords.length - 1 === idx) {
+                  return <PanelRecordCard topRecord={topRecord} isLast={true} key={topRecord.post_id} />;
+                } else {
+                  return <PanelRecordCard topRecord={topRecord} isLast={false} key={topRecord.post_id} />;
+                }
+              }) : (
                 <article className="text-lg text-center text-default font-bold mt-56">
                   <div>공간기록이 아직 존재하지 않습니다.</div>
                   <div>첫 공간기록을 작성해보세요.</div>
