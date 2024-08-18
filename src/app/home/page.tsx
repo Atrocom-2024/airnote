@@ -2,6 +2,7 @@ import Layout from "../_components/layouts/Layout";
 import HomeTopKnowledgeSection from "./_components/HomeTopKnowledgeSection";
 import HomeTopRecordSection from "./_components/HomeTopRecordSection";
 import HomeCarousel from "./_components/HomeCarousel";
+import RecordAddLink from "../_components/RecordAddLink";
 
 export default function Home() {
   return (
@@ -15,6 +16,9 @@ export default function Home() {
           <HomeTopKnowledgeSection />
         </article>
       </main>
+      <article className="fixed right-7 bottom-7 md:right-10 md:bottom-10">
+        <RecordAddLink />
+      </article>
     </Layout>
   );
 }
