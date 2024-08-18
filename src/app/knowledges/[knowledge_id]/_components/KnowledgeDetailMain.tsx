@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { CgProfile } from "react-icons/cg";
-import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
+import { HiHandThumbUp, HiHandThumbDown } from "react-icons/hi2";
 import { IoShareSocialSharp } from "react-icons/io5";
 import { FaArrowRightLong } from "react-icons/fa6";
 
@@ -46,13 +46,13 @@ export default function KnowledgeDetailMain({ knowledgeId }: PropsType) {
           <section className="flex justify-center items-center mr-5">
             <div className="flex items-center mr-2">
               <div>
-                <AiOutlineLike className="size-[20px] sm:size-[25px]" color="#AFAFAF" size="20" />
+                <HiHandThumbUp className="size-[20px] sm:size-[25px]" color="#AFAFAF" size="20" />
               </div>
               <div className="ml-1">{knowledge.likes}</div>
             </div>
             <div className="flex items-center">
               <div> 
-                <AiOutlineDislike className="size-[20px] sm:size-[25px]" color="#AFAFAF" size="20" />
+                <HiHandThumbDown className="size-[20px] sm:size-[25px]" color="#AFAFAF" size="20" />
               </div>
               <div className="ml-1">{knowledge.dislikes}</div>
             </div>
@@ -80,8 +80,8 @@ export default function KnowledgeDetailMain({ knowledgeId }: PropsType) {
             type="button"
             onClick={() => reactionClickHandler('like')}
           >
-            <div>
-              <AiOutlineLike className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
+            <div className="mr-1">
+              <HiHandThumbUp className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
             </div>
             <div>추천</div>
           </button>

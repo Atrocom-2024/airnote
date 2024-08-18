@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
+import { HiHandThumbUp, HiHandThumbDown } from "react-icons/hi2";
 
 import { parseDate } from "@/utils/modules";
 import { useDeleteRecord } from "@/app/_lib/hooks";
@@ -51,13 +51,13 @@ export default function ProfileRecordCard({ recordInfo }: PropsType) {
         <div className="flex items-center mr-5">
           <div className="flex items-center mr-2">
             <div>
-              <AiOutlineLike className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
+              <HiHandThumbUp className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
             </div>
             <div className="text-xs ml-1 sm:text-sm">{ recordInfo.likes }</div>
           </div>
           <div className="flex items-center">
             <div>
-              <AiOutlineDislike className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
+              <HiHandThumbDown className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
             </div>
             <div className="text-xs ml-1 sm:text-sm">{ recordInfo.dislikes }</div>
           </div>

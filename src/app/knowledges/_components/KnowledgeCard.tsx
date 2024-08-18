@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { CgProfile } from "react-icons/cg";
-import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
+import { HiHandThumbUp, HiHandThumbDown } from "react-icons/hi2";
 
 import { getPreviewText, parseDate, stripHtml } from "@/utils/modules";
 
@@ -38,13 +38,13 @@ export default function KnowledgeCard({ knowledgeInfo }: PropsType) {
         <article className="flex justify-end items-center">
           <div className="flex items-center mr-2">
             <div>
-              <AiOutlineLike className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
+              <HiHandThumbUp className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
             </div>
             <div className="font-bold">{knowledgeInfo.likes}</div>
           </div>
           <div className="flex items-center">
             <div>
-              <AiOutlineDislike className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
+              <HiHandThumbDown className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
             </div>
             <div className="font-bold">{knowledgeInfo.dislikes}</div>
           </div>

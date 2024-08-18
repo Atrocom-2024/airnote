@@ -2,7 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import { CgProfile } from "react-icons/cg";
-import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
+import { HiHandThumbUp, HiHandThumbDown } from "react-icons/hi2";
 
 import { parseDate } from "@/utils/modules";
 import { useRecordReaction } from "@/app/_lib/hooks";
@@ -47,13 +47,13 @@ export default function SideBarRecordCard({ review }: PropsType) {
     <section className="flex justify-end items-center mr-5 text-gray">
       <div className="flex items-center mr-3">
         <button onClick={() => reactionClickHandler('like')}>
-          <AiOutlineLike className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
+          <HiHandThumbUp className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
         </button>
         <div className="text-xs ml-1 sm:text-sm">{ review.likes }</div>
       </div>
       <div className="flex items-center">
         <button onClick={() => reactionClickHandler('dislike')}>
-          <AiOutlineDislike className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
+          <HiHandThumbDown className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
         </button>
         <div className="text-xs ml-1 sm:text-sm">{ review.dislikes }</div>
       </div>
