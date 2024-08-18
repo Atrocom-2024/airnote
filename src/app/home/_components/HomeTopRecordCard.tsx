@@ -5,16 +5,22 @@ import { CgProfile } from "react-icons/cg";
 import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
 
 import { parseDate } from "@/utils/modules";
-import { useSidebar } from "@/app/_lib/store";
+import { useMapHandle, useSidebar } from "@/app/_lib/store";
 
 export default function HomeTopRecordCard({ topRecord, isLast }: PropsType) {
+  const { closeMap } = useMapHandle();
   const { openSidebar } = useSidebar();
+
+  const linkClickHandler = () => {
+    closeMap();
+    openSidebar();
+  }
   
   return (
     <Link
       className={`"w-full ${isLast ? '' : 'border-b border-gray'} px-5 py-3 block`}
       href={`/record?lat=${topRecord.latitude}&lng=${topRecord.longitude}&address=${topRecord.address}`}
-      onClick={() => openSidebar()}
+      onClick={linkClickHandler}
     >
       <section className="flex justify-between items-center text-middle-gray">
         <div className="flex items-center">
