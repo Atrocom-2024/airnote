@@ -41,8 +41,22 @@ export default function HeaderDropdown({ isLogin }: PropsType) {
       </button>
       {isDropdown && (
         <section className="bg-white absolute top-14 right-0 w-[200px] rounded-lg shadow-[0_0_10px_3px_rgba(0,0,0,0.05)] z-[30]">
+          <ul className="space-y-5 border-b-[1.5px] border-neutral-200 px-5 pb-5 mt-5">
+            <li>
+              <MoveLink href="/record">공간기록</MoveLink>
+            </li>
+            <li>
+              <MoveLink href="/knowledges">공간지식</MoveLink>
+            </li>
+            <li>
+              <MoveLink href="https://open.kakao.com/o/sAgQYPhg" target="_blank">고객지원</MoveLink>
+            </li>
+            <li>
+              <MoveLink href="/terms">이용약관</MoveLink>
+            </li>
+          </ul>
           {isLogin ? (
-            <ul className="px-5 py-5 space-y-5 border-b-[1.5px] border-neutral-200">
+            <ul className="px-5 py-5 space-y-5">
               <li>
                 <MoveLink href="/profile/info">내 정보 관리</MoveLink>
               </li>
@@ -61,20 +75,6 @@ export default function HeaderDropdown({ isLogin }: PropsType) {
               <LoginBtn />
             </div>
           )}
-          <ul className="space-y-5 px-5 pb-5 mt-5">
-            <li>
-              <MoveLink href="/record">공간기록</MoveLink>
-            </li>
-            <li>
-              <MoveLink href="/knowledges">공간지식</MoveLink>
-            </li>
-            <li>
-              <MoveLink href="https://open.kakao.com/o/sAgQYPhg" target="_blank">고객지원</MoveLink>
-            </li>
-            <li>
-              <MoveLink href="/terms">이용약관</MoveLink>
-            </li>
-          </ul>
         </section>
       )}
     </section>
