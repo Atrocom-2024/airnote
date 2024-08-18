@@ -9,16 +9,30 @@ export const useMapLocation = create<MapLocState & MapLocAction>((set) => ({
   setMapLoc: (locInfo: MapInfo) => {set({ mapLoc: locInfo })}
 }));
 
+// 지도 유무
+export const useMapHandle = create<IsMap>((set) => ({
+  isMap: false,
+  openMap: () => {
+    set(() => ({ isMap: true }));
+  },
+  closeMap: () => {
+    set(() => ({ isMap: false }));
+  },
+  setIsMap: () => {
+    set((state) => ({ isMap: !state.isMap }));
+  }
+}))
+
 // 사이드바 유무
 export const useSidebar = create<IsSidebar>((set) => ({
   isSidebar: false,
   openSidebar: () => {
-    set(() => ({ isSidebar: true }))
+    set(() => ({ isSidebar: true }));
   },
   closeSidebar: () => {
-    set(() => ({ isSidebar: false }))
+    set(() => ({ isSidebar: false }));
   }
-}))
+}));
 
 export const useAdmin = create<IsAdminStore>((set) => ({
   isAdmin: false,
@@ -34,6 +48,13 @@ export const useAdmin = create<IsAdminStore>((set) => ({
 interface MapInfo {
   lat: number;
   lng: number;
+}
+
+interface IsMap {
+  isMap: boolean;
+  openMap: () => void;
+  closeMap: () => void;
+  setIsMap: () => void;
 }
 
 interface IsSidebar {

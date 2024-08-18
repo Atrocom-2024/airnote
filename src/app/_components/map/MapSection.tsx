@@ -7,7 +7,7 @@ import { debounce } from "lodash";
 
 import { getLocation } from "@/utils/modules";
 import { getAddress, getBuildingInfo, getMarkerInfo } from "@/app/_lib/api";
-import { useMapLocation, useSidebar } from "@/app/_lib/store";
+import { useMapHandle, useMapLocation, useSidebar } from "@/app/_lib/store";
 import PartLoadingUI from "../PartLoadingUI";
 import CustomOverlay from "./CustomOverlay";
 
@@ -17,7 +17,6 @@ export default function MapSection() {
   const paramLng = searchParams?.get('lng');
   const router = useRouter();
   const mapRef = useRef<any>(null);
-  const { openSidebar } = useSidebar();
   const [ overlayInfo, setOverlayInfo ] = useState<OverlayInfoType>({
     lat: 0,
     lng: 0,
@@ -27,6 +26,8 @@ export default function MapSection() {
   const [ isOverlay, setIsOverlay ] = useState(false);
   const [ markerInfo, setMarkerInfo ] = useState<MarkerInfoType[]>([]);
   const { mapLoc, setMapLoc } = useMapLocation();
+  const { closeMap } = useMapHandle();
+  const { openSidebar } = useSidebar();
   const [ loading ] = useKakaoLoader({
     appkey: process.env.KAKAO_JS_KEY,
   });
@@ -66,6 +67,7 @@ export default function MapSection() {
   }, [setMapLoc]);
   
   const markerClickHandler = (lat: number, lng: number, address: string) => {
+    closeMap();
     openSidebar();
     router.push(`/record?lat=${lat}&lng=${lng}&address=${encodeURIComponent(address)}`);
   };

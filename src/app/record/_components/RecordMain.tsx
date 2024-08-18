@@ -1,20 +1,19 @@
 'use client'
 
-import { useState } from "react";
 import { FaListUl } from "react-icons/fa";
 import { IoMapOutline } from "react-icons/io5";
 
-import { useSidebar } from "@/app/_lib/store";
+import { useMapHandle, useSidebar } from "@/app/_lib/store";
 import MapSection from "../../_components/map/MapSection";
 import PanelSection from "./PanelSection";
 import RecordSideBar from "./RecordSideBar";
 
 export default function RecordMain() {
-  const [isMap, setIsMap] = useState(false);
+  const { isMap, setIsMap } = useMapHandle();
   const { isSidebar } = useSidebar();
   
   const isMapHandler = () => {
-    setIsMap((prev) => !prev);
+    setIsMap();
   }
 
   return (
@@ -47,10 +46,10 @@ export default function RecordMain() {
       ) : (
         <>
           <div className="hidden md:block">
-            <PanelSection setIsMap={setIsMap} />
+            <PanelSection />
           </div>
           <div className="block md:hidden">
-            {!isMap && <PanelSection setIsMap={setIsMap} />}
+            {!isMap && <PanelSection />}
           </div>
         </>
       )}
