@@ -7,17 +7,17 @@ import PanelRecordCard from "./PanelRecordCard";
 import PartLoadingUI from "@/app/_components/PartLoadingUI";
 import MapMoveSection from "./MapMoveSection";
 
-export default function PanelSection({ setIsMap }: PropsType) {
+export default function PanelSection() {
   const { data: topRecords, isPending } = useTopRecords(4);
 
   return (
     <article
       id="panel"
-      className="absolute top-0 left-0 w-[100vw] h-[92vh] bg-white overflow-y-auto z-[28] md:top-[3vh] md:left-5 md:rounded-lg md:w-[400px] md:h-[75vh] md:shadow-lg"
+      className="absolute top-0 left-0 w-[100vw] h-[92vh] bg-white overflow-y-auto z-[28] md:top-[3vh] md:left-5 md:rounded-lg md:w-[400px] md:h-[84vh] md:shadow-lg"
     >
       {isPending ? <PartLoadingUI /> : (
         <>
-          <MapMoveSection setIsMap={setIsMap} />
+          <MapMoveSection />
           <section className="min-h-[600px]">
             <section className="flex items-center p-3">
               <div>
@@ -40,8 +40,4 @@ export default function PanelSection({ setIsMap }: PropsType) {
       )}
     </article>
   );
-}
-
-interface PropsType {
-  setIsMap: React.Dispatch<React.SetStateAction<boolean>>
 }
