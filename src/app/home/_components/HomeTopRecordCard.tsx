@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { CgProfile } from "react-icons/cg";
-import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
+import { HiHandThumbUp, HiHandThumbDown } from "react-icons/hi2";
 
 import { parseDate } from "@/utils/modules";
 import { useMapHandle, useSidebar } from "@/app/_lib/store";
@@ -35,13 +35,13 @@ export default function HomeTopRecordCard({ topRecord, isLast }: PropsType) {
         <div className="flex items-center">
           <div className="flex items-center mr-3">
             <div>
-              <AiOutlineLike className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
+              <HiHandThumbUp className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
             </div>
             <div className="text-xs ml-1 sm:text-sm">{ topRecord.likes }</div>
           </div>
           <div className="flex items-center">
             <div>
-              <AiOutlineDislike className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
+              <HiHandThumbDown className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
             </div>
             <div className="text-xs ml-1 sm:text-sm">{ topRecord.dislikes }</div>
           </div>
