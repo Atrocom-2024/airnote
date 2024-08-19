@@ -7,10 +7,14 @@ import { useMapHandle, useSidebar } from "@/app/_lib/store";
 import MapSection from "../../_components/map/MapSection";
 import PanelSection from "./PanelSection";
 import RecordSideBar from "./RecordSideBar";
+import { useSearchParams } from "next/navigation";
 
 export default function RecordMain() {
+  const searchParams = useSearchParams();
   const { isMap, setIsMap } = useMapHandle();
+  // 사이드바 로직 다시 생각
   const { isSidebar } = useSidebar();
+  const querySidebar = searchParams?.get('sidebar');
   
   const isMapHandler = () => {
     setIsMap();
@@ -34,7 +38,7 @@ export default function RecordMain() {
           </div>
         )}</button>
       <MapSection />
-      {isSidebar ? (
+      {Boolean(querySidebar) ? (
         <>
           <div className="hidden md:block">
             <RecordSideBar />
