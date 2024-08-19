@@ -34,7 +34,7 @@ export default function KnowledgeDetailMain({ knowledgeId }: PropsType) {
   }
   
   return (
-    <main className="w-full mx-auto mt-10 md:w-[1000px]">
+    <main className="w-full mx-auto mt-20 md:w-[1000px]">
       <section className="flex justify-between items-center text-middle-gray text-sm border-b-[1.5px] border-gray pb-2">
         <article className="flex justify-center items-center">
           <div>

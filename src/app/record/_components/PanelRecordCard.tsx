@@ -19,7 +19,7 @@ export default function PanelRecordCard({ topRecord, isLast }: PropsType) {
       <div className="flex justify-between items-center">
         <Link
           className="text-default font-bold"
-          href={`/record?lat=${topRecord.latitude}&lng=${topRecord.longitude}&address=${encodeURIComponent(topRecord.address)}`}
+          href={`/record?sidebar=true&lat=${topRecord.latitude}&lng=${topRecord.longitude}&address=${encodeURIComponent(topRecord.address)}`}
           onClick={linkClickHandler}
         >{topRecord.address}</Link>
         <div className="text-gray text-sm">{ parseDate(topRecord.create_at) }</div>

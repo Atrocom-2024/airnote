@@ -69,7 +69,7 @@ export default function MapSection() {
   const markerClickHandler = (lat: number, lng: number, address: string) => {
     closeMap();
     openSidebar();
-    router.push(`/record?lat=${lat}&lng=${lng}&address=${encodeURIComponent(address)}`);
+    router.push(`/record?sidebar=true&lat=${lat}&lng=${lng}&address=${encodeURIComponent(address)}`);
   };
 
   const buildingClickHandler = async (_: any, mouseEvent: any) => {
