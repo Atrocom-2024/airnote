@@ -10,6 +10,7 @@ import { useMapHandle, useSidebar } from "@/app/_lib/store";
 export default function HomeTopRecordCard({ topRecord, isLast }: PropsType) {
   const { closeMap } = useMapHandle();
   const { openSidebar } = useSidebar();
+  const recordContent = topRecord.content.split('\n');
 
   const linkClickHandler = () => {
     closeMap();
@@ -19,7 +20,7 @@ export default function HomeTopRecordCard({ topRecord, isLast }: PropsType) {
   return (
     <Link
       className={`"w-full ${isLast ? '' : 'border-b border-gray'} px-5 py-3 block`}
-      href={`/record?lat=${topRecord.latitude}&lng=${topRecord.longitude}&address=${topRecord.address}`}
+      href={`/record?sidebar=true&lat=${topRecord.latitude}&lng=${topRecord.longitude}&address=${topRecord.address}`}
       onClick={linkClickHandler}
     >
       <section className="flex justify-between items-center text-middle-gray">
@@ -47,7 +48,14 @@ export default function HomeTopRecordCard({ topRecord, isLast }: PropsType) {
           </div>
         </div>
       </section>
-      <section className="mt-3 text-sm">{topRecord.content}</section>
+      <section className="mt-3 text-sm">
+        {recordContent.map((content, idx) => {
+          if (!content) {
+            return <br key={idx} />;
+          }
+          return <p className="break-words" key={idx}>{content}</p>;
+        })}
+      </section>
     </Link>
   );
 }
