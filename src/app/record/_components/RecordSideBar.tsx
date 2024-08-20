@@ -14,9 +14,10 @@ import RoadviewCustomOverlay from "./RoadviewCustomOverlay";
 import { useSidebar } from "@/app/_lib/store";
 
 export default function RecordSideBar() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const { closeSidebar } = useSidebar();
   const roadviewRef = useRef(null);
-  const searchParams = useSearchParams();
   const address = searchParams?.get('address');
   const lat = searchParams?.get('lat');
   const lng = searchParams?.get('lng');
@@ -27,6 +28,11 @@ export default function RecordSideBar() {
     // lat과 lng가 있을 때만 쿼리를 활성화합니다.
     enabled: !!lat && !!lng
   });
+
+  const moveBackClickHandler = () => {
+    closeSidebar();
+    router.push(`/record?sidebar=&lat=${lat}&lng=${lng}&address=${address}`)
+  }
 
   // 에러 처리 로직 (옵셔널)
   useEffect(() => {
@@ -41,7 +47,7 @@ export default function RecordSideBar() {
       {isLoading ? <PartLoadingUI /> : (
         <>
           <section className="flex items-center p-3">
-            <button type="button" onClick={() => closeSidebar()}>
+            <button type="button" onClick={moveBackClickHandler}>
               <FaAngleLeft size="25" fill="#4A68F5" />
             </button>
             {/* <button type="button" onClick={() => router.back()}>
