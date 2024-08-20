@@ -1,41 +1,43 @@
 import Link from "next/link";
-import { CgProfile } from "react-icons/cg";
-import { HiHandThumbUp, HiHandThumbDown } from "react-icons/hi2";
+import { useEffect, useState } from "react";
 
-import { parseDate } from "@/utils/modules";
+import { getPreviewText, parseDate, stripHtml } from "@/utils/modules";
+import DefaultProfile from "@/app/_components/DefaultProfile";
+import ReactionContainer from "@/app/_components/ReactionContainer";
 
 export default function HomeTopKnowledgeCard({ topKnowledge, isLast }: PropsType) {
+  const [ previewText, setPreviewText ] = useState<string>('');
+
+  useEffect(() => {
+    const strippedText = stripHtml(topKnowledge.knowledge_content);
+    const preview = getPreviewText(strippedText, 200);
+    setPreviewText(preview);
+  }, [topKnowledge.knowledge_content]);
+
   return (
     <Link
-      className={`w-full ${isLast ? '' : 'border-b border-gray'} px-5 py-3 block`}
+      className={`w-full px-5 py-3 flex ${isLast ? '' : 'border-b border-gray'}`}
       href={`/knowledges/${topKnowledge.knowledge_id}`}
     >
-      <section className="flex justify-between items-center text-middle-gray">
-        <div className="flex items-center">
-          <div className="flex items-center">
-            <div>
-              <CgProfile size="30" color="#AFAFAF" />
-            </div>
-            <div className="text-sm ml-1">{topKnowledge.author_nickname}</div>
-          </div>
-          <div className="text-sm ml-3">{ parseDate(topKnowledge.create_at) }</div>
-        </div>
-        <div className="flex items-center">
-          <div className="flex items-center mr-3">
-            <div>
-              <HiHandThumbUp className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
-            </div>
-            <div className="text-xs ml-1 sm:text-sm">{ topKnowledge.likes }</div>
-          </div>
-          <div className="flex items-center">
-            <div>
-              <HiHandThumbDown className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
-            </div>
-            <div className="text-xs ml-1 sm:text-sm">{ topKnowledge.dislikes }</div>
-          </div>
-        </div>
+      <section>
+        <DefaultProfile className="rounded-2xl" />
       </section>
-      <section className="mt-2 font-semibold">{topKnowledge.knowledge_title}</section>
+      <section className="ml-3 w-full">
+        <article className="text-sm">
+          <div className="font-bold">{topKnowledge.knowledge_title}</div>
+          <div className="flex items-center mt-1">
+            <div className="text-default font-bold">{topKnowledge.author_nickname}</div>
+            <div className="text-middle-gray flex items-center">
+              <div>ㆍ</div>
+              <div>{ parseDate(topKnowledge.create_at) }</div>
+            </div>
+          </div>
+        </article>
+        <article  className="my-3 text-light-black text-sm">
+          {previewText}
+        </article>
+        <ReactionContainer likes={topKnowledge.likes} dislikes={topKnowledge.dislikes} />
+      </section>
     </Link>
   );
 }

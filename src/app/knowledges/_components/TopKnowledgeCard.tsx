@@ -7,6 +7,7 @@ import { CgProfile } from "react-icons/cg";
 import { HiHandThumbUp, HiHandThumbDown } from "react-icons/hi2";
 
 import { parseDate } from "@/utils/modules";
+import DefaultProfile from "@/app/_components/DefaultProfile";
 
 export default function TopKnowledgeCard({ knowledgeInfo }: PropsType) {
   const [previewText, setPreviewText] = useState<string>('');
@@ -32,14 +33,17 @@ export default function TopKnowledgeCard({ knowledgeInfo }: PropsType) {
         />
       </section>
       <section className="p-3 space-y-2">
-        <article className="flex justify-between items-center">
-          <div className="flex items-center">
-            <div>
-              <CgProfile className="size-[20px] md:size-[25px]" size="40" color="#C1C1C1" />
-            </div>
-            <div className="ml-1">{knowledgeInfo.author_nickname}</div>
+        <article className="flex items-center">
+          <div>
+            <DefaultProfile className="rounded-xl" width="w-[35px]" />
           </div>
-          <div>{parseDate(knowledgeInfo.create_at)}</div>
+          <div className="flex items-center ml-1">
+            <div className="ml-1 font-bold text-default">{knowledgeInfo.author_nickname}</div>
+            <div className="text-middle-gray flex items-center">
+              <div>ㆍ</div>
+              <div>{parseDate(knowledgeInfo.create_at)}</div>
+            </div>
+          </div>
         </article>
         <article>
           <div className="text-base text-black font-bold">{getPreviewText(knowledgeInfo.knowledge_title, 20)}</div>

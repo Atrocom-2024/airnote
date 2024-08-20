@@ -3,6 +3,8 @@ import { HiHandThumbUp, HiHandThumbDown } from "react-icons/hi2";
 
 import { parseDate } from "@/utils/modules";
 import { useMapLocation, useSidebar } from "@/app/_lib/store";
+import Image from "next/image";
+import DefaultProfile from "@/app/_components/DefaultProfile";
 
 export default function PanelRecordCard({ topRecord, isLast }: PropsType) {
   const { setMapLoc } = useMapLocation();
@@ -15,38 +17,45 @@ export default function PanelRecordCard({ topRecord, isLast }: PropsType) {
   }
 
   return (
-    <article className={`${isLast ? '' : 'border-b border-default'} p-3`}>
-      <div className="flex justify-between items-center">
-        <Link
-          className="text-default font-bold"
-          href={`/record?sidebar=true&lat=${topRecord.latitude}&lng=${topRecord.longitude}&address=${encodeURIComponent(topRecord.address)}`}
-          onClick={linkClickHandler}
-        >{topRecord.address}</Link>
-        <div className="text-gray text-sm">{ parseDate(topRecord.create_at) }</div>
-      </div>
-      <div className="px-2 my-5 text-sm">
-        {topRecordContent.map((content, idx) => {
-          if (!content) {
-            return <br key={idx} />;
-          }
-          return <p className="break-words" key={idx}>{content}</p>;
-        })}
-      </div>
-      <div className="flex justify-end items-center mr-5 text-gray">
-        <div className="flex items-center mr-3">
-          <div>
+    <Link
+      className={`"w-full p-3 flex ${isLast ? '' : 'border-b border-gray'}`}
+      href={`/record?sidebar=true&lat=${topRecord.latitude}&lng=${topRecord.longitude}&address=${topRecord.address}`}
+      onClick={linkClickHandler}
+    >
+      <section>
+        <DefaultProfile className="rounded-2xl" />
+      </section>
+      <section className="ml-3 w-full">
+        <article className="text-sm">
+          <div className="font-bold">{topRecord.address}</div>
+          <div className="flex items-center mt-1">
+            <div className="text-default font-bold">{topRecord.author_nickname}</div>
+            <div className="text-middle-gray flex items-center">
+              <div>ㆍ</div>
+              <div>{ parseDate(topRecord.create_at) }</div>
+            </div>
+          </div>
+        </article>
+        <article  className="my-3 text-light-black text-sm">
+          {topRecordContent.map((content, idx) => {
+            if (!content) {
+              return <br key={idx} />;
+            }
+            return <p className="break-words" key={idx}>{content}</p>;
+          })}
+        </article>
+        <article className="flex justify-end items-center mr-5 text-gray">
+          <div className="flex items-center mr-3">
             <HiHandThumbUp className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
-          </div>
           <div className="text-xs ml-1 sm:text-sm">{ topRecord.likes }</div>
-        </div>
-        <div className="flex items-center">
-          <div>
-            <HiHandThumbDown className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
           </div>
-          <div className="text-xs ml-1 sm:text-sm">{ topRecord.dislikes }</div>
-        </div>
-      </div>
-    </article>
+          <div className="flex items-center">
+            <HiHandThumbDown className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
+            <div className="text-xs ml-1 sm:text-sm">{ topRecord.dislikes }</div>
+          </div>
+        </article>
+      </section>
+    </Link>
   );
 }
 
@@ -55,6 +64,7 @@ interface PropsType {
     post_id: string;
     address: string;
     address_detail: string;
+    author_nickname: string;
     latitude: string;
     longitude: string;
     content: string;
