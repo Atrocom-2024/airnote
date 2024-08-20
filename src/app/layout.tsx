@@ -9,7 +9,7 @@ import Providers from "./_components/Providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "공기수첩",
+  title: "공기수첩 | 공간 기록 수첩",
   description: "공기수첩에 오신 것을 환영합니다. 건물주에 대한 후기와 평점을 공유하는 최고의 플랫폼입니다. 사용자들의 솔직한 리뷰를 통해 신뢰할 수 있는 정보를 제공받으세요."
 };
 
