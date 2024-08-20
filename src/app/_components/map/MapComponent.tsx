@@ -12,7 +12,7 @@ export default function MapComponent({ mapIdleHandler }: PropsType) {
   useEffect(() => {
     mapIdleHandler(map);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mapLoc]);
+  }, [mapLoc.lat]);
 
   return null;
 }
