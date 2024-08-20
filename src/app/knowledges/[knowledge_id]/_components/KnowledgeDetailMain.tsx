@@ -11,6 +11,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { parseDate } from "@/utils/modules";
 import { useKnowledge, useKnowledgeReaction } from "@/app/_lib/hooks";
 import LoadingUI from "@/app/_components/LoadingUI";
+import DefaultProfile from "@/app/_components/DefaultProfile";
 
 export default function KnowledgeDetailMain({ knowledgeId }: PropsType) {
   const { data: session } = useSession();
@@ -38,9 +39,15 @@ export default function KnowledgeDetailMain({ knowledgeId }: PropsType) {
       <section className="flex justify-between items-center text-middle-gray text-sm border-b-[1.5px] border-gray pb-2">
         <article className="flex justify-center items-center">
           <div>
-            <CgProfile className="size-[30px] md:size-[35px]" size="40" color="#C1C1C1" />
+            <DefaultProfile className="rounded-2xl" />
           </div>
-          <div className="ml-1 text-base">{knowledge.author_nickname}</div>
+          <div className="flex items-center">
+            <div className="ml-2 text-base text-default font-bold">{knowledge.author_nickname}</div>
+            <div className="flex items-center">
+              <div>ㆍ</div>
+              <div>{parseDate(knowledge.create_at)}</div>
+            </div>
+          </div>
         </article>
         <article className="flex justify-center items-center">
           <section className="flex justify-center items-center mr-5">
@@ -57,7 +64,6 @@ export default function KnowledgeDetailMain({ knowledgeId }: PropsType) {
               <div className="ml-1">{knowledge.dislikes}</div>
             </div>
           </section>
-          <section>{parseDate(knowledge.create_at)}</section>
         </article>
       </section>
       <section className="flex justify-center items-center my-5 md:my-10">
