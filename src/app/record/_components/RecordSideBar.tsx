@@ -31,7 +31,7 @@ export default function RecordSideBar() {
 
   const moveBackClickHandler = () => {
     closeSidebar();
-    router.push(`/record?sidebar=&lat=${lat}&lng=${lng}&address=${address}`)
+    router.push(`/record`);
   }
 
   // 에러 처리 로직 (옵셔널)
@@ -50,9 +50,6 @@ export default function RecordSideBar() {
             <button type="button" onClick={moveBackClickHandler}>
               <FaAngleLeft size="25" fill="#4A68F5" />
             </button>
-            {/* <button type="button" onClick={() => router.back()}>
-              <FaAngleLeft size="25" fill="#4A68F5" />
-            </button> */}
             <div className="text-xl text-default font-bold ml-2">{address}</div>
           </section>
           {lat && lng && (

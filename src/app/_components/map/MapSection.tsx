@@ -10,6 +10,7 @@ import { getAddress, getBuildingInfo, getMarkerInfo } from "@/app/_lib/api";
 import { useMapHandle, useMapLocation, useSidebar } from "@/app/_lib/store";
 import PartLoadingUI from "../PartLoadingUI";
 import CustomOverlay from "./CustomOverlay";
+import MapComponent from "./MapComponent";
 
 export default function MapSection() {
   const searchParams = useSearchParams();
@@ -43,14 +44,6 @@ export default function MapSection() {
     };
 
     setMapLoc({ lat: center.getLat(), lng: center.getLng() });
-    // // URL 업데이트
-    // if (!isSidebar) {
-    //   const newSearchParams = new URLSearchParams(searchParams?.toString());
-    //   newSearchParams.set('lat', center.getLat().toString());
-    //   newSearchParams.set('lng', center.getLng().toString());
-    //   setMapLoc({ lat: center.getLat(), lng: center.getLng() });
-    //   router.push(`?${newSearchParams.toString()}`);
-    // }
 
     try {
       const res = await getMarkerInfo(params);
@@ -108,7 +101,7 @@ export default function MapSection() {
 
   // 쿼리 파라미터에 위도/경도가 있을 때를 위한 useEffect
   useEffect(() => {
-    paramLat && paramLng ? setMapLoc({ lat: Number(paramLat), lng: Number(paramLng) }) : getUserLocation();
+    paramLat && paramLng && setMapLoc({ lat: Number(paramLat), lng: Number(paramLng) });
   }, [getUserLocation, paramLat, paramLng, setMapLoc]);
 
   return (
@@ -162,6 +155,7 @@ export default function MapSection() {
           />
         </CustomOverlayMap>
       ) : null}
+      <MapComponent mapIdleHandler={mapIdleHandler} />
     </Map>
   );
 }
