@@ -8,7 +8,7 @@ import PartLoadingUI from "@/app/_components/PartLoadingUI";
 import MapMoveSection from "./MapMoveSection";
 
 export default function PanelSection() {
-  const { data: topRecords, isPending } = useTopRecords(4);
+  const { data: topRecords, isPending } = useTopRecords(6);
 
   return (
     <article

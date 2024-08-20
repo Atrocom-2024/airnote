@@ -81,19 +81,14 @@ export default function RecordSideBar() {
             </section>
           )}
           <section className="mb-20 md:mb-0">
-            {records && records.map((records) => (
-              <SideBarRecordCard review={records} key={records.post_id} />
+            {records && records.map((record) => (
+              <SideBarRecordCard record={record} key={record.post_id} />
             ))}
           </section>
         </>
       )}
     </Sidebar>
   );
-}
-
-interface PropsType {
-  isSidebar: boolean;
-  setIsSidebar: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 interface RecordType {
