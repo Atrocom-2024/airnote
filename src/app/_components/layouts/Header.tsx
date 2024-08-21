@@ -5,7 +5,7 @@ import { CgProfile } from "react-icons/cg";
 
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import LoginBtn from "../header/LoginBtn";
-import SearchBar from "../header/SearchBar";
+// import SearchBar from "../header/SearchBar";
 import HeaderDropdown from "../header/HeaderDropdown";
 
 export default async function Header() {
