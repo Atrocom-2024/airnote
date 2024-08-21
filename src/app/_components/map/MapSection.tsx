@@ -32,6 +32,13 @@ export default function MapSection() {
   const [ loading ] = useKakaoLoader({
     appkey: process.env.KAKAO_JS_KEY,
   });
+  const customMarker = {
+    src: '/marker.svg',
+    size: {
+      width: 50,
+      height: 60
+    }
+  }
 
   const mapIdleHandler = debounce(async (target: kakao.maps.Map) => {
     const bounds = target.getBounds();
@@ -136,6 +143,7 @@ export default function MapSection() {
         {markerInfo.map((marker) => (
           <MapMarker
             position={{ lat: marker.latitude, lng: marker.longitude }}
+            image={customMarker}
             clickable={true}
             onClick={() => markerClickHandler(marker.latitude, marker.longitude, marker.address)}
             key={marker.post_id}
