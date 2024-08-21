@@ -35,8 +35,8 @@ export default function MapSection() {
   const customMarker = {
     src: '/marker.svg',
     size: {
-      width: 50,
-      height: 60
+      width: 40,
+      height: 50
     }
   }
 
@@ -114,7 +114,7 @@ export default function MapSection() {
   return (
     <Map
       center={mapLoc}
-      level={6}
+      level={3}
       minLevel={11}
       style={{ width: "100%", height: "92vh" }}
       isPanto={true}
@@ -126,7 +126,7 @@ export default function MapSection() {
       <MarkerClusterer
         averageCenter={true}
         minClusterSize={1}
-        minLevel={5}
+        minLevel={6}
         styles={[
           {
             width: '60px',
