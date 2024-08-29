@@ -109,7 +109,7 @@ export default function MapSection() {
   // 쿼리 파라미터에 위도/경도가 있을 때를 위한 useEffect
   useEffect(() => {
     paramLat && paramLng && setMapLoc({ lat: Number(paramLat), lng: Number(paramLng) });
-  }, [getUserLocation, paramLat, paramLng, setMapLoc]);
+  }, [paramLat, paramLng, setMapLoc]);
 
   return (
     <Map
