@@ -54,13 +54,13 @@ export default function TopKnowledgeCard({ knowledgeInfo }: PropsType) {
             <div>
               <HiHandThumbUp className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
             </div>
-            <div className="font-bold">{knowledgeInfo.likes}</div>
+            <div className="ml-1">{knowledgeInfo.likes}</div>
           </div>
           <div className="flex items-center">
             <div>
               <HiHandThumbDown className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
             </div>
-            <div className="font-bold">{knowledgeInfo.dislikes}</div>
+            <div className="ml-1">{knowledgeInfo.dislikes}</div>
           </div>
         </article>
       </section>

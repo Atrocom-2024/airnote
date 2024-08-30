@@ -16,7 +16,7 @@ export default function LogoutBtn() {
     <>
       {isPending && <LoadingUI />}
       <button
-        className="bg-default px-3 py-2 text-white rounded-md"
+        className="bg-default px-4 py-2 text-white text-sm rounded-lg"
         type="button"
         onClick={() => logoutHandler()}
       >로그아웃</button>

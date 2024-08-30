@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { pool } from "@/utils/database";
 import { verifyToken } from "@/utils/jwtUtils";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: CustomApiRequest, res: NextApiResponse) {
   // 토큰 확인
   const accessToken = req.cookies.accessToken;
   if (accessToken) {
@@ -19,19 +19,27 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   switch (req.method) {
     case 'GET':
       const { username } = req.query;
-      if (!username) {
-        return res.status(400).send('잘못된 요청 구문');
-      }
+      const searchPattern = `%${decodeURIComponent(username)}%`;
       const client = await pool.connect();
       const userInfoQuery = `
         SELECT id, email, name, nickname, phone_number, create_at
         FROM USERS_TB
-        WHERE nickname = $1;
+        ${username ? 'WHERE nickname ILIKE $1' : ''};
       `;
-      const userInfoQueryResult = await client.query(userInfoQuery, [username]);
+      const userInfoQueryResult = username ? (
+        await client.query(userInfoQuery, [searchPattern])
+      ) : (
+        await client.query(userInfoQuery)
+      );
       client.release();
-      return res.status(200).json(userInfoQueryResult.rows[0]);
+      return res.status(200).json(userInfoQueryResult.rows);
     default:
       return res.status(405).send('잘못된 요청 메서드');
+  }
+}
+
+interface CustomApiRequest extends NextApiRequest {
+  query: {
+    username: string;
   }
 }

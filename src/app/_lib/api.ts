@@ -43,7 +43,7 @@ export const getBuildingInfo = async (address: string) => {
   return res.json();
 }
 
-// 실시간 인기 공간 기록을 가져오는 함수
+// 실시간 인기 공간기록을 가져오는 함수
 export const getTopRecords = async (limit: number) => {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
   const res = await fetch(`${domain}/api/records/top?limit=${limit}`, { cache: 'no-store' });
@@ -53,7 +53,7 @@ export const getTopRecords = async (limit: number) => {
   return res.json();
 }
 
-// 위치에 따른 리뷰 데이터를 가져오는 함수
+// 위치에 따른 공간기록 데이터를 가져오는 함수
 export const getRecords = async (lat: string, lng: string) => {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
   const res = await fetch(`${domain}/api/records?lat=${lat}&lng=${lng}`);
@@ -87,7 +87,7 @@ export const getSearchResults = async (keyword: string) => {
   return res.json();
 };
 
-// 실시간 인기 공간 지식을 가져오는 함수
+// 실시간 인기 공간지식을 가져오는 함수
 export const getTopKnowledges = async (limit: number) => {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
   const res = await fetch(`${domain}/api/knowledges/top?limit=${limit}`, { cache: 'no-store' });
@@ -97,7 +97,7 @@ export const getTopKnowledges = async (limit: number) => {
   return res.json();
 }
 
-// 공간 지식 전체 목록 가져오는 함수
+// 공간지식 전체 목록 가져오는 함수
 export const getKnowledges = async () => {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
   const res = await fetch(`${domain}/api/knowledges`, { cache: 'no-store' });
@@ -107,7 +107,7 @@ export const getKnowledges = async () => {
   return res.json();
 }
 
-// 공간 지식 상세 데이터를 가져오는 함수
+// 공간지식 상세 데이터를 가져오는 함수
 export const getKnowledge = async (knowledgeId: string) => {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
   const res = await fetch(`${domain}/api/knowledges/${knowledgeId}`, { cache: 'no-store' });
@@ -117,7 +117,7 @@ export const getKnowledge = async (knowledgeId: string) => {
   return res.json();
 }
 
-// 공간 기록 좋아요/싫어요 요청 함수
+// 공간기록 좋아요/싫어요 요청 함수
 export const postRecordReaction = async (postId: string, kind: 'like' | 'dislike') => {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
   const uri = `${domain}/api/records/${postId}/reactions?kind=${kind}`;
@@ -128,7 +128,7 @@ export const postRecordReaction = async (postId: string, kind: 'like' | 'dislike
   return res.json();
 }
 
-// 공간 지식 좋아요/싫어요 요청 함수
+// 공간지식 좋아요/싫어요 요청 함수
 export const postKnowledgeReaction = async (knowledgeId: string, kind: 'like' | 'dislike') => {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
   const uri = `${domain}/api/knowledges/${knowledgeId}/reactions?kind=${kind}`;
@@ -293,10 +293,10 @@ export const postLogout = async () => {
 };
 
 // 사용자 정보 요청(관리자)
-export const getUserInfoAdmin = async (userName: string) => {
+export const getUserSearchAdmin = async (userName: string) => {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
   try {
-    const res = await fetch(`${domain}/api/admin/users?username=${encodeURIComponent(userName)}`, { cache: 'no-store' });
+    const res = await fetch(`${domain}/api/admin/search/users?username=${encodeURIComponent(userName)}`, { cache: 'no-store' });
     if (!res.ok) {
       throw new Error('Failed to fetch user data');
     }
@@ -306,34 +306,65 @@ export const getUserInfoAdmin = async (userName: string) => {
   }
 }
 
-// 공간 기록 목록 요청(관리자)
-export const getReviewsAdmin = async (address: string) => {
+// 공간기록 목록 검색 요청(관리자)
+export const getRecordSearchAdmin = async (address: string) => {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
   try {
-    const res = await fetch(`${domain}/api/admin/reviews?address=${encodeURIComponent(address)}`, { cache: 'no-store' });
+    const res = await fetch(`${domain}/api/admin/search/record?address=${encodeURIComponent(address)}`, { cache: 'no-store' });
     if (!res.ok) {
-      throw new Error('Failed to fetch reviews data');
+      throw new Error('Failed to fetch record data');
     }
     return res.json();
   } catch (err) {
-    console.error('공간 기록 데이터 페칭 실패', err);
+    console.error('공간기록 데이터 페칭 실패', err);
   }
 }
 
-// 공간 기록 제거 요청(관리자)
-export const deleteReviewAdmin = async (reviewId: string) => {
+// 공간기록 제거 요청(관리자)
+export const deleteRecordAdmin = async (recordId: string) => {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
   try {
-    const res = await fetch(`${domain}/api/admin/reviews/${reviewId}`, {
+    const res = await fetch(`${domain}/api/admin/record/${recordId}`, {
       method: 'DELETE',
       cache: 'no-store'
     });
     if (!res.ok) {
-      throw new Error('Failed to delete review');
+      throw new Error('Failed to delete record');
     }
     return res.json();
   } catch (err) {
-    console.error('공간 기록 제거 실패', err);
+    console.error('공간기록 제거 실패', err);
+  }
+}
+
+// 공간지식 목록 검색 요청(관리자)
+export const getKnowledgeSearchAdmin = async (title: string) => {
+  const domain = process.env.NEXT_PUBLIC_DOMAIN;
+  try {
+    const res = await fetch(`${domain}/api/admin/search/knowledges?title=${encodeURIComponent(title)}`, { cache: 'no-store' });
+    if (!res.ok) {
+      throw new Error('Failed to fetch knowledge data');
+    }
+    return res.json();
+  } catch (err) {
+    console.error('공간지식 데이터 페칭 실패', err);
+  }
+}
+
+// 공간지식 제거 요청(관리자)
+export const deleteKnowledgeAdmin = async (knowledgeId: string) => {
+  const domain = process.env.NEXT_PUBLIC_DOMAIN;
+  try {
+    const res = await fetch(`${domain}/api/admin/knowledges/${knowledgeId}`, {
+      method: 'DELETE',
+      cache: 'no-store'
+    });
+    if (!res.ok) {
+      throw new Error('Failed to delete knowledge');
+    }
+    return res.json();
+  } catch (err) {
+    console.error('공간지식 제거 실패', err);
   }
 }
 

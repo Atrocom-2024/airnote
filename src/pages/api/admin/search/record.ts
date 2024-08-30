@@ -19,17 +19,14 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
   switch (req.method) {
     case 'GET':
       const { address } = req.query;
-      if (!address) {
-        return res.status(400).send('잘못된 요청 구문');
-      }
       const searchPattern = `%${decodeURIComponent(address)}%`;
       const client = await pool.connect();
-      const reviewsQuery = `
+      const recordQuery = `
         SELECT
           r.post_id,
           u.email AS author_email,
           u.name AS author_name,
-          u.nickname AS author_nickname,
+          CASE WHEN u.nickname IS NULL THEN '(탈퇴 사용자)' ELSE u.nickname END as author_nickname,
           r.address,
           r.address_detail,
           r.content,
@@ -38,14 +35,18 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
           SUM(CASE WHEN rt.reaction_type = 'dislike' THEN 1 ELSE 0 END) AS dislikes,
           r.create_at
         FROM RECORD_TB r
-        JOIN USERS_TB u ON r.author_id = u.id
+        LEFT JOIN USERS_TB u ON r.author_id = u.id
         LEFT JOIN REACTION_TB rt ON r.post_id = rt.post_id
-        WHERE r.address ILIKE $1
+        ${address ? "WHERE r.address ILIKE $1" : ''}
         GROUP BY r.post_id, u.email, u.name, u.nickname, r.address, r.address_detail, r.content, r.auth_file_url, r.create_at;
       `;
-      const reviewsQueryResult = await client.query(reviewsQuery, [searchPattern]);
+      const recordQueryResult = address ? (
+        await client.query(recordQuery, [searchPattern])
+      ) : (
+        await client.query(recordQuery)
+      );
       client.release();
-      return res.status(200).json(reviewsQueryResult.rows);
+      return res.status(200).json(recordQueryResult.rows);
     default:
       return res.status(405).send('잘못된 요청 메서드');
   }
