@@ -4,8 +4,7 @@ import { signOut } from "next-auth/react";
 import {
   getTopRecords,
   postLogout,
-  getUserInfoAdmin,
-  getReviewsAdmin,
+  getUserSearchAdmin,
   deleteReviewAdmin,
   getTopKnowledges,
   getKnowledge,
@@ -19,10 +18,12 @@ import {
   getProfileKnowledges,
   getProfileKnowledgeDetail,
   deleteKnowledge,
-  deleteUser
+  deleteUser,
+  getRecordSearchAdmin,
+  getKnowledgeSearchAdmin
 } from "./api";
 
-// 실시간 인기 공간 기록을 가져오는 훅
+// 실시간 인기 공간기록을 가져오는 훅
 export const useTopRecords = (limit: number) => {
   return useQuery<TopRecordType[]>({
     queryKey: ['topRecords'],
@@ -30,7 +31,7 @@ export const useTopRecords = (limit: number) => {
   });
 };
 
-// 실시간 인기 공간 지식을 가져오는 함수
+// 실시간 인기 공간지식을 가져오는 함수
 export const useTopKnowledges = (limit: number) => {
   return useQuery<KnowledgeType[]>({
     queryKey: ['topKnowledges'],
@@ -38,7 +39,7 @@ export const useTopKnowledges = (limit: number) => {
   });
 };
 
-// 공간 지식 목록들을 가져오는 훅
+// 공간지식 목록들을 가져오는 훅
 export const useKnowledges = () => {
   return useQuery<KnowledgeType[]>({
     queryKey: ['knowledges'],
@@ -46,7 +47,7 @@ export const useKnowledges = () => {
   });
 };
 
-// 공간 지식 상세 데이터를 가져오는 훅
+// 공간지식 상세 데이터를 가져오는 훅
 export const useKnowledge = (knowledgeId: string) => {
   return useQuery<KnowledgeType>({
     queryKey: ['knowledge'],
@@ -54,7 +55,7 @@ export const useKnowledge = (knowledgeId: string) => {
   });
 };
 
-// 공간 기록 좋아요 요청 훅
+// 공간기록 좋아요 요청 훅
 export const useRecordReaction = (recordId: string, reactionType: 'like' | 'dislike') => {
   const queryClient = useQueryClient();
 
@@ -66,7 +67,7 @@ export const useRecordReaction = (recordId: string, reactionType: 'like' | 'disl
   });
 }
 
-// 공간 지식 좋아요 요청 훅
+// 공간지식 좋아요 요청 훅
 export const useKnowledgeReaction = (knowledgeId: string, reactionType: 'like' | 'dislike') => {
   const queryClient = useQueryClient();
 
@@ -170,21 +171,23 @@ export const useAdminLogout = () => {
 
 // 사용자 정보 요청(관리자) 훅
 export const useUserSearch = (userName: string) => {
-  return useQuery<UserInfoTypes>({
-    queryKey: ['userInfo'],
-    queryFn: () => getUserInfoAdmin(userName)
+  return useQuery<UserInfoTypes[]>({
+    queryKey: ['userInfo', userName],
+    queryFn: () => getUserSearchAdmin(userName),
+    enabled: true
   });
 };
 
-// 공간 기록 목록 요청(관리자) 훅
-export const useReviewSearch = (address: string) => {
-  return useQuery<ReviewType[]>({
-    queryKey: ['reviewSearch'],
-    queryFn: () => getReviewsAdmin(address)
+// 공간기록 목록 검색 요청(관리자) 훅
+export const useRecordSearchAdmin = (address: string) => {
+  return useQuery<RecordType[]>({
+    queryKey: ['recordAdmin', address],
+    queryFn: () => getRecordSearchAdmin(address),
+    enabled: true
   });
 };
 
-// 공간 기록 제거 요청(관리자) 훅
+// 공간기록 제거 요청(관리자) 훅
 export const useDeleteReview = () => {
   return useMutation({
     mutationFn: deleteReviewAdmin,
@@ -193,6 +196,15 @@ export const useDeleteReview = () => {
       console.error(err);
       return alert('기록 제거에 실패했습니다. 잠시 후 다시 시도해주세요.');
     }
+  });
+};
+
+// 공간지식 목록 검색 요청(관리자) 훅
+export const useKnowledgeSearchAdmin = (title: string) => {
+  return useQuery<AdminKnowledgeType[]>({
+    queryKey: ['knowledgesAdmin', title],
+    queryFn: () => getKnowledgeSearchAdmin(title),
+    enabled: true
   });
 };
 
@@ -207,14 +219,6 @@ interface TopRecordType {
   likes: number;
   dislikes: number;
   create_at: Date;
-};
-
-interface MyInfoTypes {
-  user_info: {
-    email: string;
-    nickname: string;
-  },
-  reviews: MyRecordTypes[]
 };
 
 interface ProfileInfoTypes {
@@ -263,7 +267,7 @@ interface UserInfoTypes {
   create_at: Date;
 };
 
-interface ReviewType {
+interface RecordType {
   post_id: string;
   author_email: string;
   author_name: string;
@@ -280,6 +284,19 @@ interface ReviewType {
 interface KnowledgeType {
   knowledge_id: string;
   author_nickname: string;
+  knowledge_title: string;
+  knowledge_content: string;
+  likes: number;
+  dislikes: number;
+  thumbnail_url: string;
+  create_at: Date;
+}
+
+interface AdminKnowledgeType {
+  knowledge_id: string;
+  author_email: string;
+  author_nickname: string;
+  author_name: string;
   knowledge_title: string;
   knowledge_content: string;
   likes: number;
