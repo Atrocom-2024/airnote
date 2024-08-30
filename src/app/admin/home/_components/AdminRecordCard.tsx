@@ -4,10 +4,10 @@ import Image from "next/image";
 import { AiOutlineLoading } from "react-icons/ai";
 
 import { parseDate } from "@/utils/modules";
-import { useDeleteReview } from "@/app/_lib/hooks";
+import { useDeleteRecordAdmin } from "@/app/_lib/hooks";
 
 export default function AdminRecordCard({ record }: PropsType) {
-  const { mutate, isPending } = useDeleteReview();
+  const { mutate, isPending } = useDeleteRecordAdmin();
   const recordContent = record.content.split('\n');
 
   return (
@@ -19,7 +19,7 @@ export default function AdminRecordCard({ record }: PropsType) {
         height={0}
         alt="인증파일"
       />
-      <section className="">
+      <section>
         <article className="text-sm">
           <div className="text-lg font-bold">{record.address}</div>
           <div className="flex items-center mt-1">

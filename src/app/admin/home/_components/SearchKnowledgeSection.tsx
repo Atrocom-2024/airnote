@@ -37,7 +37,7 @@ export default function SearchKnowledgeSection() {
         </section>
       </article>
       <article className="min-h-[500px] mt-10 flex justify-center items-center">
-        <div className="space-y-10">
+        <div className="w-full space-y-10">
           {isPending ? <PartLoadingUI /> : (
             knowledges && knowledges.length ? knowledges.map((knowledge) => (
               <AdminKnowledgeCard knowledge={knowledge} key={knowledge.knowledge_id} />

@@ -4,13 +4,13 @@ import Image from "next/image";
 import { AiOutlineLoading } from "react-icons/ai";
 
 import { parseDate } from "@/utils/modules";
-import { useDeleteReview } from "@/app/_lib/hooks";
+import { useDeleteKnowledgeAdmin } from "@/app/_lib/hooks";
 
 export default function AdminKnowledgeCard({ knowledge }: PropsType) {
-  const { mutate, isPending } = useDeleteReview();
+  const { mutate, isPending } = useDeleteKnowledgeAdmin();
 
   return (
-    <article className="border-b border-middle-gray flex items-center p-5">
+    <article className="w-full border-b border-middle-gray flex items-center p-5">
       <Image
         className="w-[200px] h-[250px] border border-gray rounded-md object-cover mr-5"
         src={knowledge.thumbnail_url ? knowledge.thumbnail_url : '/no-file-img.jpg'}
@@ -18,7 +18,7 @@ export default function AdminKnowledgeCard({ knowledge }: PropsType) {
         height={0}
         alt="인증파일"
       />
-      <section className="">
+      <section>
         <article className="text-sm">
           <div className="text-lg font-bold">{knowledge.knowledge_title}</div>
           <div className="flex items-center mt-1">
@@ -46,7 +46,7 @@ export default function AdminKnowledgeCard({ knowledge }: PropsType) {
             className="w-[80px] h-[36px] bg-default rounded-lg text-white text-sm text-center py-2"
             onClick={() => mutate(knowledge.knowledge_id)}
             disabled={isPending}
-          >{isPending ? <AiOutlineLoading className="animate-spin mx-auto" size="30" color="white" /> : '기록제거'}</button>
+          >{isPending ? <AiOutlineLoading className="animate-spin mx-auto" size="30" color="white" /> : '지식제거'}</button>
         </article>
       </section>
     </article>

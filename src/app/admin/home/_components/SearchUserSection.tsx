@@ -39,7 +39,7 @@ export default function SearchUserSection() {
         </section>
       </article>
       <article className="w-full mt-10">
-        {isPending ? <PartLoadingUI /> : (
+        {isPending ? <PartLoadingUI className="mt-64" /> : (
           users ? users.map((userInfo) => (
             <article className="flex justify-center items-center border border-middle-gray rounded-lg py-10 mt-8 md:justify-start md:px-24" key={userInfo.id}>
               <section>

@@ -312,28 +312,28 @@ export const getRecordSearchAdmin = async (address: string) => {
   try {
     const res = await fetch(`${domain}/api/admin/search/record?address=${encodeURIComponent(address)}`, { cache: 'no-store' });
     if (!res.ok) {
-      throw new Error('Failed to fetch reviews data');
+      throw new Error('Failed to fetch record data');
     }
     return res.json();
   } catch (err) {
-    console.error('공간 기록 데이터 페칭 실패', err);
+    console.error('공간기록 데이터 페칭 실패', err);
   }
 }
 
 // 공간기록 제거 요청(관리자)
-export const deleteReviewAdmin = async (reviewId: string) => {
+export const deleteRecordAdmin = async (recordId: string) => {
   const domain = process.env.NEXT_PUBLIC_DOMAIN;
   try {
-    const res = await fetch(`${domain}/api/admin/reviews/${reviewId}`, {
+    const res = await fetch(`${domain}/api/admin/record/${recordId}`, {
       method: 'DELETE',
       cache: 'no-store'
     });
     if (!res.ok) {
-      throw new Error('Failed to delete review');
+      throw new Error('Failed to delete record');
     }
     return res.json();
   } catch (err) {
-    console.error('공간 기록 제거 실패', err);
+    console.error('공간기록 제거 실패', err);
   }
 }
 
@@ -343,11 +343,28 @@ export const getKnowledgeSearchAdmin = async (title: string) => {
   try {
     const res = await fetch(`${domain}/api/admin/search/knowledges?title=${encodeURIComponent(title)}`, { cache: 'no-store' });
     if (!res.ok) {
-      throw new Error('Failed to fetch reviews data');
+      throw new Error('Failed to fetch knowledge data');
     }
     return res.json();
   } catch (err) {
-    console.error('공간 기록 데이터 페칭 실패', err);
+    console.error('공간지식 데이터 페칭 실패', err);
+  }
+}
+
+// 공간지식 제거 요청(관리자)
+export const deleteKnowledgeAdmin = async (knowledgeId: string) => {
+  const domain = process.env.NEXT_PUBLIC_DOMAIN;
+  try {
+    const res = await fetch(`${domain}/api/admin/knowledges/${knowledgeId}`, {
+      method: 'DELETE',
+      cache: 'no-store'
+    });
+    if (!res.ok) {
+      throw new Error('Failed to delete knowledge');
+    }
+    return res.json();
+  } catch (err) {
+    console.error('공간지식 제거 실패', err);
   }
 }
 

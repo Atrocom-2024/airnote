@@ -5,7 +5,7 @@ import {
   getTopRecords,
   postLogout,
   getUserSearchAdmin,
-  deleteReviewAdmin,
+  deleteRecordAdmin,
   getTopKnowledges,
   getKnowledge,
   getKnowledges,
@@ -20,7 +20,8 @@ import {
   deleteKnowledge,
   deleteUser,
   getRecordSearchAdmin,
-  getKnowledgeSearchAdmin
+  getKnowledgeSearchAdmin,
+  deleteKnowledgeAdmin
 } from "./api";
 
 // 실시간 인기 공간기록을 가져오는 훅
@@ -188,9 +189,9 @@ export const useRecordSearchAdmin = (address: string) => {
 };
 
 // 공간기록 제거 요청(관리자) 훅
-export const useDeleteReview = () => {
+export const useDeleteRecordAdmin = () => {
   return useMutation({
-    mutationFn: deleteReviewAdmin,
+    mutationFn: deleteRecordAdmin,
     onSuccess: () => window.location.reload(),
     onError: (err) => {
       console.error(err);
@@ -205,6 +206,18 @@ export const useKnowledgeSearchAdmin = (title: string) => {
     queryKey: ['knowledgesAdmin', title],
     queryFn: () => getKnowledgeSearchAdmin(title),
     enabled: true
+  });
+};
+
+// 공간지식 제거 요청(관리자) 훅
+export const useDeleteKnowledgeAdmin = () => {
+  return useMutation({
+    mutationFn: deleteKnowledgeAdmin,
+    onSuccess: () => window.location.reload(),
+    onError: (err) => {
+      console.error(err);
+      return alert('지식 제거에 실패했습니다. 잠시 후 다시 시도해주세요.');
+    }
   });
 };
 
