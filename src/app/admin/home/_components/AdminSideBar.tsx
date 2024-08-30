@@ -29,13 +29,22 @@ export default function AdminSideBar() {
         <FaAngleRight size="25" fill={keyword === 'record' ? '#4A68F5' : ' gray'} />
       </Link>
       <Link
-        className="flex justify-between items-center px-4 py-5"
+        className="border-b border-gray flex justify-between items-center px-4 py-5"
         href="/admin/home?keyword=knowledges"
       >
         <div
           className={`${keyword === 'knowledges' ? 'font-semibold text-default' : ''}`}
         >공간지식 관리</div>
         <FaAngleRight size="25" fill={keyword === 'knowledges' ? '#4A68F5' : ' gray'} />
+      </Link>
+      <Link
+        className="flex justify-between items-center px-4 py-5"
+        href="/admin/home?keyword=roles"
+      >
+        <div
+          className={`${keyword === 'roles' ? 'font-semibold text-default' : ''}`}
+        >사용자 권한 관리</div>
+        <FaAngleRight size="25" fill={keyword === 'roles' ? '#4A68F5' : ' gray'} />
       </Link>
     </article>
   );
