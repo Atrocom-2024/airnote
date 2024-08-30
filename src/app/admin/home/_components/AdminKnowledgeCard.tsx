@@ -10,7 +10,7 @@ export default function AdminKnowledgeCard({ knowledge }: PropsType) {
   const { mutate, isPending } = useDeleteKnowledgeAdmin();
 
   return (
-    <article className="w-full border-b border-middle-gray flex items-center p-5">
+    <article className="w-full border-b border-middle-gray flex items-center py-5">
       <Image
         className="w-[200px] h-[250px] border border-gray rounded-md object-cover mr-5"
         src={knowledge.thumbnail_url ? knowledge.thumbnail_url : '/no-file-img.jpg'}

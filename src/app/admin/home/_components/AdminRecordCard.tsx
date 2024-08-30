@@ -11,7 +11,7 @@ export default function AdminRecordCard({ record }: PropsType) {
   const recordContent = record.content.split('\n');
 
   return (
-    <article className="border-b border-middle-gray flex items-center p-5">
+    <article className="border-b border-middle-gray flex items-center py-5">
       <Image
         className="w-[200px] h-[250px] border border-gray rounded-md object-cover mr-5"
         src={record.auth_file_url ? record.auth_file_url : '/no-file-img.jpg'}
@@ -30,7 +30,7 @@ export default function AdminRecordCard({ record }: PropsType) {
             </div>
           </div>
         </article>
-        <article className="px-2 mt-5 mb-10 text-sm">
+        <article className="p-2 bg-white-gray rounded-lg mt-5 mb-10 text-sm">
           {recordContent.map((content, idx) => {
             if (!content) {
               return <br key={idx} />;

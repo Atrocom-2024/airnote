@@ -26,7 +26,7 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
           r.post_id,
           u.email AS author_email,
           u.name AS author_name,
-          u.nickname AS author_nickname,
+          CASE WHEN u.nickname IS NULL THEN '(탈퇴 사용자)' ELSE u.nickname END as author_nickname,
           r.address,
           r.address_detail,
           r.content,
@@ -35,7 +35,7 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
           SUM(CASE WHEN rt.reaction_type = 'dislike' THEN 1 ELSE 0 END) AS dislikes,
           r.create_at
         FROM RECORD_TB r
-        JOIN USERS_TB u ON r.author_id = u.id
+        LEFT JOIN USERS_TB u ON r.author_id = u.id
         LEFT JOIN REACTION_TB rt ON r.post_id = rt.post_id
         ${address ? "WHERE r.address ILIKE $1" : ''}
         GROUP BY r.post_id, u.email, u.name, u.nickname, r.address, r.address_detail, r.content, r.auth_file_url, r.create_at;
