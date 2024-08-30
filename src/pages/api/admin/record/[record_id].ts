@@ -18,17 +18,17 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
   // 요청 처리
   switch (req.method) {
     case 'DELETE':
-      const { review_id } = req.query;
-      if (!review_id) {
+      const { record_id } = req.query;
+      if (!record_id) {
         return res.status(400).send('잘못된 요청 구문');
       }
       const client = await pool.connect();
       const deleteReviewQuery = `DELETE FROM RECORD_TB WHERE post_id = $1 RETURNING post_id`;
-      const deleteQueryResult = await client.query(deleteReviewQuery, [review_id]);
+      const deleteQueryResult = await client.query(deleteReviewQuery, [record_id]);
       client.release();
       return res.status(200).json({
         success: true,
-        message: 'review deleted successfully',
+        message: 'record deleted successfully',
         updateNickname: deleteQueryResult.rows[0].post_id
       });
     default:
@@ -38,6 +38,6 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
 
 interface CustomApiRequest extends NextApiRequest {
   query: {
-    review_id: string;
+    record_id: string;
   }
 }

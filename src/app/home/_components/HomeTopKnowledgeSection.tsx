@@ -15,15 +15,13 @@ export default function HomeTopKnowledgeSection() {
 
   return (
     <section>
-      <Link
-        className="w-full h-[60px] block rounded-lg border border-default text-lg text-default font-semibold px-5 py-4 transition-all hover:bg-default hover:text-white"
-        href="/knowledges"
-      >
-        <div className="w-full h-full flex justify-between items-center">
-          <div>공간지식</div>
-          <div className="text-sm font-medium">더보기</div>
+      <article className="w-full block rounded-lg border border-default px-5 py-4 transition-all">
+        <div className="w-full h-full">
+          <div className="text-default text-lg font-semibold">공간지식</div>
+          <div className="text-sm text-dark-gray-gray my-3">전문가 사용자가 일반 사용자들에게 지식을 공유할 수 있는 서비스입니다.</div>
+          <Link className="block bg-white-gray text-center text-sm rounded-lg py-3" href="/knowledges">지식 보러가기</Link>
         </div>
-      </Link>
+      </article>
       <article className="mt-5">
         {topKnowledges.map((topKnowledge, idx) => {
           if (topKnowledges.length - 1 === idx) {

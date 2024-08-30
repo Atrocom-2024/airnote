@@ -4,8 +4,8 @@ import ProfileKnowledgesMain from "./_components/ProfileKnowledgesMain";
 
 export default async function ProfileKnowledges() {
   return (
-    <Layout className="flex justify-center">
-      <article className="flex mt-20">
+    <Layout className="px-5 md:flex md:justify-center md:px-0">
+      <article className="md:flex mt-20">
         <div className="hidden md:block">
           <ProfileNavigation />
         </div>

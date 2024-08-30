@@ -7,6 +7,7 @@ import PanelRecordCard from "./PanelRecordCard";
 import PartLoadingUI from "@/app/_components/PartLoadingUI";
 import MapMoveSection from "./MapMoveSection";
 
+// TODO: 주소 기반 지도 위치 이동 구현
 export default function PanelSection() {
   const { data: topRecords, isPending } = useTopRecords(6);
 

@@ -36,7 +36,7 @@ export default function PanelRecordCard({ topRecord, isLast }: PropsType) {
             </div>
           </div>
         </article>
-        <article  className="my-3 text-light-black text-sm">
+        <article  className="bg-white-gray rounded-lg p-2 my-3 text-light-black text-sm">
           {topRecordContent.map((content, idx) => {
             if (!content) {
               return <br key={idx} />;
