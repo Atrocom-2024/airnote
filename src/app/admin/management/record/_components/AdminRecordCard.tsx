@@ -11,7 +11,7 @@ export default function AdminRecordCard({ record }: PropsType) {
   const recordContent = record.content.split('\n');
 
   return (
-    <article className="border-b border-middle-gray flex items-center py-5">
+    <article className="border-b border-middle-gray flex justify-between items-center py-5">
       <Image
         className="w-[200px] h-[250px] border border-gray rounded-md object-cover mr-5"
         src={record.auth_file_url ? record.auth_file_url : '/no-file-img.jpg'}
@@ -19,7 +19,7 @@ export default function AdminRecordCard({ record }: PropsType) {
         height={0}
         alt="인증파일"
       />
-      <section>
+      <section className="w-full">
         <article className="text-sm">
           <div className="text-lg font-bold">{record.address}</div>
           <div className="flex items-center mt-1">
