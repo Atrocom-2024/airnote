@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { Endpoint, S3 } from "aws-sdk";
+import { S3 } from "aws-sdk";
 import formidable from "formidable";
 import fs from 'fs';
 
@@ -12,11 +12,10 @@ export const config = {
 }
 
 const s3 = new S3({
-  endpoint: new Endpoint(process.env.NAVER_STORAGE_ENDPOINT),
-  region: 'kr-standard',
+  region: 'ap-northeast-2',
   credentials: {
-    accessKeyId: process.env.NAVER_ACCESS_KEY,
-    secretAccessKey: process.env.NAVER_SECRET_KEY
+    accessKeyId: process.env.S3_ACCESS_KEY,
+    secretAccessKey: process.env.S3_SECRET_KEY
   }
 });
 
@@ -30,9 +29,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const readStream = fs.createReadStream(files.thumbnail_file[0].filepath);
         const fileType = files.thumbnail_file[0].mimetype?.split('/')[1];
         const uploadParams = {
-          Bucket: process.env.NAVER_BUCKET_NAME,
+          Bucket: process.env.S3_BUCKET_NAME,
           Key: `${generateRandomString(30)}.${fileType}`,
-          ACL: 'public-read',
           Body: readStream
         };
         try {

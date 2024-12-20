@@ -17,9 +17,8 @@ namespace NodeJS {
     DB_PASSWORD: string;
     DB_PORT: string;
     DB_SCHEMA: string;
-    NAVER_STORAGE_ENDPOINT: string;
-    NAVER_ACCESS_KEY: string;
-    NAVER_SECRET_KEY: string;
-    NAVER_BUCKET_NAME: string;
+    S3_ACCESS_KEY: string;
+    S3_SECRET_KEY: string;
+    S3_BUCKET_NAME: string;
   }
 }
