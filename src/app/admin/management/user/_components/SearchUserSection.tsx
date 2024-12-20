@@ -43,8 +43,8 @@ export default function SearchUserSection() {
           users ? users.map((userInfo) => (
             <article className="flex justify-center items-center border border-middle-gray rounded-lg py-10 mt-8 md:justify-start md:px-24" key={userInfo.id}>
               <section>
-                <div className="text-default text-xl font-bold mb-2">{userInfo.nickname}</div>
                 <CgProfile size="60" color="#4A68F5" />
+                <div className="text-default text-center text-xl font-bold mt-1">{userInfo.nickname}</div>
               </section>
               <section className="ml-5 text-dark-gray text-sm sm:text-base">
                 <div>이메일: {userInfo.email}</div>
