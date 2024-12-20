@@ -4,7 +4,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'prod-airnote.kr.object.ncloudstorage.com',
+        hostname: 'airnote-dev-bucket.s3.ap-northeast-2.amazonaws.com',
       },
     ],
   },
