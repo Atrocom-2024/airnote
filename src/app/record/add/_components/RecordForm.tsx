@@ -112,7 +112,7 @@ export default function RecordForm({ address }: PropsType) {
   }
 
   return (
-    <form className="mt-10 px-5 grid grid-cols-1 text-sm md:px-16" onSubmit={handleSubmit(formSubmitHandler)}>
+    <form className="mt-10 grid grid-cols-1 text-sm" onSubmit={handleSubmit(formSubmitHandler)}>
       <article className="mb-8 relative">
         <SubTitle>주소</SubTitle>
         <section className="mt-5">
@@ -155,7 +155,7 @@ export default function RecordForm({ address }: PropsType) {
         </section>
       </article>
       <article>
-        <SubTitle>인증서류 & 유의사항</SubTitle>
+        <SubTitle>(선택) 인증서류 & 유의사항</SubTitle>
         <section className="mt-3">
           <ul className="list-disc ml-5">
             <li>세입자는 임대차 계약서 사업자 등록증 중 하나를 인증할 수 있습니다.</li>
