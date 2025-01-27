@@ -6,6 +6,10 @@ import Link from "next/link";
 export default function AddKnowledgeBtn() {
   const { data: session, status } = useSession();
 
+  if (status == "loading" || status == "unauthenticated" || !session || session.user.role == 'general') {
+    return null;
+  }
+
   return (
     <article>
       <Link
