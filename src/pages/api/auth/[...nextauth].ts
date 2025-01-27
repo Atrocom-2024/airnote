@@ -74,6 +74,8 @@ export const authOptions: NextAuthOptions = {
       } catch (err) {
         console.error(err);
         return session;
+      } finally {
+        client.release();
       }
     }
   }
