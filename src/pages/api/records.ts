@@ -7,11 +7,13 @@ import { generateRandomString } from "@/utils/modules";
 const secret = process.env.NEXT_AUTH_SECRET;
 
 export default async function handler(req: CustomApiRequest, res: NextApiResponse) {
-  switch (req.method) {
-    case 'GET':
-      const { lat, lng } = req.query;
-      try {
-        const client = await pool.connect();
+  let client;
+
+  try {
+    switch (req.method) {
+      case 'GET':
+        client = await pool.connect();
+        const { lat, lng } = req.query;
         const reviewsQuery = `
           SELECT
             r.post_id,
@@ -29,22 +31,19 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
           GROUP BY r.post_id, u.nickname, r.address, r.address_detail, r.content, r.create_at
         `;
         const reviewsQueryResult = await client.query(reviewsQuery, [parseFloat(lat), parseFloat(lng)]);
-        client.release();
+        
         return res.status(200).json(reviewsQueryResult.rows);
-      } catch (err) {
-        console.error(err);
-        return res.status(500).send('내부 서버 오류');
-      }
-    case 'POST':
-      const token = await getToken({ req, secret });
+      case 'POST':
+        const token = await getToken({ req, secret });
+    
+        // Unauthorized
+        if (!token || !token.email) {
+          return res.status(401).send('접근 권한 없음');
+        }
   
-      // Unauthorized
-      if (!token || !token.email) {
-        return res.status(401).send('접근 권한 없음');
-      }
+        client = await pool.connect();
+        const body: BodyTypes = req.body;
 
-      const body: BodyTypes = req.body;
-      try {
         // 주소를 통해 위도/경도 좌표 얻기
         const address_res = await fetch(`https://dapi.kakao.com/v2/local/search/address.json?query=${encodeURIComponent(body.address)}`, {
           method: 'GET',
@@ -56,7 +55,6 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
         const address_json = await address_res.json();
 
         // 사용자 정보 얻기
-        const client = await pool.connect();
         const userCheckQuery = 'SELECT id FROM USERS_TB WHERE email = $1';
         const userCheckResult = await client.query(userCheckQuery, [token.email]);
         const authorId = userCheckResult.rows[0].id;
@@ -65,7 +63,7 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
         if (!authorId) {
           return res.status(401).send('접근 권한 없음');
         }
-
+  
         const recordInsertQuery = `
           INSERT INTO RECORD_TB (post_id, author_id, address, address_detail, latitude, longitude, content, auth_file_url)
           VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
@@ -82,14 +80,16 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
           body.auth_file_url
         ];
         const recordInsertResult = await client.query(recordInsertQuery, recordInsertValues);
-        client.release();
+        
         return res.status(201).json(recordInsertResult.rows[0]);
-      } catch (err) {
-        console.error(err);
-        return res.status(500).send('내부 서버 오류');
-      }
-    default:
-      return res.status(405).send('잘못된 요청 메서드');
+      default:
+        return res.status(405).send('잘못된 요청 메서드');
+    }
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send("내부 서버 오류");
+  } finally {
+    client?.release();
   }
 }
 
