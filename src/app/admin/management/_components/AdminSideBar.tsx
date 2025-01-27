@@ -16,7 +16,7 @@ export default function AdminSideBar() {
       >
         <div
           className={`${currentPath === 'user' ? 'font-semibold text-default' : ''}`}
-        >사용자 검색</div>
+        >사용자 관리</div>
         <FaAngleRight size="25" fill={currentPath === 'user' ? '#4A68F5' : ' gray'} />
       </Link>
       <Link
@@ -29,22 +29,13 @@ export default function AdminSideBar() {
         <FaAngleRight size="25" fill={currentPath === 'record' ? '#4A68F5' : ' gray'} />
       </Link>
       <Link
-        className="border-b border-gray flex justify-between items-center px-4 py-5"
+        className="flex justify-between items-center px-4 py-5"
         href="/admin/management/knowledges"
       >
         <div
           className={`${currentPath === 'knowledges' ? 'font-semibold text-default' : ''}`}
         >공간지식 관리</div>
         <FaAngleRight size="25" fill={currentPath === 'knowledges' ? '#4A68F5' : ' gray'} />
-      </Link>
-      <Link
-        className="flex justify-between items-center px-4 py-5"
-        href="/admin/management/roles"
-      >
-        <div
-          className={`${currentPath === 'roles' ? 'font-semibold text-default' : ''}`}
-        >사용자 권한 관리</div>
-        <FaAngleRight size="25" fill={currentPath === 'roles' ? '#4A68F5' : ' gray'} />
       </Link>
     </article>
   );

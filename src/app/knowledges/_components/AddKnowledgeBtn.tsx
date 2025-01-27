@@ -6,8 +6,6 @@ import Link from "next/link";
 export default function AddKnowledgeBtn() {
   const { data: session, status } = useSession();
 
-  console.log(session);
-
   return (
     <article>
       <Link

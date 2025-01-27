@@ -27,7 +27,7 @@ export default function SearchUserSection() {
   return (
     <section className="px-10 col-span-8 md:w-[700px] md:col-span-9 lg:col-span-10">
       <article className="flex items-center">
-        <section className="font-bold text-default text-2xl mr-5">사용자 정보 찾기</section>
+        <section className="font-bold text-default text-2xl mr-5">사용자 관리</section>
         <section className="w-[350px] relative border-[1.5px] border-default rounded-full">
           <input
             className="h-[5vh] px-5 rounded-full outline-none"
@@ -48,8 +48,17 @@ export default function SearchUserSection() {
               </section>
               <section className="ml-5 text-dark-gray text-sm sm:text-base">
                 <div>이메일: {userInfo.email}</div>
+                {/* <section>
+                  <div className="font-semibold text-middle-gray mr-2 mb-2">이메일</div>
+                  <input
+                    className="w-[300px] outline-none bg-white-gray text-middle-gray rounded-md px-3 py-2"
+                    value={userInfo.email}
+                    disabled={true}
+                  />
+                </section> */}
                 <div>이름: {userInfo.name}</div>
                 <div>전화번호: {`0${userInfo.phone_number.split(' ')[1]}`}</div>
+                <div>권한: {userInfo.role_name}</div>
                 <div>가입날짜: {parseDate(userInfo.create_at)}</div>
               </section>
             </article>

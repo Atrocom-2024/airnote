@@ -75,30 +75,6 @@ export async function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL('/admin/login', req.url));
     }
   }
-
-  // 관리자 로그인 상태 리다이렉트 설정
-  // if (pathname === '/admin') {
-  //   const accessToken = req.cookies.get('accessToken');
-  //   if (accessToken) {
-  //     const { valid } = await verifyToken(accessToken.value);
-  //     if (valid) {
-  //       return NextResponse.redirect(new URL('/admin/management/user', req.url));
-  //     }
-  //   }
-  // }
-
-  // 관리자 홈 상태 리다이렉트 설정
-  // if (pathname === '/admin/home') {
-  //   const accessToken = req.cookies.get('accessToken');
-  //   if (accessToken) {
-  //     const { valid } = await verifyToken(accessToken.value);
-  //     if (!valid) {
-  //       return NextResponse.redirect(new URL('/admin', req.url));
-  //     }
-  //   } else {
-  //     return NextResponse.redirect(new URL('/admin', req.url));
-  //   }
-  // }
 }
 
 export const config = {

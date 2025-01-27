@@ -44,6 +44,7 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ session, token }) {
       const client = await pool.connect();
+
       try {
         const userDataQuery = `
           SELECT
@@ -59,6 +60,7 @@ export const authOptions: NextAuthOptions = {
         `
         const userDataQueryResult = await client.query(userDataQuery, [token.email]);
         const userData = userDataQueryResult.rows[0];
+        
         if (!userData) {
           return session;
         }
