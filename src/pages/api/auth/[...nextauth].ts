@@ -41,6 +41,40 @@ export const authOptions: NextAuthOptions = {
       } finally {
         client.release();
       }
+    },
+    async session({ session, token }) {
+      const client = await pool.connect();
+
+      try {
+        const userDataQuery = `
+          SELECT
+            u.id,
+            u.email,
+            u.name,
+            u.nickname,
+            r.role_name
+          FROM USERS_TB u
+          LEFT JOIN USER_ROLES_TB ur ON u.id = ur.user_id
+          LEFT JOIN ROLES_TB r ON ur.role_id = r.role_id
+          WHERE u.email = $1
+        `
+        const userDataQueryResult = await client.query(userDataQuery, [token.email]);
+        const userData = userDataQueryResult.rows[0];
+        
+        if (!userData) {
+          return session;
+        }
+
+        session.user.email = token.email;
+        session.user.name = userData.name;
+        session.user.nickname = userData.nickname;
+        session.user.role = userData.role_name;
+
+        return session;
+      } catch (err) {
+        console.error(err);
+        return session;
+      }
     }
   }
 };

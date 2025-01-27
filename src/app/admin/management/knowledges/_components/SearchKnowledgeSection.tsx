@@ -42,7 +42,7 @@ export default function SearchKnowledgeSection() {
             knowledges && knowledges.length ? knowledges.map((knowledge) => (
               <AdminKnowledgeCard knowledge={knowledge} key={knowledge.knowledge_id} />
             )) : (
-              <section className="text-default font-bold text-xl">지식이 없습니다. 제목으로 검색해주세요.</section>
+              <section className="text-default text-center font-bold text-xl">지식이 없습니다. 제목으로 검색해주세요.</section>
             )
           )}
         </div>

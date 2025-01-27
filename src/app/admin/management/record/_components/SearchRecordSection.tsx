@@ -23,7 +23,7 @@ export default function SearchRecordSection() {
   };
 
   return (
-    <section className="px-10 col-span-8 overflow-y-auto md:w-[700px] md:col-span-9 lg:col-span-10">
+    <section className="px-10 overflow-y-auto md:w-[700px]">
       <article className="flex items-center">
         <section className="font-bold text-default text-2xl mr-5">공간기록 관리</section>
         <section className="w-[350px] relative border-[1.5px] border-default rounded-full">
@@ -36,7 +36,7 @@ export default function SearchRecordSection() {
           <IoSearch className="absolute top-1/2 right-3 -translate-y-1/2" size="30" color="#4A68F5" />
         </section>
       </article>
-      <article className="min-h-[500px] mt-10 flex justify-center items-center">
+      <article className="mt-10">
         <div className="space-y-10">
           {isPending ? <PartLoadingUI /> : (
             recordList && recordList.length ? recordList.map((record) => (

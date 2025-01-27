@@ -6,6 +6,7 @@ const secret = process.env.NEXT_AUTH_SECRET;
 
 export async function middleware(req: NextRequest) {
   const token = await getToken({ req, secret });
+  const accessToken = req.cookies.get('accessToken');
   const { pathname } = req.nextUrl;
 
   // 랜딩 페이지 접근 시 로그인 상태이면 home으로 리다이렉트 설정
@@ -51,27 +52,27 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  // 관리자 로그인 상태 리다이렉트 설정
-  if (pathname === '/admin') {
-    const accessToken = req.cookies.get('accessToken');
+  // 로그인 페이지에서 로그인 성공시 리디렉션
+  if (pathname === '/admin/login') {
     if (accessToken) {
       const { valid } = await verifyToken(accessToken.value);
       if (valid) {
-        return NextResponse.redirect(new URL('/admin/home', req.url));
+        return NextResponse.redirect(new URL('/admin/management/user', req.url));
       }
     }
+    return NextResponse.next();
   }
 
-  // 관리자 홈 상태 리다이렉트 설정
-  if (pathname === '/admin/home') {
-    const accessToken = req.cookies.get('accessToken');
+  if (pathname === '/admin' || pathname === '/admin/management/user' || pathname === '/admin/management/record' || pathname === '/admin/management/knowledges') {
     if (accessToken) {
       const { valid } = await verifyToken(accessToken.value);
       if (!valid) {
-        return NextResponse.redirect(new URL('/admin', req.url));
+        return NextResponse.redirect(new URL('/admin/login', req.url));
+      } else {
+        return NextResponse.next();
       }
     } else {
-      return NextResponse.redirect(new URL('/admin', req.url));
+      return NextResponse.redirect(new URL('/admin/login', req.url));
     }
   }
 }

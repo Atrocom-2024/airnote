@@ -277,6 +277,8 @@ interface UserInfoTypes {
   name: string;
   nickname: string;
   phone_number: string;
+  role_name: string;
+  role_id: string;
   create_at: Date;
 };
 

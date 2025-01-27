@@ -8,7 +8,7 @@ export default function LogoutBtn() {
   const pathname = usePathname();
   const { mutate: logoutHandler, isPending } = useAdminLogout();
   
-  if (pathname?.startsWith('/admin') && pathname == '/admin') {
+  if (pathname == '/admin/login') {
     return null;
   }
 
