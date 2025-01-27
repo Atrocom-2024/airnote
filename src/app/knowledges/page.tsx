@@ -12,6 +12,9 @@ export default async function Knowledge() {
           <Title>공간지식</Title>
           <AddKnowledgeBtn />
         </section>
+        <section>
+          <div className="font-semibold text-middle-gray mt-3">Real estate knowledge and tips</div>
+        </section>
         <TopKnowledgeSection />
         <KnowledgeSection />
       </main>
