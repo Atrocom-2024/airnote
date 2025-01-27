@@ -22,8 +22,17 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
       const searchPattern = `%${decodeURIComponent(username)}%`;
       const client = await pool.connect();
       const userInfoQuery = `
-        SELECT id, email, name, nickname, phone_number, create_at
-        FROM USERS_TB
+        SELECT
+          u.id,
+          u.email,
+          u.name,
+          u.nickname,
+          u.phone_number,
+          r.role_name,
+          u.create_at
+        FROM USERS_TB u
+        LEFT JOIN USER_ROLES_TB ur ON u.id = ur.user_id
+        LEFT JOIN ROLES_TB r ON ur.role_id = r.role_id
         ${username ? 'WHERE nickname ILIKE $1' : ''};
       `;
       const userInfoQueryResult = username ? (
