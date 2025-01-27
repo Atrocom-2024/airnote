@@ -6,6 +6,7 @@ import { pool } from "@/utils/database";
 const secret = process.env.NEXT_AUTH_SECRET;
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  let client;
   const token = await getToken({ req, secret });
   const { record_id } = req.query;
 
@@ -18,10 +19,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).send('잘못된 요청 구문');
   }
 
-  switch (req.method) {
-    case 'GET':
-      try {
-        const client = await pool.connect();
+  try {
+    switch (req.method) {
+      case 'GET':
+        client = await pool.connect();
         const userRecordDetailQuery = `
           SELECT
             post_id,
@@ -33,16 +34,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           WHERE post_id = $1;
         `
         const userRecordDetailQueryResult = await client.query(userRecordDetailQuery, [record_id]);
-        client.release();
+        
         return res.status(200).json(userRecordDetailQueryResult.rows[0]);
-      } catch (err) {
-        console.error(err);
-        return res.status(500).send('내부 서버 오류')
-      }
-    case 'PUT':
-      const body = req.body;
-      try {
-        const client = await pool.connect();
+      case 'PUT':
+        const body = req.body;
+        client = await pool.connect();
         const userRecordEditQuery = `
           UPDATE RECORD_TB
           SET address = $2, address_detail = $3, content = $4
@@ -51,19 +47,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         `;
         const userRecordEditQueryValues = [record_id, body.address, body.address_detail, body.content];
         const userRecordEditQueryResult = await client.query(userRecordEditQuery, userRecordEditQueryValues);
-        client.release();
+        
         return res.status(201).json({
           success: true,
           message: 'record edit successfully',
           record_id: userRecordEditQueryResult.rows[0].post_id
         });
-      } catch (err) {
-        console.error(err);
-        return res.status(500).send('내부 서버 오류');
-      }
-    case 'DELETE':
-      try {
-        const client = await pool.connect();
+      case 'DELETE':
+        client = await pool.connect();
         await client.query('BEGIN');
         // REACTION_TB에서 삭제
         await client.query('DELETE FROM REACTION_TB WHERE post_id = $1', [record_id]);
@@ -73,17 +64,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           [record_id]
         );
         await client.query('COMMIT');
-        client.release();
+        
         return res.status(200).json({
           success: true,
           message: 'record delete successfully',
           record_id: deleteRecordResult.rows[0]
         });
-      } catch (err) {
-        console.error(err);
-        return res.status(500).send('내부 서버 오류');
-      }
-    default:
-      return res.status(405).send('잘못된 요청 메서드');
+      default:
+        return res.status(405).send('잘못된 요청 메서드');
+    }
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send("내부 서버 오류");
+  } finally {
+    client?.release();
   }
+
 }

@@ -3,11 +3,13 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { pool } from "@/utils/database";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  switch (req.method) {
-    case 'GET':
-      try {
+  let client;
+  
+  try {
+    switch (req.method) {
+      case 'GET':
+        client = await pool.connect();
         const knowledgeId = req.query.knowledge_id
-        const client = await pool.connect();
         const knowledgeQuery = `
           SELECT
             k.knowledge_id,
@@ -25,13 +27,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           GROUP BY k.knowledge_id, u.nickname, k.knowledge_title, k.knowledge_content, k.thumbnail_url, k.create_at
         `
         const knowledgeQueryResult = await client.query(knowledgeQuery, [knowledgeId]);
-        client.release();
+        
         return res.status(200).json(knowledgeQueryResult.rows[0]);
-      } catch (err) {
-        console.error(err);
-        return res.status(500).send('내부 서버 오류');
-      }
-    default:
-      return res.status(405).send('잘못된 요청 메서드');
+      default:
+        return res.status(405).send('잘못된 요청 메서드');
+    }
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send('내부 서버 오류');
+  } finally {
+    client?.release();
   }
 }

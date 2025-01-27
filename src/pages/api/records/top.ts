@@ -3,11 +3,14 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { pool } from "@/utils/database";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  switch (req.method) {
-    case 'GET':
-      const { limit } = req.query;
-      try {
-        const client = await pool.connect();
+  let client;
+  
+  try {
+
+    switch (req.method) {
+      case 'GET':
+        client = await pool.connect();
+        const { limit } = req.query;
         const topReviewsQuery = `
           SELECT
             r.post_id,
@@ -28,13 +31,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           LIMIT $1;
         `
         const topReviewsQueryResult = await client.query(topReviewsQuery, [limit]);
-        client.release();
+        
         return res.status(200).json(topReviewsQueryResult.rows);
-      } catch (err) {
-        console.error(err);
-        return res.status(500).send('내부 서버 오류');
-      }
-    default:
-      return res.status(405).send('잘못된 요청 메서드');
+      default:
+        return res.status(405).send('잘못된 요청 메서드');
+    }
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send("내부 서버 오류");
+  } finally {
+    client?.release();
   }
 }

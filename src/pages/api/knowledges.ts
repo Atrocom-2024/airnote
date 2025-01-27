@@ -7,10 +7,12 @@ import { generateRandomString } from "@/utils/modules";
 const secret = process.env.NEXT_AUTH_SECRET;
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  switch (req.method) {
-    case 'GET':
-      try {
-        const client = await pool.connect();
+  let client;
+
+  try {
+    switch (req.method) {
+      case 'GET':
+        client = await pool.connect();
         const knowledgesQuery = `
           SELECT
             k.knowledge_id,
@@ -28,24 +30,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           ORDER BY k.create_at DESC;
         `
         const knowledgesQueryResult = await client.query(knowledgesQuery);
-        client.release();
+        
         return res.status(200).json(knowledgesQueryResult.rows);
-      } catch (err) {
-        console.error(err);
-        return res.status(500).send('내부 서버 오류');
-      }
-    case 'POST':
-      const token = await getToken({ req, secret });
+      case 'POST':
+        const token = await getToken({ req, secret });
+    
+        // Unauthorized
+        if (!token || !token.email) {
+          return res.status(401).send('접근 권한 없음');
+        }
   
-      // Unauthorized
-      if (!token || !token.email) {
-        return res.status(401).send('접근 권한 없음');
-      }
-
-      const body: BodyTypes = req.body;
-      try {
-        // 사용자 정보 얻기
-        const client = await pool.connect();
+        client = await pool.connect();
+        const body: BodyTypes = req.body;
         const userCheckQuery = 'SELECT id FROM USERS_TB WHERE email = $1';
         const userCheckResult = await client.query(userCheckQuery, [token.email]);
         const authorId = userCheckResult.rows[0].id;
@@ -54,7 +50,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (!authorId) {
           return res.status(401).send('접근 권한 없음');
         }
-
+  
         const knowledgeInsertQuery = `
           INSERT INTO KNOWLEDGE_TB (knowledge_id, author_id, knowledge_title, knowledge_content, thumbnail_url)
           VALUES ($1, $2, $3, $4, $5)
@@ -68,14 +64,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           body.thumbnail_url
         ];
         const knowledgeInsertResult = await client.query(knowledgeInsertQuery, knowledgeInsertValues);
-        client.release();
+        
         return res.status(201).json(knowledgeInsertResult.rows[0]);
-      } catch (err) {
-        console.error(err);
-        return res.status(500).send('내부 서버 오류');
-      }
-    default:
-      return res.status(405).send('잘못된 요청 메서드');
+      default:
+        return res.status(405).send('잘못된 요청 메서드');
+    }
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send("내부 서버 오류");
+  } finally {
+    client?.release();
   }
 }
 
