@@ -29,11 +29,11 @@ export default function ProfileRecordCard({ recordInfo }: PropsType) {
         </div>
         <div>
           <Link
-            className="bg-white-gray text-xs px-4 py-2 rounded-lg mr-2 md:text-sm"
+            className="bg-dark-white text-xs px-4 py-2 rounded-lg mr-2 md:text-sm"
             href={`/profile/record/${recordInfo.post_id}/edit`}
           >기록수정</Link>
           <button
-            className="bg-white-gray text-xs px-4 py-2 rounded-lg md:text-sm"
+            className="bg-dark-white text-xs px-4 py-2 rounded-lg md:text-sm"
             type="button"
             onClick={recordDeleteClickHandler}
           >기록삭제</button>

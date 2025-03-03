@@ -63,7 +63,7 @@ export default function MapMoveSection() {
         </article>
         <article className="grid grid-cols-2 gap-3 p-5">
           <select
-            className="outline-none bg-white-gray px-3 py-1 rounded-lg"
+            className="outline-none bg-dark-white px-3 py-1 rounded-lg"
             value={city}
             onChange={cityChangeHandler}
           >
@@ -73,7 +73,7 @@ export default function MapMoveSection() {
             ))}
           </select>
           <select
-            className="outline-none bg-white-gray px-3 py-1 rounded-lg"
+            className="outline-none bg-dark-white px-3 py-1 rounded-lg"
             value={regionName}
             onChange={regionChangeHandler}
           >
@@ -100,7 +100,7 @@ export default function MapMoveSection() {
         </article>
         <article className="relative grid grid-cols-4 gap-3 p-5">
           <input
-            className="outline-none bg-white-gray px-3 py-2 rounded-lg col-span-3"
+            className="outline-none bg-dark-white px-3 py-2 rounded-lg col-span-3"
             placeholder="주소를 입력해주세요."
             disabled={true}
             // register={{...register('address')}}

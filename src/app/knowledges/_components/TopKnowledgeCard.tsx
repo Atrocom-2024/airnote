@@ -20,15 +20,15 @@ export default function TopKnowledgeCard({ knowledgeInfo }: PropsType) {
 
   return (
     <Link
-      className="border border-gray shadow-sm mx-auto rounded-xl text-xs text-middle-gray transition-all"
+      className="w-full flex border border-gray shadow-sm mx-auto rounded-xl text-xs text-middle-gray transition-all"
       href={`/knowledges/${knowledgeInfo.knowledge_id}`}
     >
-      <section>
+      <section className="w-[50%]">
         <Image
-          className="w-full h-[300px] object-cover rounded-t-xl"
+          className="h-[300px] object-cover rounded-l-xl"
           src={knowledgeInfo.thumbnail_url ? knowledgeInfo.thumbnail_url : '/airnote-thumbnail.jpg'}
-          width={300}
-          height={300}
+          width={500}
+          height={500}
           alt="썸네일"
         />
       </section>

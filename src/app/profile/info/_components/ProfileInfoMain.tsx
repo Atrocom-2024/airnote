@@ -30,7 +30,7 @@ export default function ProfileInfoMain() {
           <section>
             <div className="font-semibold text-middle-gray mr-2 mb-2">이메일</div>
             <input
-              className="w-[300px] outline-none bg-white-gray text-middle-gray rounded-md px-3 py-2"
+              className="w-[300px] outline-none bg-dark-white text-middle-gray rounded-md px-3 py-2"
               value={profileInfo.email}
               disabled={true}
             />
@@ -39,7 +39,7 @@ export default function ProfileInfoMain() {
           <section>
             <div className="font-semibold text-middle-gray mr-2 mb-2">전화번호</div>
             <input
-              className="w-[300px] outline-none bg-white-gray text-middle-gray rounded-md px-3 py-2"
+              className="w-[300px] outline-none bg-dark-white text-middle-gray rounded-md px-3 py-2"
               value={parsePhoneNumber(profileInfo.phone_number)}
               disabled={true}
             />
@@ -47,7 +47,7 @@ export default function ProfileInfoMain() {
           <section>
             <div className="font-semibold text-middle-gray mr-2 mb-2">이름</div>
             <input
-              className="w-[300px] outline-none bg-white-gray text-middle-gray rounded-md px-3 py-2"
+              className="w-[300px] outline-none bg-dark-white text-middle-gray rounded-md px-3 py-2"
               value={profileInfo.name}
               disabled={true}
             />
