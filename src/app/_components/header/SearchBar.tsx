@@ -62,7 +62,7 @@ export default function SearchBar() {
     <article className="relative group">
       <IoSearch className="absolute top-1/2 left-3 -translate-y-1/2 size-[20px] md:size-[25px]" color="#AFAFAF" />
       <input
-        className="w-[170px] h-[4.5vh] pl-10 md:pl-12 bg-white-gray rounded-xl outline-none text-xs focus:border-[1.5px] focus:border-default focus:bg-white sm:w-[350px] md:text-base"
+        className="w-[170px] h-[4.5vh] pl-10 md:pl-12 bg-dark-white rounded-xl outline-none text-xs focus:border-[1.5px] focus:border-default focus:bg-white sm:w-[350px] md:text-base"
         value={query}
         onChange={qeuryChangeHandler}
         onKeyDown={searchKeyPressHandler}

@@ -30,7 +30,7 @@ export default function AdminRecordCard({ record }: PropsType) {
             </div>
           </div>
         </article>
-        <article className="p-2 bg-white-gray rounded-lg mt-5 mb-10 text-sm">
+        <article className="p-2 bg-dark-white rounded-lg mt-5 mb-10 text-sm">
           {recordContent.map((content, idx) => {
             if (!content) {
               return <br key={idx} />;
