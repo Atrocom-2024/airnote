@@ -51,7 +51,7 @@ export default function SearchUserSection() {
                 {/* <section>
                   <div className="font-semibold text-middle-gray mr-2 mb-2">이메일</div>
                   <input
-                    className="w-[300px] outline-none bg-white-gray text-middle-gray rounded-md px-3 py-2"
+                    className="w-[300px] outline-none bg-dark-white text-middle-gray rounded-md px-3 py-2"
                     value={userInfo.email}
                     disabled={true}
                   />

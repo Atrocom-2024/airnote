@@ -48,11 +48,11 @@ export default function ProfileKnowledgeCard({ knowledgeInfo }: PropsType) {
           <div className="text-sm font-bold sm:text-lg">{getPreviewText(knowledgeInfo.knowledge_title, 18)}</div>
           <div className="hidden md:block">
             <Link
-              className="bg-white-gray px-4 py-2 rounded-lg mr-2 text-sm"
+              className="bg-dark-white px-4 py-2 rounded-lg mr-2 text-sm"
               href={`/profile/knowledges/${knowledgeInfo.knowledge_id}/edit`}
             >지식수정</Link>
             <button
-              className="bg-white-gray px-4 py-2 rounded-lg text-sm"
+              className="bg-dark-white px-4 py-2 rounded-lg text-sm"
               type="button"
               onClick={knowledgeDeleteClickHandler}
             >지식삭제</button>
@@ -78,11 +78,11 @@ export default function ProfileKnowledgeCard({ knowledgeInfo }: PropsType) {
         </section>
         <div className="text-end block mt-2 md:hidden">
             <Link
-              className="text-xs bg-white-gray px-4 py-2 rounded-lg mr-2 md:text-sm"
+              className="text-xs bg-dark-white px-4 py-2 rounded-lg mr-2 md:text-sm"
               href={`/profile/knowledges/${knowledgeInfo.knowledge_id}/edit`}
             >지식수정</Link>
             <button
-              className="text-xs bg-white-gray px-4 py-2 rounded-lg md:text-sm"
+              className="text-xs bg-dark-white px-4 py-2 rounded-lg md:text-sm"
               type="button"
               onClick={knowledgeDeleteClickHandler}
             >지식삭제</button>

@@ -40,7 +40,7 @@ export default function SideBarRecordCard({ record }: PropsType) {
             </div>
           </div>
         </article>
-        <article  className="bg-white-gray rounded-lg p-2 my-3 text-light-black text-sm">
+        <article  className="bg-dark-white rounded-lg p-2 my-3 text-light-black text-sm">
           {recordContent.map((content, idx) => {
             if (!content) {
               return <br key={idx} />;
