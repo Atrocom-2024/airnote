@@ -23,7 +23,7 @@ export default function LoginBtn() {
   return (
     <>
       <button
-        className="w-full bg-default text-white px-5 py-2 rounded-md text-xs md:text-sm"
+        className="w-full bg-default text-white px-5 py-2 rounded-md text-xs transition-all md:text-sm hover:bg-dark-default"
         type="button"
         onClick={openModalHandler}
       >로그인 / 회원가입</button>

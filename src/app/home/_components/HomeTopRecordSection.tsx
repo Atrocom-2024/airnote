@@ -26,7 +26,7 @@ export default function HomeTopRecordSection() {
       <article className="w-full block rounded-lg border border-default px-5 py-4">
         <div className="w-full h-full">
           <div className="text-default text-lg font-semibold">공간기록</div>
-          <div className="text-sm text-dark-gray-gray my-3">지도 위에 건물에 대한 기록을 남길 수 있는 서비스입니다.</div>
+          <div className="text-sm text-gray-gray my-3">지도 위에 건물에 대한 기록을 남길 수 있는 서비스입니다.</div>
           <div className="grid grid-cols-2 gap-5 text-center text-sm">
             <Link className="bg-dark-white rounded-lg py-3" href="/record">기록 보러가기</Link>
             <Link
