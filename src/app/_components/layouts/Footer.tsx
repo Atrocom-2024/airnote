@@ -10,7 +10,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="w-[100vw] h-[8vh] bg-white border-t border-gray flex flex-col justify-center z-[29] text-[0.5rem] text-dark-gray pl-5 md:text-[0.7rem] md:flex-row md:justify-evenly md:items-center md:pl-0">
+    <footer className="w-[100vw] h-[8vh] bg-white border-t border-light-gray flex flex-col justify-center z-[29] text-[0.5rem] text-gray pl-5 md:text-[0.7rem] md:flex-row md:justify-evenly md:items-center md:pl-0">
       <section className="space-y-1">
         <article>{'('}주{')'} 아트로컴</article>
         <article>주소: 서울특별시 강남구 테헤란로21길 5 | 대표: 허수현</article>

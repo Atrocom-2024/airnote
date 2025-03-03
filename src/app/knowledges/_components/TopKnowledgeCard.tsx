@@ -14,13 +14,13 @@ export default function TopKnowledgeCard({ knowledgeInfo }: PropsType) {
 
   useEffect(() => {
     const strippedText = stripHtml(knowledgeInfo.knowledge_content);
-    const preview = getPreviewText(strippedText, 25);
+    const preview = getPreviewText(strippedText, 300);
     setPreviewText(preview);
   }, [knowledgeInfo.knowledge_content]);
 
   return (
     <Link
-      className="w-full flex border border-gray shadow-sm mx-auto rounded-xl text-xs text-middle-gray transition-all"
+      className="w-full flex shadow-sm mx-auto text-xs text-middle-gray transition-all"
       href={`/knowledges/${knowledgeInfo.knowledge_id}`}
     >
       <section className="w-[50%]">
@@ -32,7 +32,7 @@ export default function TopKnowledgeCard({ knowledgeInfo }: PropsType) {
           alt="썸네일"
         />
       </section>
-      <section className="p-3 space-y-2">
+      <section className="w-[50%] p-3 space-y-3 border border-light-gray rounded-r-xl">
         <article className="flex items-center">
           <div>
             <DefaultProfile className="rounded-xl" width="w-[35px]" />
@@ -46,22 +46,28 @@ export default function TopKnowledgeCard({ knowledgeInfo }: PropsType) {
           </div>
         </article>
         <article>
-          <div className="text-base text-black font-bold">{getPreviewText(knowledgeInfo.knowledge_title, 20)}</div>
-          <div className="text-xs text-middle-gray mt-1">{previewText}</div>
-        </article>
-        <article className="flex justify-end items-center">
-          <div className="flex items-center mr-2">
-            <div>
-              <HiHandThumbUp className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
-            </div>
-            <div className="ml-1">{knowledgeInfo.likes}</div>
-          </div>
-          <div className="flex items-center">
-            <div>
-              <HiHandThumbDown className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
-            </div>
-            <div className="ml-1">{knowledgeInfo.dislikes}</div>
-          </div>
+          <section className="flex justify-between items-center mb-5">
+            <article>
+              <h3 className="text-base text-black font-bold">{getPreviewText(knowledgeInfo.knowledge_title, 20)}</h3>
+            </article>
+            <article className="flex justify-end items-center">
+              <div className="flex items-center mr-2">
+                <div>
+                  <HiHandThumbUp className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
+                </div>
+                <div className="ml-1">{knowledgeInfo.likes}</div>
+              </div>
+              <div className="flex items-center">
+                <div>
+                  <HiHandThumbDown className="size-[15px] sm:size-[20px]" color="#AFAFAF" size="20" />
+                </div>
+                <div className="ml-1">{knowledgeInfo.dislikes}</div>
+              </div>
+            </article>
+          </section>
+          <section>
+            <p className="text-xs text-middle-gray mt-1">{previewText}</p>
+          </section>
         </article>
       </section>
     </Link>
