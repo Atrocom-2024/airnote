@@ -1,5 +1,7 @@
 'use client';
 
+import Link from "next/link";
+
 import { useKnowledges } from "@/app/_lib/hooks";
 import LoadingUI from "@/app/_components/LoadingUI";
 import KnowledgeCard from "./KnowledgeCard";
@@ -12,10 +14,11 @@ export default function KnowledgeSection() {
   }
 
   return (
-    <section className="mt-10">
-      <section className="text-light-black text-xl font-bold">전체 지식</section>
-      {/* <section className="w-full grid grid-cols-1 gap-5 mt-5 md:grid-cols-2"> */}
-      <section className="w-full grid grid-cols-1 gap-5 mt-5">
+    <section className="basis-[70%] flex-2 mt-10">
+      <section className="flex border-b border-light-gray text-gray text-lg font-semibold">
+        <Link className="px-5 py-2 border-b-2 border-black text-black" href="/knowledges">전체</Link>
+      </section>
+      <section className="mt-5">
         {knowledges.map((knowledgeInfo) => (
           <KnowledgeCard knowledgeInfo={knowledgeInfo} key={knowledgeInfo.knowledge_id} />
         ))}

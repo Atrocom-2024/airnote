@@ -7,16 +7,30 @@ import AddKnowledgeBtn from "./_components/AddKnowledgeBtn";
 export default async function Knowledge() {
   return (
     <Layout className="pb-36">
-      <main className="w-full mx-auto mt-20 px-5 lg:px-0 lg:w-[1000px]">
+      <main className="mx-auto mt-20 px-5 lg:px-0 lg:w-[1000px]">
         <section className="flex justify-between items-center">
           <Title>공간지식</Title>
-          <AddKnowledgeBtn />
+          <div className="hidden lg:block">
+            <AddKnowledgeBtn />
+          </div>
         </section>
         <section>
-          <div className="font-semibold text-middle-gray mt-3">Real estate knowledge and tips</div>
+          <div className="font-semibold text-middle-gray mt-3">부동산에 대한 각종 지식과 팁을 전해드려요</div>
         </section>
-        <TopKnowledgeSection />
-        <KnowledgeSection />
+        <section className="mt-10 lg:hidden">
+          <AddKnowledgeBtn />
+        </section>
+        <section className="lg:hidden">
+          <TopKnowledgeSection />
+        </section>
+        <section className="lg:flex lg:gap-10">
+          <div>
+            <KnowledgeSection />
+          </div>
+          <div className="hidden lg:block">
+            <TopKnowledgeSection />
+          </div>
+        </section>
       </main>
     </Layout>
   );
