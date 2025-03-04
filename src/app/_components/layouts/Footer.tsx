@@ -17,7 +17,7 @@ export default function Footer() {
         <article>전자우편주소: info@atrocom.com</article>
       </section>
       <section>
-        <article className="pt-1 md:pt-7">© 2024 공간 기록 수첩 [공기수첩] Powered by Next.js, Vercel App</article>
+        <article className="pt-1 md:pt-7">{'('}주{')'}아트로컴 Copyright © 2024. Atrocom All rights reserved.</article>
       </section>
     </footer>
   );
