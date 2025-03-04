@@ -69,28 +69,35 @@ em {
 
 /* 모바일 환경에 맞춘 기본 스타일 */
 .knowledge-detail-container h1 {
-    font-size: large;
+    font-size: xxx-large;
     font-weight: bold;
     margin-top: 30px;
     margin-bottom: 20px;
 }
 
 .knowledge-detail-container h2 {
-    font-size: medium;
+    font-size: xx-large;
     font-weight: bold;
     margin-top: 20px;
     margin-bottom: 15px;
 }
 
 .knowledge-detail-container h3 {
-    font-size: small;
+    font-size: x-large;
     font-weight: bold;
     margin-top: 5px;
     margin-bottom: 3px;
 }
 
+.knowledge-detail-container h4 {
+    font-size: large;
+    font-weight: bold;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
 .knowledge-detail-container p {
-    line-height: normal;
+    line-height: 1.5;
 }
 
 .knowledge-detail-container li {

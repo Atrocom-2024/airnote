@@ -299,6 +299,7 @@ interface RecordType {
 interface KnowledgeType {
   knowledge_id: string;
   author_nickname: string;
+  author_name: string;
   knowledge_title: string;
   knowledge_content: string;
   likes: number;

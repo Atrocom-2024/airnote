@@ -13,7 +13,7 @@ export default function AddKnowledgeBtn() {
   return (
     <article>
       <Link
-        className="bg-default text-white text-sm px-4 py-3 rounded-lg md:text-base"
+        className="bg-default text-white text-sm px-5 py-2 rounded-lg md:text-base"
         href="/knowledges/add"
       >지식작성</Link>
     </article>

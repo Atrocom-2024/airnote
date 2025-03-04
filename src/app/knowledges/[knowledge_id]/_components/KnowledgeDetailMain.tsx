@@ -35,17 +35,26 @@ export default function KnowledgeDetailMain({ knowledgeId }: PropsType) {
   }
   
   return (
-    <main className="w-full mx-auto mt-20 md:w-[1000px]">
-      <section className="flex justify-between items-center text-middle-gray text-sm border-b-[1.5px] border-gray pb-2">
+    <main className="w-full mx-auto mt-10 md:w-[700px]">
+      <section className="flex justify-center items-center mb-5">
+        <Image
+          className="w-full h-[400px] object-cover rounded-lg"
+          src={knowledge.thumbnail_url ? knowledge.thumbnail_url : '/airnote-thumbnail.jpg'}
+          width={1200}
+          height={0}
+          alt="썸네일"
+        />
+      </section>
+      <section className="mb-5">
+        <article className="text-2xl text-dar text-dark-gray font-semibold md:text-4xl">{knowledge.knowledge_title}</article>
+      </section>
+      <section className="flex justify-between items-center text-dark-gray text-sm">
         <article className="flex justify-center items-center">
-          <div>
-            <DefaultProfile className="rounded-2xl" />
-          </div>
-          <div className="flex items-center">
-            <div className="ml-2 text-base text-default font-bold">{knowledge.author_nickname}</div>
+          <div className="flex items-center text-base font-semibold">
+            <div>{knowledge.author_nickname}</div>
             <div className="flex items-center">
               <div>ㆍ</div>
-              <div>{parseDate(knowledge.create_at)}</div>
+              <div>{knowledge.author_name}</div>
             </div>
           </div>
         </article>
@@ -55,31 +64,24 @@ export default function KnowledgeDetailMain({ knowledgeId }: PropsType) {
               <div>
                 <HiHandThumbUp className="size-[20px] sm:size-[25px]" color="#AFAFAF" size="20" />
               </div>
-              <div className="ml-1">{knowledge.likes}</div>
+              <div className="text-gray ml-1">{knowledge.likes}</div>
             </div>
             <div className="flex items-center">
               <div> 
                 <HiHandThumbDown className="size-[20px] sm:size-[25px]" color="#AFAFAF" size="20" />
               </div>
-              <div className="ml-1">{knowledge.dislikes}</div>
+              <div className="text-gray ml-1">{knowledge.dislikes}</div>
             </div>
           </section>
         </article>
       </section>
-      <section className="flex justify-center items-center my-5 md:my-10">
-        <Image
-          className="w-[400px] h-[400px] object-cover rounded-lg"
-          src={knowledge.thumbnail_url ? knowledge.thumbnail_url : '/airnote-thumbnail.jpg'}
-          width={400}
-          height={0}
-          alt="썸네일"
-        />
+      <section className="mb-24 text-gray text-sm">
+        <div>{parseDate(knowledge.create_at)}</div>
       </section>
-      <section>
-        <article className="text-2xl font-bold mb-5 md:text-3xl">{knowledge.knowledge_title}</article>
-        <article className="knowledge-detail-container" dangerouslySetInnerHTML={{ __html: knowledge.knowledge_content }} />
+      <section className="mb-32">
+        <article className="knowledge-detail-container text-dark-gray" dangerouslySetInnerHTML={{ __html: knowledge.knowledge_content }} />
       </section>
-      <section className="mt-10 pb-20 text-sm">
+      <section className="pb-20 text-sm">
         <article className="flex justify-center items-center">
           <button
             className="border-[1.5px] border-gray rounded-lg px-4 py-2 flex justify-center items-center"

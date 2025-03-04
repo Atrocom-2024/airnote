@@ -12,7 +12,7 @@ export default async function Header() {
   const session = await getServerSession(authOptions);
 
   return (
-    <header className="fixed w-[100vw] h-[8vh] bg-white/70 backdrop-blur-[3px] justify-between flex items-center z-[30] border-b border-light-gray px-5 sm:px-10 md:justify-around">
+    <header className="fixed w-[100vw] h-[8vh] bg-white/70 backdrop-blur-[3px] justify-between flex items-center z-[30] border-b border-light-gray px-5 sm:px-10 lg:justify-around">
       <section className="flex items-center">
         <article className="mr-5 sm:mr-10">
           <Link href="/home">
