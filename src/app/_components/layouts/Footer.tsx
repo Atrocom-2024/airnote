@@ -17,7 +17,7 @@ export default function Footer() {
         <article>전자우편주소: info@atrocom.com</article>
       </section>
       <section>
-        <article className="pt-1 md:pt-7">{'('}주{')'}아트로컴 Copyright © 2024. Atrocom All rights reserved.</article>
+        <article className="pt-1 md:pt-7">Copyright © 2024. Atrocom All rights reserved.</article>
       </section>
     </footer>
   );
