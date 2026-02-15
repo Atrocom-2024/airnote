@@ -1,6 +1,7 @@
 import { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
 import Kakao from "next-auth/providers/kakao";
+import { RowDataPacket } from "mysql2";
 
 import { pool } from "@/utils/database";
 
@@ -22,11 +23,10 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async signIn({ user, profile }) {
-      const client = await pool.connect();
       try {
-        const checkUserQuery = 'SELECT * FROM USERS_TB WHERE email = $1';
-        const checkResult = await client.query(checkUserQuery, [user.email]);
-        const existingUser = checkResult.rows[0];
+        const checkUserQuery = 'SELECT * FROM USERS_TB WHERE email = ?';
+        const [rows] = await pool.query<RowDataPacket[]>(checkUserQuery, [user.email]);
+        const existingUser = rows[0];
   
         if (profile) {
           if (existingUser) {
@@ -38,13 +38,12 @@ export const authOptions: NextAuthOptions = {
         } else {
           return '/home';
         }
-      } finally {
-        client.release();
+      } catch (err) {
+        console.error("API Error:", err);
+        return false;
       }
     },
     async session({ session, token }) {
-      const client = await pool.connect();
-
       try {
         const userDataQuery = `
           SELECT
@@ -56,10 +55,10 @@ export const authOptions: NextAuthOptions = {
           FROM USERS_TB u
           LEFT JOIN USER_ROLES_TB ur ON u.id = ur.user_id
           LEFT JOIN ROLES_TB r ON ur.role_id = r.role_id
-          WHERE u.email = $1
+          WHERE u.email = ?
         `
-        const userDataQueryResult = await client.query(userDataQuery, [token.email]);
-        const userData = userDataQueryResult.rows[0];
+        const [rows] = await pool.query<RowDataPacket[]>(userDataQuery, [token.email]);
+        const userData = rows[0];
         
         if (!userData) {
           return session;
@@ -72,14 +71,11 @@ export const authOptions: NextAuthOptions = {
 
         return session;
       } catch (err) {
-        console.error(err);
+        console.error("API Error:", err);
         return session;
-      } finally {
-        client.release();
       }
     }
   }
 };
-
 
 export default NextAuth(authOptions);
