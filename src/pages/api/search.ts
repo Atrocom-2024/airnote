@@ -1,10 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { RowDataPacket } from "mysql2";
 
 import { pool } from "@/utils/database";
 
 export default async function handler(req: CustomApiRequest, res: NextApiResponse) {
-  let client;
-  
   try {
     switch (req.method) {
       case 'GET':
@@ -14,7 +13,6 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
           return res.status(400).send('검색어가 필요합니다');
         }
 
-        client = await pool.connect();
         const searchPattern = `%${decodeURIComponent(q)}%`;
         const searchQuery = `
           SELECT 
@@ -29,20 +27,18 @@ export default async function handler(req: CustomApiRequest, res: NextApiRespons
             r.create_at
           FROM RECORD_TB r
           LEFT JOIN REACTION_TB rt ON r.post_id = rt.post_id
-          WHERE r.address ILIKE $1
+          WHERE r.address ILIKE ?
           GROUP BY r.post_id, r.address, r.address_detail, r.latitude, r.longitude, r.content, r.create_at;
         `;
-        const searchQueryResult = await client.query(searchQuery, [searchPattern]);
+        const [rows] = await pool.query<RowDataPacket[]>(searchQuery, [searchPattern]);
         
-        return res.status(200).json(searchQueryResult.rows);
+        return res.status(200).json(rows);
       default:
         return res.status(405).send('잘못된 요청 메서드');
     }
   } catch (err) {
     console.error(err);
     return res.status(500).send("내부 서버 오류");
-  } finally {
-    client?.release();
   }
 }
 
